@@ -7,15 +7,16 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { messages, max_tokens } = req.body;
+    // 1. Dynamically pull model from req.body alongside messages and max_tokens
+    const { model, messages, max_tokens } = req.body;
 
-    // Use the global environment variable directly
     const anthropic = new Anthropic({
       apiKey: process.env.ANTHROPIC_API_KEY,
     });
 
+    // 2. Use the exact model the frontend requests to maintain consistency
     const response = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20241022', // or your preferred model version
+      model: model || 'claude-3-5-sonnet-20241022', 
       max_tokens: max_tokens || 1024,
       messages: messages,
     });
