@@ -3,229 +3,256 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>whatimado.com — Casual name. Serious business.</title>
+<title>whatimado.com</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#2a1f0e;
-  --bg2:#1e1608;
-  --gold:#e8a020;
-  --gold2:#f5c842;
-  --brown:#5c3d1a;
-  --brown2:#3d2610;
-  --cream:#f5ead0;
-  --cream2:#e8d5a8;
-  --text:#f5ead0;
-  --text2:rgba(245,234,208,0.7);
-  --rule:rgba(232,160,32,0.15);
-  --rule2:rgba(232,160,32,0.07);
-  --bubble-ai:#3d2a0a;
-  --bubble-user:#6b4a1a;
+  --bg:#f4f7f9;
+  --surface:#ffffff;
+  --surface2:#f8fafb;
+  --ink:#0f1923;
+  --ink2:#2d3a45;
+  --mid:#5c6b78;
+  --faint:#9aaab8;
+  --line:#e4eaef;
+  --line2:#edf1f5;
+  --aqua:#2bbfbf;
+  --aqua2:#3dd4d4;
+  --aqua3:#e6f9f9;
+  --aqua4:#b3eeee;
+  --aqua-text:#1a9090;
+  --text:#0f1923;
+  --text2:#5c6b78;
+  --text3:#9aaab8;
+  --shadow-sm:0 1px 4px rgba(15,25,35,0.06),0 2px 12px rgba(15,25,35,0.04);
+  --shadow-md:0 2px 8px rgba(15,25,35,0.07),0 8px 24px rgba(15,25,35,0.05);
+  --shadow-lg:0 4px 16px rgba(15,25,35,0.08),0 16px 40px rgba(15,25,35,0.06);
+  --radius-sm:10px;
+  --radius-md:16px;
+  --radius-lg:22px;
+  --radius-xl:28px;
+  --connector:#d0dbe4;
 }
-html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--bg2);color:var(--text);overflow-x:hidden}
+html,body{height:100%;font-family:'Manrope',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 body{min-height:100vh}
 
-/* ── BACKGROUND ── */
-.bg-layer{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 20% 50%, #3d2a0a 0%, #1e1608 60%)}
+/* BACKGROUND */
+.bg-layer{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 50% 30%, #e8f4f4 0%, #edf3f6 30%, #f4f7f9 65%, #f8fafb 100%);pointer-events:none}
 
-/* ── HEADER ── */
-header{position:fixed;top:0;left:0;right:0;z-index:500;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(30,22,8,0.95);backdrop-filter:blur(24px);border-bottom:1px solid var(--rule)}
-.logo{font-family:'Outfit',sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:.04em;color:var(--gold);cursor:pointer}
-.logo span{color:var(--cream);font-weight:300}
-.tagline{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text2)}
-.nav{display:flex;gap:.75rem;align-items:center}
-.nav-btn{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);background:none;border:none;cursor:pointer;transition:color .2s;padding:.3rem 0}
-.nav-btn:hover{color:var(--gold)}
-.nav-btn.active{color:var(--gold);border-bottom:1.5px solid var(--gold)}
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(228,234,239,0.8);box-shadow:0 1px 0 rgba(15,25,35,0.04)}
+.logo{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:-.02em;color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:.5rem}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--aqua)}
+.logo span{color:var(--faint);font-weight:400}
+.tagline{font-size:.72rem;font-weight:500;letter-spacing:.04em;color:var(--text3);text-transform:uppercase}
+.nav{display:flex;gap:.25rem;align-items:center}
+.nav-btn{font-family:'Manrope',sans-serif;font-size:.82rem;font-weight:500;color:var(--text2);background:none;border:none;cursor:pointer;transition:color .15s;padding:.35rem .75rem;border-radius:var(--radius-sm)}
+.nav-btn:hover{color:var(--ink);background:var(--surface2)}
+.nav-btn.active{color:var(--aqua-text);background:var(--aqua3)}
 
-/* ── SCREENS ── */
+/* SCREENS */
 .screen{position:relative;z-index:10;display:none;min-height:100vh}
 .screen.active{display:block}
-
-/* ── MAIN SCREEN ── */
 #screen-main{padding-top:5rem}
 
-.hero{max-width:640px;margin:0 auto;padding:3rem 2rem 1.5rem;text-align:center;position:relative;z-index:10}
-.hero-eyebrow{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;opacity:0;animation:fadeUp .6s ease .1s forwards}
-.hero-title{font-family:'Outfit',sans-serif;font-weight:700;font-size:clamp(2rem,6vw,3.2rem);letter-spacing:-.02em;color:var(--cream);line-height:1.05;margin-bottom:.75rem;opacity:0;animation:fadeUp .6s ease .2s forwards}
-.hero-title em{font-style:normal;color:var(--gold)}
-.hero-sub{font-size:clamp(.9rem,3vw,1.05rem);color:var(--text2);font-weight:300;line-height:1.7;opacity:0;animation:fadeUp .6s ease .3s forwards}
+/* HERO */
+.hero{max-width:540px;margin:0 auto;padding:4.5rem 2rem 2rem;position:relative;z-index:10}
+.hero-chip{display:inline-flex;align-items:center;gap:.4rem;background:var(--aqua3);border:1px solid var(--aqua4);border-radius:100px;padding:.28rem .85rem;margin-bottom:1.25rem;opacity:0;animation:fadeUp .5s ease .1s forwards}
+.hero-chip-dot{width:5px;height:5px;border-radius:50%;background:var(--aqua)}
+.hero-chip-text{font-size:.7rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--aqua-text)}
+.hero-title{font-weight:800;font-size:clamp(1.9rem,5.5vw,2.75rem);letter-spacing:-.03em;color:var(--ink);line-height:1.12;margin-bottom:1rem;opacity:0;animation:fadeUp .5s ease .2s forwards}
+.hero-title em{font-style:normal;color:var(--aqua-text)}
+.hero-sub{font-size:.95rem;color:var(--text2);font-weight:400;line-height:1.8;opacity:0;animation:fadeUp .5s ease .3s forwards;max-width:420px}
 
-/* ── PATH CHOOSER ── */
-.path-chooser{max-width:560px;margin:2rem auto 0;padding:0 2rem;opacity:0;animation:fadeUp .6s ease .4s forwards}
-.path-label{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text2);text-align:center;margin-bottom:1.25rem}
-.path-btns{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
-.path-btn{padding:1.25rem 1rem;background:rgba(92,61,26,0.3);border:1.5px solid rgba(232,160,32,0.3);border-radius:16px;color:var(--cream);cursor:pointer;transition:all .2s;text-align:center;font-family:'Outfit',sans-serif}
-.path-btn:hover,.path-btn.selected{background:rgba(232,160,32,0.15);border-color:var(--gold);transform:translateY(-2px)}
-.path-btn .pb-icon{font-size:1.75rem;margin-bottom:.5rem;display:block}
-.path-btn .pb-title{font-weight:600;font-size:.95rem;display:block;margin-bottom:.25rem}
-.path-btn .pb-sub{font-family:'DM Mono',monospace;font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text2)}
-.path-divider{text-align:center;font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text2);margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem}
-.path-divider::before,.path-divider::after{content:'';flex:1;height:1px;background:var(--rule)}
+/* DIVIDER */
+.section-gap{max-width:540px;margin:2.5rem auto 0;padding:0 2rem;opacity:0;animation:fadeUp .5s ease .38s forwards}
+.section-gap hr{border:none;border-top:1px solid var(--line);margin-bottom:1.75rem}
 
-/* ── PROMPT BOX ── */
-.prompt-wrap{max-width:560px;margin:0 auto;padding:0 2rem 2rem;opacity:0;animation:fadeUp .6s ease .5s forwards}
-.prompt-box{background:rgba(61,42,10,0.6);border:1.5px solid rgba(232,160,32,0.25);border-radius:20px;overflow:hidden;box-shadow:0 4px 40px rgba(0,0,0,0.3)}
-.prompt-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);padding:.75rem 1rem .35rem;display:block;border-bottom:1px solid var(--rule)}
-.prompt-ta{width:100%;padding:1rem;font-family:'Outfit',sans-serif;font-size:.92rem;font-weight:300;border:none;outline:none;background:transparent;color:var(--cream);resize:none;min-height:90px;line-height:1.65}
-.prompt-ta::placeholder{color:rgba(245,234,208,0.3)}
-.prompt-foot{display:flex;justify-content:space-between;align-items:center;padding:.6rem .75rem .6rem 1rem;border-top:1px solid var(--rule)}
-.prompt-hint{font-family:'DM Mono',monospace;font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text2)}
-.prompt-btn{padding:.55rem 1.4rem;background:var(--gold);color:#1e1608;border:none;border-radius:8px;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;font-weight:600;transition:all .2s}
-.prompt-btn:hover{background:var(--gold2)}
-.prompt-btn:disabled{opacity:.4;cursor:not-allowed}
-.pills{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:1rem;max-width:560px;padding:0 2rem;opacity:0;animation:fadeUp .6s ease .6s forwards}
-.pill{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .85rem;border:1px solid rgba(232,160,32,0.3);border-radius:20px;color:var(--text2);background:transparent;cursor:pointer;transition:all .15s}
-.pill:hover{border-color:var(--gold);color:var(--gold);background:rgba(232,160,32,0.08)}
+/* PATH CHOOSER */
+.path-chooser{max-width:540px;margin:0 auto;padding:0 2rem;opacity:0;animation:fadeUp .5s ease .44s forwards}
+.path-label{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:.875rem}
+.path-btns{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.75rem}
+.path-btn{padding:1.1rem 1rem;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);color:var(--text);cursor:pointer;transition:all .18s;text-align:left;font-family:'Manrope',sans-serif;display:flex;flex-direction:column;gap:.5rem;box-shadow:var(--shadow-sm)}
+.path-btn:hover{border-color:var(--aqua4);box-shadow:var(--shadow-md);transform:translateY(-1px)}
+.path-btn.selected{border-color:var(--aqua);background:var(--aqua3);box-shadow:0 0 0 3px rgba(43,191,191,0.12),var(--shadow-sm)}
+.path-btn .pb-icon{width:32px;height:32px;border-radius:8px;background:var(--surface2);display:flex;align-items:center;justify-content:center;color:var(--faint);transition:all .18s}
+.path-btn:hover .pb-icon{background:var(--aqua3);color:var(--aqua)}
+.path-btn.selected .pb-icon{background:rgba(43,191,191,0.18);color:var(--aqua)}
+.path-btn .pb-icon svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.path-btn .pb-title{font-weight:700;font-size:.88rem;color:var(--ink);transition:color .18s}
+.path-btn.selected .pb-title{color:var(--aqua-text)}
+.path-btn .pb-sub{font-size:.78rem;color:var(--text3);font-weight:400}
+.path-or{font-size:.72rem;font-weight:500;letter-spacing:.04em;color:var(--text3);margin-bottom:1.75rem;display:flex;align-items:center;gap:.875rem;text-transform:uppercase}
+.path-or::before,.path-or::after{content:'';flex:1;height:1px;background:var(--line2)}
 
-/* ── CHAT DRAWER ── */
-.chat-drawer-bg{position:fixed;inset:0;z-index:800;background:rgba(0,0,0,0);pointer-events:none;transition:background .35s}
-.chat-drawer-bg.open{background:rgba(0,0,0,0.5);pointer-events:auto}
-.chat-drawer{position:fixed;bottom:0;left:0;right:0;z-index:900;max-height:82vh;display:flex;flex-direction:column;background:var(--bg2);border-top:2px solid var(--gold);border-radius:24px 24px 0 0;transform:translateY(100%);transition:transform .4s cubic-bezier(.32,.72,0,1);box-shadow:0 -8px 60px rgba(0,0,0,0.6)}
-.chat-drawer.open{transform:translateY(0)}
-.chat-handle-bar{display:flex;justify-content:space-between;align-items:center;padding:.875rem 1.25rem .625rem;border-bottom:1px solid var(--rule);flex-shrink:0}
-.chat-handle{width:36px;height:4px;background:rgba(232,160,32,0.4);border-radius:2px;position:absolute;left:50%;transform:translateX(-50%);top:.625rem}
-.chat-title{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
-.chat-close{background:none;border:none;color:var(--text2);cursor:pointer;font-size:1.1rem;padding:.25rem;transition:color .2s;line-height:1}
-.chat-close:hover{color:var(--cream)}
-.chat-messages{flex:1;overflow-y:auto;padding:1rem 1rem .5rem;display:flex;flex-direction:column;gap:.75rem;scrollbar-width:thin;scrollbar-color:rgba(232,160,32,0.2) transparent}
-.chat-messages::-webkit-scrollbar{width:4px}
-.chat-messages::-webkit-scrollbar-thumb{background:rgba(232,160,32,0.2);border-radius:2px}
+/* PROMPT BOX */
+.prompt-wrap{max-width:540px;margin:0 auto;padding:0 2rem 1rem;opacity:0;animation:fadeUp .5s ease .5s forwards}
+.prompt-box{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md);transition:border-color .18s,box-shadow .18s}
+.prompt-box:focus-within{border-color:var(--aqua4);box-shadow:0 0 0 3px rgba(43,191,191,0.1),var(--shadow-md)}
+.prompt-ta{width:100%;padding:1rem 1.1rem;font-family:'Manrope',sans-serif;font-size:.9rem;font-weight:400;border:none;outline:none;background:transparent;color:var(--ink);resize:none;min-height:84px;line-height:1.75}
+.prompt-ta::placeholder{color:var(--text3)}
+.prompt-foot{display:flex;justify-content:space-between;align-items:center;padding:.6rem .75rem .6rem 1.1rem;border-top:1px solid var(--line2)}
+.prompt-hint{font-size:.72rem;font-weight:500;color:var(--text3)}
+.prompt-btn{padding:.52rem 1.2rem;background:var(--ink);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Manrope',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .18s;letter-spacing:-.01em}
+.prompt-btn:hover{background:var(--ink2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(15,25,35,0.2)}
+.prompt-btn:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
 
-/* ── CHAT BUBBLES ── */
-.bubble-row{display:flex;align-items:flex-end;gap:.5rem;opacity:0;transform:translateY(14px) scale(.96);animation:bubblePop .35s cubic-bezier(.34,1.56,.64,1) forwards}
-@keyframes bubblePop{to{opacity:1;transform:translateY(0) scale(1)}}
-.bubble-row.user{flex-direction:row-reverse}
-.bubble-avatar{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700}
-.bubble-avatar.ai{background:var(--gold);color:#1e1608}
-.bubble-avatar.user{background:var(--brown);color:var(--cream)}
-.bubble{max-width:82%;padding:.75rem 1rem;border-radius:18px;font-size:.88rem;line-height:1.7;font-weight:300;word-wrap:break-word}
-.bubble.ai{background:var(--bubble-ai);border:1px solid rgba(232,160,32,0.2);border-bottom-left-radius:4px;color:var(--cream)}
-.bubble.user{background:var(--bubble-user);border:1px solid rgba(232,160,32,0.15);border-bottom-right-radius:4px;color:var(--cream)}
-.bubble strong{font-weight:600;color:var(--gold)}
-.bubble .idea-card{background:rgba(232,160,32,0.08);border:1px solid rgba(232,160,32,0.2);border-radius:12px;padding:.75rem;margin:.5rem 0;cursor:pointer;transition:all .2s}
-.bubble .idea-card:hover{background:rgba(232,160,32,0.15);border-color:var(--gold)}
-.bubble .idea-card-title{font-weight:600;color:var(--gold);font-size:.9rem;margin-bottom:.2rem}
-.bubble .idea-card-tag{font-family:'DM Mono',monospace;font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-bottom:.35rem}
-.bubble .idea-card-desc{font-size:.82rem;color:var(--text2);line-height:1.6}
-.bubble .path-choice-btns{display:flex;flex-direction:column;gap:.5rem;margin-top:.75rem}
-.bubble .pch-btn{padding:.6rem 1rem;background:rgba(92,61,26,0.4);border:1.5px solid rgba(232,160,32,0.3);border-radius:10px;color:var(--cream);cursor:pointer;font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:500;text-align:left;transition:all .2s}
-.bubble .pch-btn:hover{background:rgba(232,160,32,0.15);border-color:var(--gold);color:var(--gold)}
+/* PILLS */
+.pills{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.875rem;max-width:540px;padding:0 2rem;opacity:0;animation:fadeUp .5s ease .55s forwards}
+.pill{font-size:.72rem;font-weight:500;padding:.3rem .8rem;border:1.5px solid var(--line);border-radius:100px;color:var(--text2);background:var(--surface);cursor:pointer;transition:all .15s;box-shadow:var(--shadow-sm)}
+.pill:hover{border-color:var(--aqua4);color:var(--aqua-text);background:var(--aqua3);box-shadow:none}
 
-/* typing indicator */
-.typing-bubble{display:flex;align-items:center;gap:4px;padding:.75rem 1rem}
-.typing-bubble span{width:7px;height:7px;background:var(--gold);border-radius:50%;animation:typingDot 1.2s ease-in-out infinite}
-.typing-bubble span:nth-child(2){animation-delay:.2s}
-.typing-bubble span:nth-child(3){animation-delay:.4s}
-@keyframes typingDot{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-6px);opacity:1}}
+/* ── BUBBLE CHAIN ── */
+#convo-thread{display:none;max-width:540px;margin:0 auto;padding:2.5rem 2rem 7rem;position:relative;z-index:10}
+.bubble-chain{display:flex;flex-direction:column;align-items:center;position:relative}
+.chain-pair{display:flex;flex-direction:column;align-items:center;width:100%}
 
-/* ── CHAT INPUT BAR ── */
-.chat-input-bar{display:flex;gap:.5rem;padding:.75rem 1rem;border-top:1px solid var(--rule);flex-shrink:0;background:var(--bg2)}
-.chat-input{flex:1;padding:.65rem 1rem;font-family:'Outfit',sans-serif;font-size:.9rem;border:1.5px solid rgba(232,160,32,0.25);border-radius:20px;outline:none;background:rgba(61,42,10,0.5);color:var(--cream);font-weight:300;transition:border-color .2s}
-.chat-input:focus{border-color:var(--gold);background:rgba(61,42,10,0.7)}
-.chat-input::placeholder{color:rgba(245,234,208,0.3)}
-.chat-send{width:38px;height:38px;background:var(--gold);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
-.chat-send:hover{background:var(--gold2);transform:scale(1.05)}
-.chat-send:disabled{opacity:.4;cursor:not-allowed}
-.chat-send svg{width:16px;height:16px;fill:#1e1608}
+/* User node */
+.chain-user{display:flex;justify-content:flex-end;width:100%}
+.node-user{max-width:72%;background:var(--ink);color:#fff;border-radius:var(--radius-md) 6px var(--radius-md) var(--radius-md);padding:.8rem 1.05rem;font-size:.875rem;font-weight:400;line-height:1.72;word-wrap:break-word;opacity:0;animation:nodeIn .25s ease forwards;box-shadow:var(--shadow-md)}
 
-/* ── JOURNEY / IDEAS UI (simplified) ── */
-#ideas-panel{display:none;max-width:640px;margin:0 auto;padding:1rem 2rem 8rem;position:relative;z-index:10}
-.ideas-back{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);background:none;border:none;cursor:pointer;padding:0;transition:color .2s;margin-bottom:1.5rem;display:inline-block}
-.ideas-back:hover{color:var(--gold)}
-.ideas-grid{display:flex;flex-direction:column;gap:1rem}
-.idea-tile{background:rgba(61,42,10,0.5);border:1.5px solid rgba(232,160,32,0.2);border-radius:16px;padding:1.25rem;cursor:pointer;transition:all .2s}
-.idea-tile:hover{border-color:var(--gold);background:rgba(232,160,32,0.08);transform:translateY(-2px)}
-.it-type{font-family:'DM Mono',monospace;font-size:.48rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem}
-.it-name{font-weight:600;font-size:1.05rem;color:var(--cream);margin-bottom:.35rem}
-.it-tagline{font-size:.875rem;color:var(--text2);font-weight:300;line-height:1.6;margin-bottom:.75rem}
-.it-why{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);padding:.4rem .75rem;background:rgba(232,160,32,0.06);border-left:2px solid var(--gold);border-radius:0 6px 6px 0}
-.it-choose-btn{margin-top:.875rem;padding:.5rem 1.1rem;background:var(--gold);color:#1e1608;border:none;border-radius:8px;font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;font-weight:600;transition:all .2s}
-.it-choose-btn:hover{background:var(--gold2)}
+/* Connector */
+.chain-connector{display:flex;flex-direction:column;align-items:center;padding:.2rem 0;min-height:36px}
+.connector-line{width:1.5px;background:linear-gradient(to bottom, var(--connector), transparent);flex:1;min-height:20px}
+.connector-dot{width:6px;height:6px;border-radius:50%;background:var(--aqua4);flex-shrink:0}
 
-/* ── JOURNEY SCREEN ── */
-#journey-panel{display:none;max-width:640px;margin:0 auto;padding:1rem 2rem 8rem;position:relative;z-index:10}
-.journey-header{margin-bottom:1.5rem}
-.jh-back{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);background:none;border:none;cursor:pointer;transition:color .2s;margin-bottom:.875rem;display:inline-block}
-.jh-back:hover{color:var(--gold)}
-.jh-type{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem}
-.jh-title{font-weight:600;font-size:1.3rem;color:var(--cream);margin-bottom:.35rem}
-.jh-sub{font-size:.875rem;color:var(--text2);font-weight:300;line-height:1.65}
-.stages{display:flex;flex-direction:column;gap:.875rem}
-.stage-card{background:rgba(61,42,10,0.4);border:1.5px solid rgba(232,160,32,0.15);border-radius:14px;overflow:hidden;transition:border-color .2s}
-.stage-card.active{border-color:var(--gold)}
-.stage-head{display:flex;align-items:center;gap:.875rem;padding:1rem 1.1rem;cursor:pointer}
-.stage-num{width:28px;height:28px;border-radius:50%;background:rgba(232,160,32,0.12);border:1.5px solid rgba(232,160,32,0.3);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:.6rem;color:var(--gold);flex-shrink:0}
-.stage-card.done .stage-num{background:var(--gold);border-color:var(--gold);color:#1e1608}
-.stage-label{font-weight:500;font-size:.9rem;color:var(--cream);flex:1}
-.stage-arrow{font-size:.75rem;color:var(--text2);transition:transform .2s}
+/* AI node */
+.chain-ai{display:flex;justify-content:flex-start;width:100%}
+.node-ai-wrap{display:flex;flex-direction:column;align-items:flex-start;max-width:72%}
+.node-ai-label{font-size:.68rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--aqua-text);margin-bottom:.35rem;display:flex;align-items:center;gap:.35rem}
+.node-ai-pulse{width:6px;height:6px;border-radius:50%;background:var(--aqua);animation:pulseDot 2.4s ease infinite}
+@keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
+.node-ai{background:var(--surface);border:1.5px solid var(--line);border-radius:6px var(--radius-md) var(--radius-md) var(--radius-md);padding:.8rem 1.05rem;font-size:.875rem;font-weight:400;line-height:1.72;color:var(--ink);word-wrap:break-word;opacity:0;animation:nodeIn .25s ease forwards;box-shadow:var(--shadow-md)}
+.node-ai strong{font-weight:700;color:var(--ink)}
+.node-ai .idea-card{border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:.7rem .875rem;margin:.45rem 0;cursor:pointer;transition:all .18s;background:var(--surface2)}
+.node-ai .idea-card:hover{border-color:var(--aqua);background:var(--aqua3);transform:translateX(3px)}
+.node-ai .idea-card-tag{font-size:.65rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--aqua-text);margin-bottom:.2rem}
+.node-ai .idea-card-title{font-weight:700;font-size:.875rem;color:var(--ink);margin-bottom:.15rem}
+.node-ai .idea-card-desc{font-size:.78rem;color:var(--text2);line-height:1.6}
+
+/* Choice buttons */
+.choice-btns{display:flex;flex-direction:column;gap:.35rem;margin-top:.65rem}
+.choice-btn{padding:.55rem .95rem;background:var(--surface2);border:1.5px solid var(--line);border-radius:var(--radius-sm);color:var(--ink);cursor:pointer;font-family:'Manrope',sans-serif;font-size:.84rem;font-weight:500;text-align:left;transition:all .18s}
+.choice-btn:hover{border-color:var(--aqua);background:var(--aqua3);color:var(--aqua-text)}
+
+/* Reply node */
+.chain-reply{display:flex;justify-content:flex-end;width:100%}
+.node-reply{width:62%;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);overflow:hidden;transition:all .18s;box-shadow:var(--shadow-sm)}
+.node-reply:focus-within{border-color:var(--aqua4);box-shadow:0 0 0 3px rgba(43,191,191,0.1),var(--shadow-sm)}
+.reply-ta{width:100%;padding:.65rem .95rem;font-family:'Manrope',sans-serif;font-size:.84rem;font-weight:400;border:none;outline:none;background:transparent;color:var(--ink);resize:none;min-height:56px;line-height:1.65}
+.reply-ta::placeholder{color:var(--text3)}
+.reply-foot{display:flex;justify-content:flex-end;padding:.28rem .4rem;border-top:1px solid var(--line2)}
+.reply-send{padding:.32rem .875rem;background:var(--aqua);color:#fff;border:none;border-radius:8px;font-family:'Manrope',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .18s}
+.reply-send:hover{background:var(--aqua2);box-shadow:0 3px 10px rgba(43,191,191,0.35)}
+
+/* Typing */
+.typing-dots{display:flex;align-items:center;gap:5px;padding:.1rem 0}
+.typing-dots span{width:5px;height:5px;background:var(--aqua4);border-radius:50%;animation:typingDot 1.3s ease-in-out infinite}
+.typing-dots span:nth-child(2){animation-delay:.2s}
+.typing-dots span:nth-child(3){animation-delay:.4s}
+@keyframes typingDot{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
+
+/* ── IDEAS PANEL ── */
+#ideas-panel{display:none;max-width:540px;margin:0 auto;padding:2rem 2rem 7rem;position:relative;z-index:10}
+.panel-back{font-size:.75rem;font-weight:600;letter-spacing:.02em;color:var(--text2);background:none;border:none;cursor:pointer;padding:.4rem 0;transition:color .15s;margin-bottom:2rem;display:inline-flex;align-items:center;gap:.35rem}
+.panel-back:hover{color:var(--aqua-text)}
+.panel-back svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ideas-grid{display:flex;flex-direction:column;gap:.875rem}
+.idea-tile{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);padding:1.1rem 1.2rem;cursor:pointer;transition:all .18s;box-shadow:var(--shadow-sm)}
+.idea-tile:hover{border-color:var(--aqua4);box-shadow:var(--shadow-md);transform:translateY(-1px)}
+.it-type{font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--aqua-text);margin-bottom:.35rem}
+.it-name{font-weight:700;font-size:.95rem;color:var(--ink);margin-bottom:.3rem}
+.it-tagline{font-size:.84rem;color:var(--text2);font-weight:400;line-height:1.65;margin-bottom:.65rem}
+.it-why{font-size:.72rem;font-weight:500;color:var(--text2);padding:.35rem .75rem;background:var(--aqua3);border-left:2px solid var(--aqua4);border-radius:0 6px 6px 0}
+.it-choose-btn{margin-top:.875rem;padding:.46rem 1.05rem;background:var(--ink);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Manrope',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .18s}
+.it-choose-btn:hover{background:var(--ink2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(15,25,35,0.18)}
+
+/* ── JOURNEY ── */
+#journey-panel{display:none;max-width:540px;margin:0 auto;padding:2rem 2rem 7rem;position:relative;z-index:10}
+.jh-back{font-size:.75rem;font-weight:600;color:var(--text2);background:none;border:none;cursor:pointer;transition:color .15s;margin-bottom:1rem;display:inline-flex;align-items:center;gap:.35rem;padding:.4rem 0}
+.jh-back:hover{color:var(--aqua-text)}
+.jh-back svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.jh-type{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--aqua-text);margin-bottom:.35rem}
+.jh-title{font-weight:800;font-size:1.2rem;color:var(--ink);margin-bottom:.35rem}
+.jh-sub{font-size:.875rem;color:var(--text2);font-weight:400;line-height:1.75;margin-bottom:2rem}
+.stages{display:flex;flex-direction:column;gap:.75rem}
+.stage-card{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);overflow:hidden;transition:all .18s;box-shadow:var(--shadow-sm)}
+.stage-card.open{border-color:var(--aqua4);box-shadow:var(--shadow-md)}
+.stage-head{display:flex;align-items:center;gap:.875rem;padding:.95rem 1.1rem;cursor:pointer}
+.stage-num{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:var(--text3);flex-shrink:0;transition:all .18s}
+.stage-card.done .stage-num{background:linear-gradient(135deg,#2bbfbf,#3dd4d4);border-color:transparent;color:#fff;box-shadow:0 2px 8px rgba(43,191,191,0.4)}
+.stage-label{font-weight:600;font-size:.9rem;color:var(--ink);flex:1}
+.stage-arrow{font-size:.65rem;color:var(--text3);transition:transform .2s}
 .stage-card.open .stage-arrow{transform:rotate(90deg)}
-.stage-body{display:none;padding:0 1.1rem 1rem;border-top:1px solid var(--rule)}
+.stage-body{display:none;padding:0 1.1rem 1rem;border-top:1px solid var(--line2)}
 .stage-card.open .stage-body{display:block}
-.stage-desc{font-size:.875rem;color:var(--text2);line-height:1.7;margin-top:.75rem;margin-bottom:.875rem}
+.stage-desc{font-size:.84rem;color:var(--text2);line-height:1.72;margin-top:.65rem;margin-bottom:.875rem}
 .tasks{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.875rem}
-.task-row{display:flex;gap:.625rem;align-items:flex-start}
-.task-check{width:18px;height:18px;border-radius:4px;border:1.5px solid rgba(232,160,32,0.4);background:transparent;cursor:pointer;flex-shrink:0;margin-top:2px;transition:all .2s;appearance:none;-webkit-appearance:none}
-.task-check:checked{background:var(--gold);border-color:var(--gold)}
-.task-text{font-size:.875rem;color:var(--text2);font-weight:300;line-height:1.6}
-.stage-done-btn{padding:.5rem 1.1rem;background:transparent;border:1.5px solid var(--gold);border-radius:8px;color:var(--gold);font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .2s}
-.stage-done-btn:hover{background:var(--gold);color:#1e1608}
-.stage-done-btn.completed{background:rgba(107,158,143,0.2);border-color:#6b9e8f;color:#6b9e8f}
+.task-row{display:flex;gap:.6rem;align-items:flex-start}
+.task-check{width:16px;height:16px;border-radius:5px;border:1.5px solid var(--line);background:transparent;cursor:pointer;flex-shrink:0;margin-top:3px;appearance:none;-webkit-appearance:none;transition:all .18s}
+.task-check:checked{background:linear-gradient(135deg,#2bbfbf,#3dd4d4);border-color:transparent}
+.task-text{font-size:.86rem;color:var(--text2);font-weight:400;line-height:1.65}
+.stage-done-btn{padding:.44rem 1.05rem;background:transparent;border:1.5px solid var(--line);border-radius:var(--radius-sm);color:var(--text2);font-family:'Manrope',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .18s}
+.stage-done-btn:hover{border-color:var(--aqua);color:var(--aqua-text);background:var(--aqua3)}
+.stage-done-btn.completed{border-color:var(--aqua4);color:var(--aqua-text);background:var(--aqua3)}
 
 /* ── STORE ── */
 #screen-store{padding-top:5rem}
-.store-inner{max-width:600px;margin:0 auto;padding:4rem 2rem;text-align:center}
-.store-eyebrow{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
-.store-title{font-family:'Outfit',sans-serif;font-weight:700;font-size:clamp(1.75rem,5vw,3rem);letter-spacing:-.02em;color:var(--cream);margin-bottom:3rem;line-height:1.05}
-.store-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;margin-bottom:2rem}
-.store-card{background:rgba(61,42,10,0.4);border:1.5px solid rgba(232,160,32,0.15);border-radius:14px;padding:1.75rem 1.25rem;text-align:center;cursor:pointer;transition:all .2s}
-.store-card:hover{border-color:var(--gold);transform:translateY(-2px);background:rgba(232,160,32,0.06)}
-.store-img{width:100%;aspect-ratio:1;background:rgba(232,160,32,0.05);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:2.5rem;border-radius:10px}
-.store-name{font-weight:600;font-size:.95rem;color:var(--cream);margin-bottom:.2rem}
-.store-brand{font-family:'DM Mono',monospace;font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}
-.store-price{font-size:.9rem;font-weight:300;color:var(--text2)}
-.store-soon{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text2);margin-top:.875rem}
+.store-inner{max-width:540px;margin:0 auto;padding:4rem 2rem;text-align:left}
+.store-eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--aqua-text);margin-bottom:.75rem;display:flex;align-items:center;gap:.4rem}
+.store-eyebrow::before{content:'';width:16px;height:2px;background:var(--aqua);border-radius:2px}
+.store-title{font-weight:800;font-size:clamp(1.75rem,5vw,2.4rem);letter-spacing:-.03em;color:var(--ink);margin-bottom:2.5rem;line-height:1.12}
+.store-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.875rem;margin-bottom:2rem}
+.store-card{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-lg);padding:1.25rem;cursor:pointer;transition:all .18s;box-shadow:var(--shadow-sm)}
+.store-card:hover{border-color:var(--aqua4);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.store-img{width:100%;aspect-ratio:1;background:var(--surface2);display:flex;align-items:center;justify-content:center;margin-bottom:.875rem;border-radius:var(--radius-md);color:var(--faint)}
+.store-img svg{width:30px;height:30px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.store-name{font-weight:600;font-size:.9rem;color:var(--ink);margin-bottom:.15rem}
+.store-price{font-size:.84rem;font-weight:400;color:var(--text2)}
+.store-soon{font-size:.72rem;font-weight:500;letter-spacing:.04em;color:var(--text3);margin-top:.75rem;text-transform:uppercase}
 
-/* ── HELP FAB ── */
-.help-fab{position:fixed;bottom:1.75rem;right:1.75rem;z-index:700;width:48px;height:48px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(232,160,32,0.4);transition:all .2s;font-size:1.2rem}
-.help-fab:hover{background:var(--gold2);transform:scale(1.1)}
+/* FAB */
+.help-fab{position:fixed;bottom:1.75rem;right:1.75rem;z-index:700;width:46px;height:46px;border-radius:50%;background:var(--aqua);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(43,191,191,0.4),0 1px 4px rgba(43,191,191,0.2);transition:all .18s}
+.help-fab:hover{background:var(--aqua2);transform:scale(1.08);box-shadow:0 6px 20px rgba(43,191,191,0.5)}
+.help-fab svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-/* ── CONFETTI ── */
-.confetti-piece{position:fixed;width:8px;height:8px;top:-10px;border-radius:2px;pointer-events:none;z-index:9999;animation:confettiFall linear forwards}
+/* CONFETTI */
+.confetti-piece{position:fixed;width:6px;height:6px;top:-10px;border-radius:2px;pointer-events:none;z-index:9999;animation:confettiFall linear forwards}
 @keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes nodeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-
-/* ── LOADER ── */
-#page-loader{position:fixed;inset:0;z-index:9000;background:var(--bg2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;transition:opacity .5s ease}
+/* LOADER */
+#page-loader{position:fixed;inset:0;z-index:9000;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.25rem;transition:opacity .4s ease}
 #page-loader.fade-out{opacity:0;pointer-events:none}
-.loader-logo{font-family:'Outfit',sans-serif;font-weight:700;font-size:1.5rem;color:var(--gold);letter-spacing:.04em}
-.loader-dots{display:flex;gap:.5rem}
-.loader-dots span{width:8px;height:8px;background:var(--gold);border-radius:50%;animation:typingDot 1.2s ease-in-out infinite}
+.loader-logo{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.25rem;color:var(--ink);letter-spacing:-.02em;display:flex;align-items:center;gap:.45rem}
+.loader-logo-dot{width:8px;height:8px;border-radius:50%;background:var(--aqua)}
+.loader-dots{display:flex;gap:.45rem}
+.loader-dots span{width:5px;height:5px;background:var(--aqua4);border-radius:50%;animation:typingDot 1.3s ease-in-out infinite}
 .loader-dots span:nth-child(2){animation-delay:.2s}
 .loader-dots span:nth-child(3){animation-delay:.4s}
 
 @media(max-width:600px){
-  .path-btns{grid-template-columns:1fr 1fr}
-  .store-grid{grid-template-columns:1fr 1fr}
-  header{padding:.875rem 1.25rem}
+  .path-btns,.store-grid{grid-template-columns:1fr 1fr}
+  header{padding:.75rem 1.25rem}
   .tagline{display:none}
+  .node-user,.node-ai-wrap,.node-reply{max-width:88%;width:88%}
 }
 </style>
 </head>
 <body>
 
 <div id="page-loader">
-  <div class="loader-logo">whatimado</div>
+  <div class="loader-logo"><span class="loader-logo-dot"></span>whatimado</div>
   <div class="loader-dots"><span></span><span></span><span></span></div>
 </div>
 
 <div class="bg-layer"></div>
 
 <header>
-  <div class="logo" onclick="resetAll()">whatimado<span>.com</span></div>
+  <div class="logo" onclick="resetAll()"><span class="logo-dot"></span>whatimado<span>.com</span></div>
   <div class="tagline">Casual name. Serious business.</div>
   <nav class="nav">
     <button class="nav-btn active" id="nav-home-btn" onclick="resetAll()">Home</button>
@@ -233,522 +260,229 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:1rem 2rem;display
   </nav>
 </header>
 
-<!-- MAIN SCREEN -->
 <div id="screen-main" class="screen active">
-
-  <!-- HERO -->
   <div class="hero">
-    <p class="hero-eyebrow">Your next move starts here</p>
+    <div class="hero-chip"><span class="hero-chip-dot"></span><span class="hero-chip-text">Start here</span></div>
     <h1 class="hero-title">So… <em>what you</em><br>gonna do?</h1>
-    <p class="hero-sub">Tell us where you're at. We'll help you figure out where you're going — whether that's a new career or your own business.</p>
+    <p class="hero-sub">Tell us where you're at. We'll help you figure out what's next — a new career, a business, or just a direction.</p>
   </div>
 
-  <!-- PATH CHOOSER -->
+  <div class="section-gap"><hr></div>
+
   <div class="path-chooser" id="path-chooser">
-    <p class="path-label">What are you working toward?</p>
+    <p class="path-label">I want to</p>
     <div class="path-btns">
       <button class="path-btn" id="btn-profession" onclick="selectPath('profession')">
-        <span class="pb-icon">💼</span>
-        <span class="pb-title">Seeking a Profession</span>
-        <span class="pb-sub">Find your next career</span>
+        <div class="pb-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div>
+        <div class="pb-title">Find a career</div>
+        <div class="pb-sub">Job or profession</div>
       </button>
       <button class="path-btn" id="btn-business" onclick="selectPath('business')">
-        <span class="pb-icon">🚀</span>
-        <span class="pb-title">Start a Business</span>
-        <span class="pb-sub">Build something you own</span>
+        <div class="pb-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+        <div class="pb-title">Build a business</div>
+        <div class="pb-sub">Something I own</div>
       </button>
     </div>
-    <div class="path-divider">or just tell us everything</div>
+    <div class="path-or">or just describe your situation</div>
   </div>
 
-  <!-- PROMPT BOX -->
   <div class="prompt-wrap" id="prompt-wrap">
     <div class="prompt-box">
-      <span class="prompt-label" id="prompt-label-text">What's your situation? Skills, interests, goals — anything helps.</span>
-      <textarea class="prompt-ta" id="skills-input" placeholder="e.g. I love cooking, I'm good with people, I need something flexible..." rows="3"></textarea>
+      <textarea class="prompt-ta" id="skills-input" placeholder="Tell us about yourself — skills, background, what you enjoy, what you need…" rows="3"></textarea>
       <div class="prompt-foot">
-        <span class="prompt-hint" id="prompt-hint-text">Be as real as you want</span>
-        <button class="prompt-btn" id="search-btn" onclick="startChat()">Let's go →</button>
+        <span class="prompt-hint" id="prompt-hint-text">Be honest. There's no wrong answer.</span>
+        <button class="prompt-btn" onclick="startConvo()">Continue →</button>
       </div>
     </div>
   </div>
 
-  <!-- QUICK PILLS -->
   <div class="pills" id="pills-wrap">
-    <button class="pill" onclick="fillPrompt('I love working with my hands and fixing things')">hands-on work</button>
-    <button class="pill" onclick="fillPrompt('I am good with technology and computers')">tech savvy</button>
-    <button class="pill" onclick="fillPrompt('I enjoy helping and talking to people')">people person</button>
+    <button class="pill" onclick="fillPrompt('I love working with my hands and fixing things')">hands-on</button>
+    <button class="pill" onclick="fillPrompt('I am good with technology and computers')">tech</button>
+    <button class="pill" onclick="fillPrompt('I enjoy helping and talking to people')">people</button>
     <button class="pill" onclick="fillPrompt('I am creative and artistic')">creative</button>
     <button class="pill" onclick="fillPrompt('I have no money but I have time and hustle')">starting from zero</button>
   </div>
 
-  <!-- IDEAS PANEL -->
+  <div id="convo-thread">
+    <div class="bubble-chain" id="bubble-chain"></div>
+  </div>
+
   <div id="ideas-panel">
-    <button class="ideas-back" onclick="resetAll()">← Back</button>
+    <button class="panel-back" onclick="resetAll()">
+      <svg viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg>
+      Start over
+    </button>
     <div class="ideas-grid" id="ideas-grid"></div>
   </div>
 
-  <!-- JOURNEY PANEL -->
   <div id="journey-panel">
-    <div class="journey-header">
-      <button class="jh-back" onclick="showIdeas()">← Back to ideas</button>
-      <div class="jh-type" id="jh-type"></div>
-      <div class="jh-title" id="jh-title"></div>
-      <div class="jh-sub" id="jh-sub"></div>
-    </div>
+    <button class="jh-back" onclick="showIdeas()">
+      <svg viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg>
+      Back to options
+    </button>
+    <div class="jh-type" id="jh-type"></div>
+    <div class="jh-title" id="jh-title"></div>
+    <div class="jh-sub" id="jh-sub"></div>
     <div class="stages" id="stages-list"></div>
   </div>
-
 </div>
 
-<!-- STORE SCREEN -->
 <div id="screen-store" class="screen">
   <div class="store-inner">
     <p class="store-eyebrow">whatimado.com</p>
     <h2 class="store-title">Rep the move.</h2>
     <div class="store-grid">
-      <div class="store-card">
-        <div class="store-img">👕</div>
-        <div class="store-name">Classic Tee</div>
-        <div class="store-brand">whatimado.com</div>
-        <div class="store-price">$32</div>
-      </div>
-      <div class="store-card">
-        <div class="store-img">🧢</div>
-        <div class="store-name">Snapback</div>
-        <div class="store-brand">whatimado.com</div>
-        <div class="store-price">$28</div>
-      </div>
-      <div class="store-card">
-        <div class="store-img">🧥</div>
-        <div class="store-name">Hoodie</div>
-        <div class="store-brand">whatimado.com</div>
-        <div class="store-price">$58</div>
-      </div>
-      <div class="store-card">
-        <div class="store-img">🎒</div>
-        <div class="store-name">Tote Bag</div>
-        <div class="store-brand">whatimado.com</div>
-        <div class="store-price">$22</div>
-      </div>
+      <div class="store-card"><div class="store-img"><svg viewBox="0 0 24 24"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg></div><div class="store-name">Classic Tee</div><div class="store-price">$32</div></div>
+      <div class="store-card"><div class="store-img"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div><div class="store-name">Snapback</div><div class="store-price">$28</div></div>
+      <div class="store-card"><div class="store-img"><svg viewBox="0 0 24 24"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg></div><div class="store-name">Hoodie</div><div class="store-price">$58</div></div>
+      <div class="store-card"><div class="store-img"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div><div class="store-name">Tote Bag</div><div class="store-price">$22</div></div>
     </div>
-    <p class="store-soon">Shop launching soon — stay tuned.</p>
+    <p class="store-soon">Shop launching soon.</p>
   </div>
 </div>
 
-<!-- CHAT DRAWER -->
-<div class="chat-drawer-bg" id="chat-drawer-bg" onclick="handleDrawerBgClick(event)">
-  <div class="chat-drawer" id="chat-drawer">
-    <div class="chat-handle-bar">
-      <div class="chat-handle"></div>
-      <span class="chat-title" id="chat-title">Your Path</span>
-      <button class="chat-close" onclick="closeChat()">✕</button>
-    </div>
-    <div class="chat-messages" id="chat-messages"></div>
-    <div class="chat-input-bar" id="chat-input-bar">
-      <input class="chat-input" id="chat-input" placeholder="Ask anything or reply…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatMessage()}"/>
-      <button class="chat-send" id="chat-send-btn" onclick="sendChatMessage()">
-        <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- HELP FAB -->
-<button class="help-fab" id="help-fab" onclick="openHelpChat()" title="Ask for help">💬</button>
+<button class="help-fab" onclick="openHelpConvo()" title="Ask anything">
+  <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+</button>
 
 <script>
-// ── STATE ──
-let selectedPath = null;
-let savedSkills = '';
-let savedIdeas = [];
-let chosenIdeaIdx = null;
-let chatConversation = []; // full conversation history for the drawer
-let chatMode = 'ideas'; // 'ideas' | 'help' | 'clarify'
-let pendingClarify = false;
-
-const STAGES = [
-  {label:'First Win', desc:'Get your first result — proof this works.', tasks:['Complete one paying transaction or get first interview callback','Tell 5 people what you\'re doing','Spend 30 minutes per day on this — no exceptions']},
-  {label:'Getting Established', desc:'Build consistency and a small reputation.', tasks:['Get 3 repeat clients or 3 interviews','Set up a simple online presence','Track your income or progress weekly']},
-  {label:'Sustainable Income', desc:'Make this your primary income stream.', tasks:['Hit your monthly income goal for 3 months straight','Automate or streamline at least one process','Set aside savings for the first time']},
-  {label:'Scale Up', desc:'Grow beyond just yourself.', tasks:['Bring in help or delegate one task','Set a 12-month growth goal','Invest back into your business or skills']}
+let selectedPath=null,savedSkills='',savedIdeas=[],chosenIdeaIdx=null,convoHistory=[],pendingClarify=false,replyCounter=0;
+const STAGES=[
+  {label:'First Win',desc:'Get your first result — proof this works.',tasks:['Complete one paying transaction or get first interview callback','Tell 5 people what you\'re doing','Spend 30 minutes per day on this — no exceptions']},
+  {label:'Getting Established',desc:'Build consistency and a small reputation.',tasks:['Get 3 repeat clients or 3 interviews','Set up a simple online presence','Track your income or progress weekly']},
+  {label:'Sustainable Income',desc:'Make this your primary income stream.',tasks:['Hit your monthly income goal for 3 months straight','Automate or streamline at least one process','Set aside savings for the first time']},
+  {label:'Scale Up',desc:'Grow beyond just yourself.',tasks:['Bring in help or delegate one task','Set a 12-month growth goal','Invest back into your business or skills']}
 ];
-
-// ── INIT ──
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    document.getElementById('page-loader').classList.add('fade-out');
-    setTimeout(() => document.getElementById('page-loader').style.display = 'none', 600);
-  }, 900);
-});
-
-// ── PATH SELECTION ──
-function selectPath(p) {
-  selectedPath = p;
-  document.querySelectorAll('.path-btn').forEach(b => b.classList.remove('selected'));
-  document.getElementById('btn-' + p).classList.add('selected');
-  const label = document.getElementById('prompt-label-text');
-  const hint = document.getElementById('prompt-hint-text');
-  if (p === 'profession') {
-    label.textContent = 'Tell us about yourself — skills, background, what you enjoy.';
-    hint.textContent = 'e.g. healthcare, tech, trades…';
-    document.getElementById('skills-input').placeholder = 'e.g. I have 2 years of customer service, I enjoy organizing things...';
-  } else {
-    label.textContent = 'Tell us your skills, interests, and financial goals.';
-    hint.textContent = 'e.g. I want to earn $3k/month...';
-    document.getElementById('skills-input').placeholder = 'e.g. I can cook, I have $200 to start, I want to work from home...';
+window.addEventListener('load',()=>{setTimeout(()=>{document.getElementById('page-loader').classList.add('fade-out');setTimeout(()=>document.getElementById('page-loader').style.display='none',500)},800)});
+function selectPath(p){selectedPath=p;document.querySelectorAll('.path-btn').forEach(b=>b.classList.remove('selected'));document.getElementById('btn-'+p).classList.add('selected');const h=document.getElementById('prompt-hint-text');if(p==='profession'){h.textContent='e.g. healthcare, tech, trades…';document.getElementById('skills-input').placeholder='e.g. I have 2 years of customer service, I enjoy organizing things...'}else{h.textContent='e.g. I want to earn $3k/month...';document.getElementById('skills-input').placeholder='e.g. I can cook, I have $200 to start, I want to work from home...'}document.getElementById('skills-input').focus()}
+function fillPrompt(t){document.getElementById('skills-input').value=t;document.getElementById('skills-input').focus()}
+function showScreen(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-'+n).classList.add('active');document.getElementById('nav-home-btn').classList.toggle('active',n==='main');window.scrollTo({top:0,behavior:'smooth'})}
+function resetAll(){selectedPath=null;savedSkills='';savedIdeas=[];chosenIdeaIdx=null;convoHistory=[];pendingClarify=false;replyCounter=0;document.querySelectorAll('.path-btn').forEach(b=>b.classList.remove('selected'));document.getElementById('skills-input').value='';document.getElementById('prompt-hint-text').textContent='Be honest. There\'s no wrong answer.';document.getElementById('skills-input').placeholder='Tell us about yourself — skills, background, what you enjoy, what you need…';['path-chooser','prompt-wrap','pills-wrap'].forEach(id=>document.getElementById(id).style.display='');document.getElementById('bubble-chain').innerHTML='';document.getElementById('convo-thread').style.display='none';document.getElementById('ideas-panel').style.display='none';document.getElementById('journey-panel').style.display='none';showScreen('main')}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function fmt(t){return t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')}
+function scrollBottom(){setTimeout(()=>{const c=document.getElementById('bubble-chain');if(c.lastElementChild)c.lastElementChild.scrollIntoView({behavior:'smooth',block:'end'})},130)}
+function showThread(){document.getElementById('convo-thread').style.display='block'}
+function addUserNode(text){
+  showThread();const chain=document.getElementById('bubble-chain');
+  const pair=document.createElement('div');pair.className='chain-pair';
+  pair.innerHTML=`<div class="chain-user"><div class="node-user">${esc(text)}</div></div>`;
+  chain.appendChild(pair);scrollBottom();return pair;
+}
+function addConnectorAndTyping(pair){
+  const conn=document.createElement('div');conn.className='chain-connector';
+  conn.innerHTML=`<div class="connector-dot"></div><div class="connector-line"></div><div class="connector-dot"></div>`;
+  pair.appendChild(conn);
+  const aiRow=document.createElement('div');aiRow.className='chain-ai';aiRow.id='typing-ai';
+  aiRow.innerHTML=`<div class="node-ai-wrap"><div class="node-ai-label"><span class="node-ai-pulse"></span>whatimado</div><div class="node-ai"><div class="typing-dots"><span></span><span></span><span></span></div></div></div>`;
+  pair.appendChild(aiRow);scrollBottom();return pair;
+}
+function resolveTyping(text,hasChoices,choices,showReply){
+  const aiRow=document.getElementById('typing-ai');if(!aiRow)return;
+  aiRow.removeAttribute('id');replyCounter++;const rid='r'+replyCounter;
+  let cHTML='';
+  if(hasChoices&&choices.length)cHTML=`<div class="choice-btns">${choices.map(c=>`<button class="choice-btn" onclick="clarifyChoice('${c.val}')">${esc(c.label)}</button>`).join('')}</div>`;
+  aiRow.innerHTML=`<div class="node-ai-wrap"><div class="node-ai-label"><span class="node-ai-pulse"></span>whatimado</div><div class="node-ai">${fmt(text)}${cHTML}</div></div>`;
+  if(showReply&&!hasChoices){
+    const chain=document.getElementById('bubble-chain');
+    const rp=document.createElement('div');rp.className='chain-pair';
+    rp.innerHTML=`<div class="chain-connector"><div class="connector-dot"></div><div class="connector-line"></div><div class="connector-dot"></div></div><div class="chain-reply"><div class="node-reply" id="${rid}box"><textarea class="reply-ta" id="${rid}" placeholder="Reply…" rows="2" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendReply('${rid}','${rid}box')}"></textarea><div class="reply-foot"><button class="reply-send" onclick="sendReply('${rid}','${rid}box')">Send →</button></div></div></div>`;
+    chain.appendChild(rp);scrollBottom();
+    setTimeout(()=>{const ta=document.getElementById(rid);if(ta)ta.focus()},300);
   }
-  document.getElementById('skills-input').focus();
+  scrollBottom();
 }
-
-function fillPrompt(text) {
-  document.getElementById('skills-input').value = text;
-  document.getElementById('skills-input').focus();
+function resolveTypingIdeas(ideas){
+  const aiRow=document.getElementById('typing-ai');if(!aiRow)return;
+  aiRow.removeAttribute('id');replyCounter++;const rid='r'+replyCounter;
+  const cards=ideas.map((idea,i)=>`<div class="idea-card" onclick="expandIdea(${i})"><div class="idea-card-tag">${esc(idea.type)}</div><div class="idea-card-title">${esc(idea.name)}</div><div class="idea-card-desc">${esc(idea.tagline)}</div></div>`).join('');
+  aiRow.innerHTML=`<div class="node-ai-wrap"><div class="node-ai-label"><span class="node-ai-pulse"></span>whatimado</div><div class="node-ai">Here are <strong>${ideas.length} options</strong> based on what you shared — tap one to go deeper:${cards}</div></div>`;
+  const chain=document.getElementById('bubble-chain');
+  const rp=document.createElement('div');rp.className='chain-pair';
+  rp.innerHTML=`<div class="chain-connector"><div class="connector-dot"></div><div class="connector-line"></div><div class="connector-dot"></div></div><div class="chain-reply"><div class="node-reply" id="${rid}box"><textarea class="reply-ta" id="${rid}" placeholder="Ask a question or say more…" rows="2" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendReply('${rid}','${rid}box')}"></textarea><div class="reply-foot"><button class="reply-send" onclick="sendReply('${rid}','${rid}box')">Send →</button></div></div></div>`;
+  chain.appendChild(rp);scrollBottom();
 }
-
-// ── SCREEN NAV ──
-function showScreen(name) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById('screen-' + name).classList.add('active');
-  document.getElementById('nav-home-btn').classList.toggle('active', name === 'main');
-  window.scrollTo({top:0, behavior:'smooth'});
+async function startConvo(){
+  const input=document.getElementById('skills-input').value.trim();
+  if(!input){document.getElementById('skills-input').focus();return}
+  savedSkills=input;convoHistory=[];
+  ['path-chooser','prompt-wrap','pills-wrap'].forEach(id=>document.getElementById(id).style.display='none');
+  const pair=addUserNode(input);addConnectorAndTyping(pair);
+  const isVague=input.split(' ').length<5||input.length<20;
+  if(isVague){await delay(1200);resolveTyping('Got it. One quick question — <strong>are you looking for a job or career path, or do you want to build your own business?</strong>',true,[{label:'Find a job or career',val:'clarify_profession'},{label:'Build my own business',val:'clarify_business'}],false);pendingClarify=true;return}
+  await generateIdeas(input);
 }
-
-function resetAll() {
-  selectedPath = null;
-  savedSkills = '';
-  savedIdeas = [];
-  chosenIdeaIdx = null;
-  document.querySelectorAll('.path-btn').forEach(b => b.classList.remove('selected'));
-  document.getElementById('skills-input').value = '';
-  document.getElementById('prompt-label-text').textContent = 'What\'s your situation? Skills, interests, goals — anything helps.';
-  document.getElementById('prompt-hint-text').textContent = 'Be as real as you want';
-  document.getElementById('skills-input').placeholder = 'e.g. I love cooking, I\'m good with people, I need something flexible...';
-  document.getElementById('path-chooser').style.display = '';
-  document.getElementById('prompt-wrap').style.display = '';
-  document.getElementById('pills-wrap').style.display = '';
-  document.getElementById('ideas-panel').style.display = 'none';
-  document.getElementById('journey-panel').style.display = 'none';
-  showScreen('main');
-  closeChat();
+async function generateIdeas(input,extra=''){
+  const pathHint=selectedPath==='profession'?'This person wants career/job options.':selectedPath==='business'?'This person wants business/entrepreneurship ideas.':'';
+  const prompt=`You are a no-fluff advisor helping real people including those starting from zero. Return EXACTLY valid JSON no markdown no preamble.\n${pathHint}\nBackground: "${input}${extra}"\nIf homeless/broke/zero resources: suggest only zero-cost immediate cash ideas. Never suggest anything demeaning.\nReturn EXACTLY:\n{"clarify":false,"message":"One warm sentence acknowledging their situation","ideas":[{"name":"Name","type":"career|business|hustle","tagline":"1 sentence","description":"2 sentences max","why_you":"1 sentence specifically why this fits them","reality_check":"1 honest sentence"}]}`;
+  try{
+    const data=await callClaude(prompt);
+    resolveTyping(data.message||'Here\'s what I see for you:',false,[],false);
+    await delay(500);
+    const chain=document.getElementById('bubble-chain');
+    const p2=document.createElement('div');p2.className='chain-pair';
+    p2.innerHTML=`<div class="chain-connector"><div class="connector-dot"></div><div class="connector-line"></div><div class="connector-dot"></div></div>`;
+    chain.appendChild(p2);addConnectorAndTyping(p2);await delay(700);
+    savedIdeas=data.ideas||[];resolveTypingIdeas(savedIdeas);
+  }catch(e){resolveTyping('Something went wrong. Mind trying again?',false,[],false)}
 }
-
-// ── START CHAT ──
-async function startChat() {
-  const input = document.getElementById('skills-input').value.trim();
-  if (!input) { document.getElementById('skills-input').focus(); return; }
-  savedSkills = input;
-  chatConversation = [];
-  chatMode = 'ideas';
-  openChatDrawer('Figuring out your move…');
-
-  // Show user bubble
-  addBubble('user', input);
-  showTyping();
-
-  // Decide: is input too vague?
-  const isVague = input.split(' ').length < 5 || input.length < 20;
-
-  if (isVague) {
-    await delay(1200);
-    hideTyping();
-    addBubble('ai', `Got it. Before I give you ideas, let me make sure I point you in the right direction. <strong>Are you looking to find a job/career, or are you thinking about starting your own business?</strong>`, true, [
-      {label:'🎯 Find a career / job', val:'clarify_profession'},
-      {label:'🚀 Start my own business', val:'clarify_business'}
-    ]);
-    pendingClarify = true;
-    return;
-  }
-
-  await generateIdeasFromChat(input);
+async function sendReply(rid,boxId){
+  const ta=document.getElementById(rid);if(!ta)return;
+  const msg=ta.value.trim();if(!msg)return;
+  const box=document.getElementById(boxId);if(box)box.style.display='none';
+  const chain=document.getElementById('bubble-chain');
+  const pair=document.createElement('div');pair.className='chain-pair';
+  pair.innerHTML=`<div class="chain-connector"><div class="connector-dot"></div><div class="connector-line"></div><div class="connector-dot"></div></div><div class="chain-user"><div class="node-user">${esc(msg)}</div></div>`;
+  chain.appendChild(pair);addConnectorAndTyping(pair);
+  if(pendingClarify){pendingClarify=false;selectedPath=msg.toLowerCase().includes('job')||msg.toLowerCase().includes('career')?'profession':'business';await generateIdeas(savedSkills,` They want: ${msg}`);return}
+  const chosenIdea=chosenIdeaIdx!==null?savedIdeas[chosenIdeaIdx]:null;
+  const ctx=chosenIdea?`They are pursuing: "${chosenIdea.name}". `:'';
+  const hist=convoHistory.slice(-6).map(m=>`${m.role}: ${m.content}`).join('\n');
+  const prompt=`You are a direct warm advisor for someone building their future. No fluff no corporate speak. Be real.\n${ctx}Background: "${savedSkills}".\nRecent conversation:\n${hist}\nUser just said: "${msg}"\nReply in 2-3 short paragraphs. Be honest and practical.`;
+  try{
+    const r=await fetch('/api/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,messages:[{role:'user',content:prompt}]})});
+    const d=await r.json();const text=d.content.map(c=>c.text||'').join('');
+    resolveTyping(text,false,[],true);convoHistory.push({role:'user',content:msg},{role:'assistant',content:text});
+  }catch(e){resolveTyping('Something went wrong. Try again?',false,[],true)}
 }
-
-async function generateIdeasFromChat(input, extra = '') {
-  const pathHint = selectedPath === 'profession' ? 'This person wants career/job options.' : selectedPath === 'business' ? 'This person wants business/entrepreneurship ideas.' : '';
-  const prompt = `You are a no-fluff advisor helping real people — including those starting from zero. Return EXACTLY valid JSON, no markdown, no preamble.
-${pathHint}
-Background: "${input}${extra}"
-If homeless/broke/zero resources: suggest only zero-cost, immediate cash ideas. Never suggest anything demeaning.
-If career-focused: suggest 3 realistic career paths with actionable steps.
-Return EXACTLY:
-{"clarify":false,"message":"One warm sentence acknowledging their situation","ideas":[{"name":"Name","type":"career|business|hustle","tagline":"1 sentence","description":"2 sentences max","why_you":"1 sentence — specifically why this fits them","reality_check":"1 honest sentence"}]}`;
-
-  try {
-    const data = await callClaude(prompt);
-    hideTyping();
-    if (data.message) addBubble('ai', data.message);
-    showTyping();
-    await delay(800);
-    hideTyping();
-    savedIdeas = data.ideas || [];
-    addIdeasBubble(savedIdeas);
-    document.getElementById('chat-title').textContent = 'Your Options';
-  } catch(e) {
-    hideTyping();
-    addBubble('ai', 'Something went wrong. Mind trying again?');
-  }
+function clarifyChoice(val){
+  pendingClarify=false;const label=val==='clarify_profession'?'Find a job or career':'Build my own business';
+  selectedPath=val==='clarify_profession'?'profession':'business';
+  const chain=document.getElementById('bubble-chain');
+  const pair=document.createElement('div');pair.className='chain-pair';
+  pair.innerHTML=`<div class="chain-connector"><div class="connector-dot"></div><div class="connector-line"></div><div class="connector-dot"></div></div><div class="chain-user"><div class="node-user">${esc(label)}</div></div>`;
+  chain.appendChild(pair);addConnectorAndTyping(pair);generateIdeas(savedSkills,` They want: ${label}`);
 }
-
-async function sendChatMessage() {
-  const inp = document.getElementById('chat-input');
-  const msg = inp.value.trim();
-  if (!msg) return;
-  inp.value = '';
-  addBubble('user', msg);
-
-  if (pendingClarify) {
-    pendingClarify = false;
-    selectedPath = msg.toLowerCase().includes('job') || msg.toLowerCase().includes('career') ? 'profession' : 'business';
-    showTyping();
-    await generateIdeasFromChat(savedSkills, ` They want: ${msg}`);
-    return;
-  }
-
-  // General follow-up chat
-  showTyping();
-  const chosenIdea = chosenIdeaIdx !== null ? savedIdeas[chosenIdeaIdx] : null;
-  const ctx = chosenIdea ? `They are pursuing: "${chosenIdea.name}". ` : '';
-  const historyText = chatConversation.slice(-6).map(m => `${m.role}: ${m.content}`).join('\n');
-  const prompt = `You are a direct, warm advisor for someone building their future. No fluff, no corporate speak. Be real.
-${ctx}Background: "${savedSkills}".
-Recent conversation:
-${historyText}
-User just asked: "${msg}"
-Reply in 2-3 short paragraphs. Be honest and practical.`;
-
-  try {
-    const r = await fetch('/api/claude', {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({model:'claude-sonnet-4-20250514', max_tokens:500, messages:[{role:'user',content:prompt}]})
-    });
-    const d = await r.json();
-    const text = d.content.map(c=>c.text||'').join('');
-    hideTyping();
-    addBubble('ai', text);
-    chatConversation.push({role:'user',content:msg},{role:'assistant',content:text});
-  } catch(e) {
-    hideTyping();
-    addBubble('ai', 'Something went wrong. Try again?');
-  }
+function openHelpConvo(){
+  ['path-chooser','prompt-wrap','pills-wrap'].forEach(id=>document.getElementById(id).style.display='none');
+  showThread();const chain=document.getElementById('bubble-chain');
+  const pair=document.createElement('div');pair.className='chain-pair';chain.appendChild(pair);
+  addConnectorAndTyping(pair);
+  setTimeout(()=>resolveTyping("What's on your mind? Ask me anything — about your options, how to get started, money, skills, whatever.",false,[],true),500);
 }
-
-function handleClarifyChoice(val) {
-  pendingClarify = false;
-  const label = val === 'clarify_profession' ? '🎯 Find a career / job' : '🚀 Start my own business';
-  selectedPath = val === 'clarify_profession' ? 'profession' : 'business';
-  addBubble('user', label);
-  showTyping();
-  generateIdeasFromChat(savedSkills, ` They want: ${label}`);
+function expandIdea(idx){
+  document.getElementById('convo-thread').style.display='none';
+  const grid=document.getElementById('ideas-grid');grid.innerHTML='';
+  savedIdeas.forEach((id,i)=>{const tile=document.createElement('div');tile.className='idea-tile';tile.innerHTML=`<div class="it-type">${esc(id.type)}</div><div class="it-name">${esc(id.name)}</div><div class="it-tagline">${esc(id.tagline)}</div><div class="it-why">${esc(id.why_you||id.reality_check)}</div><button class="it-choose-btn" onclick="chooseIdea(${i})">Start this →</button>`;grid.appendChild(tile)});
+  document.getElementById('ideas-panel').style.display='block';window.scrollTo({top:0,behavior:'smooth'});
 }
-
-// ── HELP CHAT ──
-function openHelpChat() {
-  chatMode = 'help';
-  chatConversation = [];
-  openChatDrawer('Ask Anything');
-  if (document.getElementById('chat-messages').children.length === 0) {
-    setTimeout(() => {
-      addBubble('ai', "What's on your mind? Ask me anything — about your options, how to get started, money, skills, you name it.");
-    }, 300);
-  }
+function showIdeas(){document.getElementById('journey-panel').style.display='none';document.getElementById('ideas-panel').style.display='block'}
+function chooseIdea(idx){
+  chosenIdeaIdx=idx;const idea=savedIdeas[idx];
+  document.getElementById('ideas-panel').style.display='none';
+  document.getElementById('jh-type').textContent=idea.type;
+  document.getElementById('jh-title').textContent=idea.name;
+  document.getElementById('jh-sub').textContent=idea.description;
+  const sl=document.getElementById('stages-list');sl.innerHTML='';
+  STAGES.forEach((s,i)=>{const done=JSON.parse(localStorage.getItem(`wiad_done_${idx}`)||'[]');const isDone=done.includes(i);const c=document.createElement('div');c.className='stage-card'+(isDone?' done':'')+(i===0?' open':'');c.innerHTML=`<div class="stage-head" onclick="toggleStage(${i})"><div class="stage-num">${isDone?'✓':i+1}</div><div class="stage-label">${s.label}</div><span class="stage-arrow">›</span></div><div class="stage-body"><p class="stage-desc">${s.desc}</p><div class="tasks">${s.tasks.map((t,ti)=>`<div class="task-row"><input type="checkbox" class="task-check" ${isDone?'checked':''} onchange="saveTask(${i},${ti},this.checked)"><span class="task-text">${t}</span></div>`).join('')}</div><button class="stage-done-btn${isDone?' completed':''}" onclick="markStageDone(${i})">${isDone?'Done':'Mark complete'}</button></div>`;sl.appendChild(c)});
+  document.getElementById('journey-panel').style.display='block';window.scrollTo({top:0,behavior:'smooth'});
 }
-
-// ── CHOOSE IDEA → JOURNEY ──
-function chooseIdea(idx) {
-  chosenIdeaIdx = idx;
-  closeChat();
-  const idea = savedIdeas[idx];
-  document.getElementById('path-chooser').style.display = 'none';
-  document.getElementById('prompt-wrap').style.display = 'none';
-  document.getElementById('pills-wrap').style.display = 'none';
-  document.getElementById('ideas-panel').style.display = 'none';
-
-  document.getElementById('jh-type').textContent = idea.type;
-  document.getElementById('jh-title').textContent = idea.name;
-  document.getElementById('jh-sub').textContent = idea.description;
-
-  const stagesList = document.getElementById('stages-list');
-  stagesList.innerHTML = '';
-  STAGES.forEach((s, i) => {
-    const completed = JSON.parse(localStorage.getItem(`wiad_done_${idx}`) || '[]');
-    const isDone = completed.includes(i);
-    const card = document.createElement('div');
-    card.className = 'stage-card' + (isDone ? ' done' : '') + (i === 0 ? ' open' : '');
-    card.innerHTML = `
-      <div class="stage-head" onclick="toggleStage(${i})">
-        <div class="stage-num">${isDone ? '✓' : i+1}</div>
-        <div class="stage-label">${s.label}</div>
-        <span class="stage-arrow">›</span>
-      </div>
-      <div class="stage-body">
-        <p class="stage-desc">${s.desc}</p>
-        <div class="tasks">
-          ${s.tasks.map((t,ti) => `<div class="task-row"><input type="checkbox" class="task-check" ${isDone?'checked':''} onchange="saveTask(${i},${ti},this.checked)"><span class="task-text">${t}</span></div>`).join('')}
-        </div>
-        <button class="stage-done-btn${isDone?' completed':''}" onclick="markStageDone(${i})">${isDone ? '✓ Completed' : 'Mark Complete'}</button>
-      </div>`;
-    stagesList.appendChild(card);
-  });
-
-  document.getElementById('journey-panel').style.display = 'block';
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-
-function toggleStage(i) {
-  const cards = document.querySelectorAll('.stage-card');
-  cards.forEach((c, ci) => {
-    if (ci === i) c.classList.toggle('open');
-    else c.classList.remove('open');
-  });
-}
-
-function saveTask(stageIdx, taskIdx, checked) {
-  // just visual for now
-}
-
-function markStageDone(i) {
-  if (chosenIdeaIdx === null) return;
-  const completed = JSON.parse(localStorage.getItem(`wiad_done_${chosenIdeaIdx}`) || '[]');
-  if (!completed.includes(i)) completed.push(i);
-  localStorage.setItem(`wiad_done_${chosenIdeaIdx}`, JSON.stringify(completed));
-  launchCelebration();
-  setTimeout(() => chooseIdea(chosenIdeaIdx), 1200);
-}
-
-function showIdeas() {
-  document.getElementById('journey-panel').style.display = 'none';
-  document.getElementById('ideas-panel').style.display = 'block';
-}
-
-// ── CHAT DRAWER HELPERS ──
-function openChatDrawer(title) {
-  document.getElementById('chat-title').textContent = title || 'Your Path';
-  document.getElementById('chat-drawer-bg').classList.add('open');
-  document.getElementById('chat-drawer').classList.add('open');
-  setTimeout(() => document.getElementById('chat-input').focus(), 400);
-}
-
-function closeChat() {
-  document.getElementById('chat-drawer-bg').classList.remove('open');
-  document.getElementById('chat-drawer').classList.remove('open');
-}
-
-function handleDrawerBgClick(e) {
-  if (e.target === document.getElementById('chat-drawer-bg')) closeChat();
-}
-
-let typingEl = null;
-function showTyping() {
-  const msgs = document.getElementById('chat-messages');
-  const row = document.createElement('div');
-  row.className = 'bubble-row';
-  row.id = 'typing-indicator';
-  row.innerHTML = `<div class="bubble-avatar ai">W</div><div class="bubble ai"><div class="typing-bubble"><span></span><span></span><span></span></div></div>`;
-  msgs.appendChild(row);
-  msgs.scrollTop = msgs.scrollHeight;
-  typingEl = row;
-}
-
-function hideTyping() {
-  if (typingEl) { typingEl.remove(); typingEl = null; }
-  const old = document.getElementById('typing-indicator');
-  if (old) old.remove();
-}
-
-let bubbleCount = 0;
-function addBubble(role, text, hasChoices = false, choices = []) {
-  const msgs = document.getElementById('chat-messages');
-  const row = document.createElement('div');
-  row.className = `bubble-row ${role}`;
-  row.style.animationDelay = `0ms`;
-  const avatar = role === 'ai' ? '<div class="bubble-avatar ai">W</div>' : '<div class="bubble-avatar user">U</div>';
-  let choiceHTML = '';
-  if (hasChoices && choices.length) {
-    choiceHTML = `<div class="path-choice-btns">${choices.map(c => `<button class="pch-btn" onclick="handleClarifyChoice('${c.val}')">${c.label}</button>`).join('')}</div>`;
-  }
-  const formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
-  row.innerHTML = role === 'ai'
-    ? `${avatar}<div class="bubble ai">${formattedText}${choiceHTML}</div>`
-    : `<div class="bubble user">${formattedText}</div>${avatar}`;
-  msgs.appendChild(row);
-  msgs.scrollTop = msgs.scrollHeight;
-  bubbleCount++;
-}
-
-function addIdeasBubble(ideas) {
-  const msgs = document.getElementById('chat-messages');
-  const row = document.createElement('div');
-  row.className = 'bubble-row';
-  row.innerHTML = `<div class="bubble-avatar ai">W</div><div class="bubble ai">
-    Here are <strong>${ideas.length} paths</strong> that fit your situation — tap one to explore it:
-    ${ideas.map((idea, i) => `
-      <div class="idea-card" onclick="expandIdeaFromChat(${i})">
-        <div class="idea-card-tag">${idea.type}</div>
-        <div class="idea-card-title">${idea.name}</div>
-        <div class="idea-card-desc">${idea.tagline}</div>
-      </div>`).join('')}
-  </div>`;
-  msgs.appendChild(row);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function expandIdeaFromChat(idx) {
-  const idea = savedIdeas[idx];
-  closeChat();
-  document.getElementById('path-chooser').style.display = 'none';
-  document.getElementById('prompt-wrap').style.display = 'none';
-  document.getElementById('pills-wrap').style.display = 'none';
-
-  const grid = document.getElementById('ideas-grid');
-  grid.innerHTML = '';
-  savedIdeas.forEach((id, i) => {
-    const tile = document.createElement('div');
-    tile.className = 'idea-tile';
-    tile.innerHTML = `
-      <div class="it-type">${id.type}</div>
-      <div class="it-name">${id.name}</div>
-      <div class="it-tagline">${id.tagline}</div>
-      <div class="it-why">${id.why_you || id.reality_check}</div>
-      <button class="it-choose-btn" onclick="chooseIdea(${i})">Start this journey →</button>`;
-    grid.appendChild(tile);
-  });
-  document.getElementById('ideas-panel').style.display = 'block';
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-
-// ── API ──
-async function callClaude(prompt) {
-  const r = await fetch('/api/claude', {
-    method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({model:'claude-sonnet-4-20250514', max_tokens:1000, messages:[{role:'user',content:prompt}]})
-  });
-  const data = await r.json();
-  const text = data.content.map(c => c.text||'').join('');
-  const clean = text.replace(/```json|```/g,'').trim();
-  const m = clean.match(/\{[\s\S]*\}/);
-  if (!m) throw new Error('No JSON');
-  return JSON.parse(m[0]);
-}
-
-function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-// ── CELEBRATION ──
-function launchCelebration() {
-  const colors = ['#e8a020','#f5c842','#5c3d1a','#a07030','#ffffff','#e8d5a8'];
-  for (let i = 0; i < 60; i++) {
-    setTimeout(() => {
-      const el = document.createElement('div');
-      el.className = 'confetti-piece';
-      el.style.left = Math.random() * 100 + 'vw';
-      el.style.background = colors[Math.floor(Math.random() * colors.length)];
-      el.style.animationDuration = (1.5 + Math.random() * 2) + 's';
-      el.style.animationDelay = (Math.random() * .5) + 's';
-      el.style.transform = `rotate(${Math.random()*360}deg)`;
-      document.body.appendChild(el);
-      setTimeout(() => el.remove(), 4000);
-    }, i * 30);
-  }
-}
+function toggleStage(i){document.querySelectorAll('.stage-card').forEach((c,ci)=>{if(ci===i)c.classList.toggle('open');else c.classList.remove('open')})}
+function saveTask(){}
+function markStageDone(i){if(chosenIdeaIdx===null)return;const done=JSON.parse(localStorage.getItem(`wiad_done_${chosenIdeaIdx}`)||'[]');if(!done.includes(i))done.push(i);localStorage.setItem(`wiad_done_${chosenIdeaIdx}`,JSON.stringify(done));launchCelebration();setTimeout(()=>chooseIdea(chosenIdeaIdx),1200)}
+async function callClaude(prompt){const r=await fetch('/api/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});const data=await r.json();const text=data.content.map(c=>c.text||'').join('');const clean=text.replace(/```json|```/g,'').trim();const m=clean.match(/\{[\s\S]*\}/);if(!m)throw new Error('No JSON');return JSON.parse(m[0])}
+function delay(ms){return new Promise(r=>setTimeout(r,ms))}
+function launchCelebration(){const colors=['#2bbfbf','#3dd4d4','#b3eeee','#0f1923','#5a8a6a'];for(let i=0;i<50;i++){setTimeout(()=>{const el=document.createElement('div');el.className='confetti-piece';el.style.left=Math.random()*100+'vw';el.style.background=colors[Math.floor(Math.random()*colors.length)];el.style.animationDuration=(1.5+Math.random()*2)+'s';el.style.animationDelay=(Math.random()*.5)+'s';el.style.transform=`rotate(${Math.random()*360}deg)`;document.body.appendChild(el);setTimeout(()=>el.remove(),4000)},i*30)}}
 </script>
 </body>
 </html>
