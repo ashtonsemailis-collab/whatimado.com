@@ -1,4 +1,4 @@
-const Anthropic = require('@anthropic-ai/sdk');
+import Anthropic from '@anthropic-ai/sdk';
 
 export default async function handler(req, res) {
   // Only allow POST requests
@@ -9,7 +9,6 @@ export default async function handler(req, res) {
   try {
     const { model, messages, max_tokens } = req.body;
 
-    // Check if key exists to prevent silent failures
     if (!process.env.ANTHROPIC_API_KEY) {
       return res.status(500).json({ error: 'API key is missing from backend environment variables.' });
     }
