@@ -440,7 +440,7 @@ async function sendReply(rid,boxId){
   const hist=convoHistory.slice(-6).map(m=>`${m.role}: ${m.content}`).join('\n');
   const prompt=`You are a direct warm advisor for someone building their future. No fluff no corporate speak. Be real.\n${ctx}Background: "${savedSkills}".\nRecent conversation:\n${hist}\nUser just said: "${msg}"\nReply in 2-3 short paragraphs. Be honest and practical.`;
   try{
-    const r=await fetch('/api/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,messages:[{role:'user',content:prompt}]})});
+    const r=await fetch('/api/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-3-5-sonnet-20241022',max_tokens:500,messages:[{role:'user',content:prompt}]})});
     const d=await r.json();const text=d.content.map(c=>c.text||'').join('');
     resolveTyping(text,false,[],true);convoHistory.push({role:'user',content:msg},{role:'assistant',content:text});
   }catch(e){resolveTyping('Something went wrong. Try again?',false,[],true)}
@@ -480,7 +480,7 @@ function chooseIdea(idx){
 function toggleStage(i){document.querySelectorAll('.stage-card').forEach((c,ci)=>{if(ci===i)c.classList.toggle('open');else c.classList.remove('open')})}
 function saveTask(){}
 function markStageDone(i){if(chosenIdeaIdx===null)return;const done=JSON.parse(localStorage.getItem(`wiad_done_${chosenIdeaIdx}`)||'[]');if(!done.includes(i))done.push(i);localStorage.setItem(`wiad_done_${chosenIdeaIdx}`,JSON.stringify(done));launchCelebration();setTimeout(()=>chooseIdea(chosenIdeaIdx),1200)}
-async function callClaude(prompt){const r=await fetch('/api/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});const data=await r.json();const text=data.content.map(c=>c.text||'').join('');const clean=text.replace(/```json|```/g,'').trim();const m=clean.match(/\{[\s\S]*\}/);if(!m)throw new Error('No JSON');return JSON.parse(m[0])}
+async function callClaude(prompt){const r=await fetch('/api/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-3-5-sonnet-20241022',max_tokens:1000,messages:[{role:'user',content:prompt}]})});const data=await r.json();const text=data.content.map(c=>c.text||'').join('');const clean=text.replace(/```json|```/g,'').trim();const m=clean.match(/\{[\s\S]*\}/);if(!m)throw new Error('No JSON');return JSON.parse(m[0])}
 function delay(ms){return new Promise(r=>setTimeout(r,ms))}
 function launchCelebration(){const colors=['#2bbfbf','#3dd4d4','#b3eeee','#0f1923','#5a8a6a'];for(let i=0;i<50;i++){setTimeout(()=>{const el=document.createElement('div');el.className='confetti-piece';el.style.left=Math.random()*100+'vw';el.style.background=colors[Math.floor(Math.random()*colors.length)];el.style.animationDuration=(1.5+Math.random()*2)+'s';el.style.animationDelay=(Math.random()*.5)+'s';el.style.transform=`rotate(${Math.random()*360}deg)`;document.body.appendChild(el);setTimeout(()=>el.remove(),4000)},i*30)}}
 </script>
