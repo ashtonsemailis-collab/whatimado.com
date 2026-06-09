@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>whatimado.com — Casual name. Serious business.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#2a1f0e;
+  --bg2:#1e1608;
+  --gold:#e8a020;
+  --gold2:#f5c842;
+  --brown:#5c3d1a;
+  --brown2:#3d2610;
+  --cream:#f5ead0;
+  --cream2:#e8d5a8;
+  --text:#f5ead0;
+  --text2:rgba(245,234,208,0.7);
+  --rule:rgba(232,160,32,0.15);
+  --rule2:rgba(232,160,32,0.07);
+  --bubble-ai:#3d2a0a;
+  --bubble-user:#6b4a1a;
+}
+html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--bg2);color:var(--text);overflow-x:hidden}
+body{min-height:100vh}
+
+/* ── BACKGROUND ── */
+.bg-layer{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 20% 50%, #3d2a0a 0%, #1e1608 60%)}
+
+/* ── HEADER ── */
+header{position:fixed;top:0;left:0;right:0;z-index:500;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(30,22,8,0.95);backdrop-filter:blur(24px);border-bottom:1px solid var(--rule)}
+.logo{font-family:'Outfit',sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:.04em;color:var(--gold);cursor:pointer}
+.logo span{color:var(--cream);font-weight:300}
+.tagline{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text2)}
+.nav{display:flex;gap:.75rem;align-items:center}
+.nav-btn{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);background:none;border:none;cursor:pointer;transition:color .2s;padding:.3rem 0}
+.nav-btn:hover{color:var(--gold)}
+.nav-btn.active{color:var(--gold);border-bottom:1.5px solid var(--gold)}
+
+/* ── SCREENS ── */
+.screen{position:relative;z-index:10;display:none;min-height:100vh}
+.screen.active{display:block}
+
+/* ── MAIN SCREEN ── */
+#screen-main{padding-top:5rem}
+
+.hero{max-width:640px;margin:0 auto;padding:3rem 2rem 1.5rem;text-align:center;position:relative;z-index:10}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;opacity:0;animation:fadeUp .6s ease .1s forwards}
+.hero-title{font-family:'Outfit',sans-serif;font-weight:700;font-size:clamp(2rem,6vw,3.2rem);letter-spacing:-.02em;color:var(--cream);line-height:1.05;margin-bottom:.75rem;opacity:0;animation:fadeUp .6s ease .2s forwards}
+.hero-title em{font-style:normal;color:var(--gold)}
+.hero-sub{font-size:clamp(.9rem,3vw,1.05rem);color:var(--text2);font-weight:300;line-height:1.7;opacity:0;animation:fadeUp .6s ease .3s forwards}
+
+/* ── PATH CHOOSER ── */
+.path-chooser{max-width:560px;margin:2rem auto 0;padding:0 2rem;opacity:0;animation:fadeUp .6s ease .4s forwards}
+.path-label{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text2);text-align:center;margin-bottom:1.25rem}
+.path-btns{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.path-btn{padding:1.25rem 1rem;background:rgba(92,61,26,0.3);border:1.5px solid rgba(232,160,32,0.3);border-radius:16px;color:var(--cream);cursor:pointer;transition:all .2s;text-align:center;font-family:'Outfit',sans-serif}
+.path-btn:hover,.path-btn.selected{background:rgba(232,160,32,0.15);border-color:var(--gold);transform:translateY(-2px)}
+.path-btn .pb-icon{font-size:1.75rem;margin-bottom:.5rem;display:block}
+.path-btn .pb-title{font-weight:600;font-size:.95rem;display:block;margin-bottom:.25rem}
+.path-btn .pb-sub{font-family:'DM Mono',monospace;font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text2)}
+.path-divider{text-align:center;font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text2);margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem}
+.path-divider::before,.path-divider::after{content:'';flex:1;height:1px;background:var(--rule)}
+
+/* ── PROMPT BOX ── */
+.prompt-wrap{max-width:560px;margin:0 auto;padding:0 2rem 2rem;opacity:0;animation:fadeUp .6s ease .5s forwards}
+.prompt-box{background:rgba(61,42,10,0.6);border:1.5px solid rgba(232,160,32,0.25);border-radius:20px;overflow:hidden;box-shadow:0 4px 40px rgba(0,0,0,0.3)}
+.prompt-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);padding:.75rem 1rem .35rem;display:block;border-bottom:1px solid var(--rule)}
+.prompt-ta{width:100%;padding:1rem;font-family:'Outfit',sans-serif;font-size:.92rem;font-weight:300;border:none;outline:none;background:transparent;color:var(--cream);resize:none;min-height:90px;line-height:1.65}
+.prompt-ta::placeholder{color:rgba(245,234,208,0.3)}
+.prompt-foot{display:flex;justify-content:space-between;align-items:center;padding:.6rem .75rem .6rem 1rem;border-top:1px solid var(--rule)}
+.prompt-hint{font-family:'DM Mono',monospace;font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text2)}
+.prompt-btn{padding:.55rem 1.4rem;background:var(--gold);color:#1e1608;border:none;border-radius:8px;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;font-weight:600;transition:all .2s}
+.prompt-btn:hover{background:var(--gold2)}
+.prompt-btn:disabled{opacity:.4;cursor:not-allowed}
+.pills{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:1rem;max-width:560px;padding:0 2rem;opacity:0;animation:fadeUp .6s ease .6s forwards}
+.pill{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .85rem;border:1px solid rgba(232,160,32,0.3);border-radius:20px;color:var(--text2);background:transparent;cursor:pointer;transition:all .15s}
+.pill:hover{border-color:var(--gold);color:var(--gold);background:rgba(232,160,32,0.08)}
+
+/* ── CHAT DRAWER ── */
+.chat-drawer-bg{position:fixed;inset:0;z-index:800;background:rgba(0,0,0,0);pointer-events:none;transition:background .35s}
+.chat-drawer-bg.open{background:rgba(0,0,0,0.5);pointer-events:auto}
+.chat-drawer{position:fixed;bottom:0;left:0;right:0;z-index:900;max-height:82vh;display:flex;flex-direction:column;background:var(--bg2);border-top:2px solid var(--gold);border-radius:24px 24px 0 0;transform:translateY(100%);transition:transform .4s cubic-bezier(.32,.72,0,1);box-shadow:0 -8px 60px rgba(0,0,0,0.6)}
+.chat-drawer.open{transform:translateY(0)}
+.chat-handle-bar{display:flex;justify-content:space-between;align-items:center;padding:.875rem 1.25rem .625rem;border-bottom:1px solid var(--rule);flex-shrink:0}
+.chat-handle{width:36px;height:4px;background:rgba(232,160,32,0.4);border-radius:2px;position:absolute;left:50%;transform:translateX(-50%);top:.625rem}
+.chat-title{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.chat-close{background:none;border:none;color:var(--text2);cursor:pointer;font-size:1.1rem;padding:.25rem;transition:color .2s;line-height:1}
+.chat-close:hover{color:var(--cream)}
+.chat-messages{flex:1;overflow-y:auto;padding:1rem 1rem .5rem;display:flex;flex-direction:column;gap:.75rem;scrollbar-width:thin;scrollbar-color:rgba(232,160,32,0.2) transparent}
+.chat-messages::-webkit-scrollbar{width:4px}
+.chat-messages::-webkit-scrollbar-thumb{background:rgba(232,160,32,0.2);border-radius:2px}
+
+/* ── CHAT BUBBLES ── */
+.bubble-row{display:flex;align-items:flex-end;gap:.5rem;opacity:0;transform:translateY(14px) scale(.96);animation:bubblePop .35s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes bubblePop{to{opacity:1;transform:translateY(0) scale(1)}}
+.bubble-row.user{flex-direction:row-reverse}
+.bubble-avatar{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700}
+.bubble-avatar.ai{background:var(--gold);color:#1e1608}
+.bubble-avatar.user{background:var(--brown);color:var(--cream)}
+.bubble{max-width:82%;padding:.75rem 1rem;border-radius:18px;font-size:.88rem;line-height:1.7;font-weight:300;word-wrap:break-word}
+.bubble.ai{background:var(--bubble-ai);border:1px solid rgba(232,160,32,0.2);border-bottom-left-radius:4px;color:var(--cream)}
+.bubble.user{background:var(--bubble-user);border:1px solid rgba(232,160,32,0.15);border-bottom-right-radius:4px;color:var(--cream)}
+.bubble strong{font-weight:600;color:var(--gold)}
+.bubble .idea-card{background:rgba(232,160,32,0.08);border:1px solid rgba(232,160,32,0.2);border-radius:12px;padding:.75rem;margin:.5rem 0;cursor:pointer;transition:all .2s}
+.bubble .idea-card:hover{background:rgba(232,160,32,0.15);border-color:var(--gold)}
+.bubble .idea-card-title{font-weight:600;color:var(--gold);font-size:.9rem;margin-bottom:.2rem}
+.bubble .idea-card-tag{font-family:'DM Mono',monospace;font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-bottom:.35rem}
+.bubble .idea-card-desc{font-size:.82rem;color:var(--text2);line-height:1.6}
+.bubble .path-choice-btns{display:flex;flex-direction:column;gap:.5rem;margin-top:.75rem}
+.bubble .pch-btn{padding:.6rem 1rem;background:rgba(92,61,26,0.4);border:1.5px solid rgba(232,160,32,0.3);border-radius:10px;color:var(--cream);cursor:pointer;font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:500;text-align:left;transition:all .2s}
+.bubble .pch-btn:hover{background:rgba(232,160,32,0.15);border-color:var(--gold);color:var(--gold)}
+
+/* typing indicator */
+.typing-bubble{display:flex;align-items:center;gap:4px;padding:.75rem 1rem}
+.typing-bubble span{width:7px;height:7px;background:var(--gold);border-radius:50%;animation:typingDot 1.2s ease-in-out infinite}
+.typing-bubble span:nth-child(2){animation-delay:.2s}
+.typing-bubble span:nth-child(3){animation-delay:.4s}
+@keyframes typingDot{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-6px);opacity:1}}
+
+/* ── CHAT INPUT BAR ── */
+.chat-input-bar{display:flex;gap:.5rem;padding:.75rem 1rem;border-top:1px solid var(--rule);flex-shrink:0;background:var(--bg2)}
+.chat-input{flex:1;padding:.65rem 1rem;font-family:'Outfit',sans-serif;font-size:.9rem;border:1.5px solid rgba(232,160,32,0.25);border-radius:20px;outline:none;background:rgba(61,42,10,0.5);color:var(--cream);font-weight:300;transition:border-color .2s}
+.chat-input:focus{border-color:var(--gold);background:rgba(61,42,10,0.7)}
+.chat-input::placeholder{color:rgba(245,234,208,0.3)}
+.chat-send{width:38px;height:38px;background:var(--gold);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.chat-send:hover{background:var(--gold2);transform:scale(1.05)}
+.chat-send:disabled{opacity:.4;cursor:not-allowed}
+.chat-send svg{width:16px;height:16px;fill:#1e1608}
+
+/* ── JOURNEY / IDEAS UI (simplified) ── */
+#ideas-panel{display:none;max-width:640px;margin:0 auto;padding:1rem 2rem 8rem;position:relative;z-index:10}
+.ideas-back{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);background:none;border:none;cursor:pointer;padding:0;transition:color .2s;margin-bottom:1.5rem;display:inline-block}
+.ideas-back:hover{color:var(--gold)}
+.ideas-grid{display:flex;flex-direction:column;gap:1rem}
+.idea-tile{background:rgba(61,42,10,0.5);border:1.5px solid rgba(232,160,32,0.2);border-radius:16px;padding:1.25rem;cursor:pointer;transition:all .2s}
+.idea-tile:hover{border-color:var(--gold);background:rgba(232,160,32,0.08);transform:translateY(-2px)}
+.it-type{font-family:'DM Mono',monospace;font-size:.48rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem}
+.it-name{font-weight:600;font-size:1.05rem;color:var(--cream);margin-bottom:.35rem}
+.it-tagline{font-size:.875rem;color:var(--text2);font-weight:300;line-height:1.6;margin-bottom:.75rem}
+.it-why{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);padding:.4rem .75rem;background:rgba(232,160,32,0.06);border-left:2px solid var(--gold);border-radius:0 6px 6px 0}
+.it-choose-btn{margin-top:.875rem;padding:.5rem 1.1rem;background:var(--gold);color:#1e1608;border:none;border-radius:8px;font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;font-weight:600;transition:all .2s}
+.it-choose-btn:hover{background:var(--gold2)}
+
+/* ── JOURNEY SCREEN ── */
+#journey-panel{display:none;max-width:640px;margin:0 auto;padding:1rem 2rem 8rem;position:relative;z-index:10}
+.journey-header{margin-bottom:1.5rem}
+.jh-back{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);background:none;border:none;cursor:pointer;transition:color .2s;margin-bottom:.875rem;display:inline-block}
+.jh-back:hover{color:var(--gold)}
+.jh-type{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem}
+.jh-title{font-weight:600;font-size:1.3rem;color:var(--cream);margin-bottom:.35rem}
+.jh-sub{font-size:.875rem;color:var(--text2);font-weight:300;line-height:1.65}
+.stages{display:flex;flex-direction:column;gap:.875rem}
+.stage-card{background:rgba(61,42,10,0.4);border:1.5px solid rgba(232,160,32,0.15);border-radius:14px;overflow:hidden;transition:border-color .2s}
+.stage-card.active{border-color:var(--gold)}
+.stage-head{display:flex;align-items:center;gap:.875rem;padding:1rem 1.1rem;cursor:pointer}
+.stage-num{width:28px;height:28px;border-radius:50%;background:rgba(232,160,32,0.12);border:1.5px solid rgba(232,160,32,0.3);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:.6rem;color:var(--gold);flex-shrink:0}
+.stage-card.done .stage-num{background:var(--gold);border-color:var(--gold);color:#1e1608}
+.stage-label{font-weight:500;font-size:.9rem;color:var(--cream);flex:1}
+.stage-arrow{font-size:.75rem;color:var(--text2);transition:transform .2s}
+.stage-card.open .stage-arrow{transform:rotate(90deg)}
+.stage-body{display:none;padding:0 1.1rem 1rem;border-top:1px solid var(--rule)}
+.stage-card.open .stage-body{display:block}
+.stage-desc{font-size:.875rem;color:var(--text2);line-height:1.7;margin-top:.75rem;margin-bottom:.875rem}
+.tasks{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.875rem}
+.task-row{display:flex;gap:.625rem;align-items:flex-start}
+.task-check{width:18px;height:18px;border-radius:4px;border:1.5px solid rgba(232,160,32,0.4);background:transparent;cursor:pointer;flex-shrink:0;margin-top:2px;transition:all .2s;appearance:none;-webkit-appearance:none}
+.task-check:checked{background:var(--gold);border-color:var(--gold)}
+.task-text{font-size:.875rem;color:var(--text2);font-weight:300;line-height:1.6}
+.stage-done-btn{padding:.5rem 1.1rem;background:transparent;border:1.5px solid var(--gold);border-radius:8px;color:var(--gold);font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.stage-done-btn:hover{background:var(--gold);color:#1e1608}
+.stage-done-btn.completed{background:rgba(107,158,143,0.2);border-color:#6b9e8f;color:#6b9e8f}
+
+/* ── STORE ── */
+#screen-store{padding-top:5rem}
+.store-inner{max-width:600px;margin:0 auto;padding:4rem 2rem;text-align:center}
+.store-eyebrow{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.store-title{font-family:'Outfit',sans-serif;font-weight:700;font-size:clamp(1.75rem,5vw,3rem);letter-spacing:-.02em;color:var(--cream);margin-bottom:3rem;line-height:1.05}
+.store-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;margin-bottom:2rem}
+.store-card{background:rgba(61,42,10,0.4);border:1.5px solid rgba(232,160,32,0.15);border-radius:14px;padding:1.75rem 1.25rem;text-align:center;cursor:pointer;transition:all .2s}
+.store-card:hover{border-color:var(--gold);transform:translateY(-2px);background:rgba(232,160,32,0.06)}
+.store-img{width:100%;aspect-ratio:1;background:rgba(232,160,32,0.05);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:2.5rem;border-radius:10px}
+.store-name{font-weight:600;font-size:.95rem;color:var(--cream);margin-bottom:.2rem}
+.store-brand{font-family:'DM Mono',monospace;font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}
+.store-price{font-size:.9rem;font-weight:300;color:var(--text2)}
+.store-soon{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text2);margin-top:.875rem}
+
+/* ── HELP FAB ── */
+.help-fab{position:fixed;bottom:1.75rem;right:1.75rem;z-index:700;width:48px;height:48px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(232,160,32,0.4);transition:all .2s;font-size:1.2rem}
+.help-fab:hover{background:var(--gold2);transform:scale(1.1)}
+
+/* ── CONFETTI ── */
+.confetti-piece{position:fixed;width:8px;height:8px;top:-10px;border-radius:2px;pointer-events:none;z-index:9999;animation:confettiFall linear forwards}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* ── LOADER ── */
+#page-loader{position:fixed;inset:0;z-index:9000;background:var(--bg2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;transition:opacity .5s ease}
+#page-loader.fade-out{opacity:0;pointer-events:none}
+.loader-logo{font-family:'Outfit',sans-serif;font-weight:700;font-size:1.5rem;color:var(--gold);letter-spacing:.04em}
+.loader-dots{display:flex;gap:.5rem}
+.loader-dots span{width:8px;height:8px;background:var(--gold);border-radius:50%;animation:typingDot 1.2s ease-in-out infinite}
+.loader-dots span:nth-child(2){animation-delay:.2s}
+.loader-dots span:nth-child(3){animation-delay:.4s}
+
+@media(max-width:600px){
+  .path-btns{grid-template-columns:1fr 1fr}
+  .store-grid{grid-template-columns:1fr 1fr}
+  header{padding:.875rem 1.25rem}
+  .tagline{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="page-loader">
+  <div class="loader-logo">whatimado</div>
+  <div class="loader-dots"><span></span><span></span><span></span></div>
+</div>
+
+<div class="bg-layer"></div>
+
+<header>
+  <div class="logo" onclick="resetAll()">whatimado<span>.com</span></div>
+  <div class="tagline">Casual name. Serious business.</div>
+  <nav class="nav">
+    <button class="nav-btn active" id="nav-home-btn" onclick="resetAll()">Home</button>
+    <button class="nav-btn" onclick="showScreen('store')">Shop</button>
+  </nav>
+</header>
+
+<!-- MAIN SCREEN -->
+<div id="screen-main" class="screen active">
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-eyebrow">Your next move starts here</p>
+    <h1 class="hero-title">So… <em>what you</em><br>gonna do?</h1>
+    <p class="hero-sub">Tell us where you're at. We'll help you figure out where you're going — whether that's a new career or your own business.</p>
+  </div>
+
+  <!-- PATH CHOOSER -->
+  <div class="path-chooser" id="path-chooser">
+    <p class="path-label">What are you working toward?</p>
+    <div class="path-btns">
+      <button class="path-btn" id="btn-profession" onclick="selectPath('profession')">
+        <span class="pb-icon">💼</span>
+        <span class="pb-title">Seeking a Profession</span>
+        <span class="pb-sub">Find your next career</span>
+      </button>
+      <button class="path-btn" id="btn-business" onclick="selectPath('business')">
+        <span class="pb-icon">🚀</span>
+        <span class="pb-title">Start a Business</span>
+        <span class="pb-sub">Build something you own</span>
+      </button>
+    </div>
+    <div class="path-divider">or just tell us everything</div>
+  </div>
+
+  <!-- PROMPT BOX -->
+  <div class="prompt-wrap" id="prompt-wrap">
+    <div class="prompt-box">
+      <span class="prompt-label" id="prompt-label-text">What's your situation? Skills, interests, goals — anything helps.</span>
+      <textarea class="prompt-ta" id="skills-input" placeholder="e.g. I love cooking, I'm good with people, I need something flexible..." rows="3"></textarea>
+      <div class="prompt-foot">
+        <span class="prompt-hint" id="prompt-hint-text">Be as real as you want</span>
+        <button class="prompt-btn" id="search-btn" onclick="startChat()">Let's go →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK PILLS -->
+  <div class="pills" id="pills-wrap">
+    <button class="pill" onclick="fillPrompt('I love working with my hands and fixing things')">hands-on work</button>
+    <button class="pill" onclick="fillPrompt('I am good with technology and computers')">tech savvy</button>
+    <button class="pill" onclick="fillPrompt('I enjoy helping and talking to people')">people person</button>
+    <button class="pill" onclick="fillPrompt('I am creative and artistic')">creative</button>
+    <button class="pill" onclick="fillPrompt('I have no money but I have time and hustle')">starting from zero</button>
+  </div>
+
+  <!-- IDEAS PANEL -->
+  <div id="ideas-panel">
+    <button class="ideas-back" onclick="resetAll()">← Back</button>
+    <div class="ideas-grid" id="ideas-grid"></div>
+  </div>
+
+  <!-- JOURNEY PANEL -->
+  <div id="journey-panel">
+    <div class="journey-header">
+      <button class="jh-back" onclick="showIdeas()">← Back to ideas</button>
+      <div class="jh-type" id="jh-type"></div>
+      <div class="jh-title" id="jh-title"></div>
+      <div class="jh-sub" id="jh-sub"></div>
+    </div>
+    <div class="stages" id="stages-list"></div>
+  </div>
+
+</div>
+
+<!-- STORE SCREEN -->
+<div id="screen-store" class="screen">
+  <div class="store-inner">
+    <p class="store-eyebrow">whatimado.com</p>
+    <h2 class="store-title">Rep the move.</h2>
+    <div class="store-grid">
+      <div class="store-card">
+        <div class="store-img">👕</div>
+        <div class="store-name">Classic Tee</div>
+        <div class="store-brand">whatimado.com</div>
+        <div class="store-price">$32</div>
+      </div>
+      <div class="store-card">
+        <div class="store-img">🧢</div>
+        <div class="store-name">Snapback</div>
+        <div class="store-brand">whatimado.com</div>
+        <div class="store-price">$28</div>
+      </div>
+      <div class="store-card">
+        <div class="store-img">🧥</div>
+        <div class="store-name">Hoodie</div>
+        <div class="store-brand">whatimado.com</div>
+        <div class="store-price">$58</div>
+      </div>
+      <div class="store-card">
+        <div class="store-img">🎒</div>
+        <div class="store-name">Tote Bag</div>
+        <div class="store-brand">whatimado.com</div>
+        <div class="store-price">$22</div>
+      </div>
+    </div>
+    <p class="store-soon">Shop launching soon — stay tuned.</p>
+  </div>
+</div>
+
+<!-- CHAT DRAWER -->
+<div class="chat-drawer-bg" id="chat-drawer-bg" onclick="handleDrawerBgClick(event)">
+  <div class="chat-drawer" id="chat-drawer">
+    <div class="chat-handle-bar">
+      <div class="chat-handle"></div>
+      <span class="chat-title" id="chat-title">Your Path</span>
+      <button class="chat-close" onclick="closeChat()">✕</button>
+    </div>
+    <div class="chat-messages" id="chat-messages"></div>
+    <div class="chat-input-bar" id="chat-input-bar">
+      <input class="chat-input" id="chat-input" placeholder="Ask anything or reply…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatMessage()}"/>
+      <button class="chat-send" id="chat-send-btn" onclick="sendChatMessage()">
+        <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- HELP FAB -->
+<button class="help-fab" id="help-fab" onclick="openHelpChat()" title="Ask for help">💬</button>
+
+<script>
+// ── STATE ──
+let selectedPath = null;
+let savedSkills = '';
+let savedIdeas = [];
+let chosenIdeaIdx = null;
+let chatConversation = []; // full conversation history for the drawer
+let chatMode = 'ideas'; // 'ideas' | 'help' | 'clarify'
+let pendingClarify = false;
+
+const STAGES = [
+  {label:'First Win', desc:'Get your first result — proof this works.', tasks:['Complete one paying transaction or get first interview callback','Tell 5 people what you\'re doing','Spend 30 minutes per day on this — no exceptions']},
+  {label:'Getting Established', desc:'Build consistency and a small reputation.', tasks:['Get 3 repeat clients or 3 interviews','Set up a simple online presence','Track your income or progress weekly']},
+  {label:'Sustainable Income', desc:'Make this your primary income stream.', tasks:['Hit your monthly income goal for 3 months straight','Automate or streamline at least one process','Set aside savings for the first time']},
+  {label:'Scale Up', desc:'Grow beyond just yourself.', tasks:['Bring in help or delegate one task','Set a 12-month growth goal','Invest back into your business or skills']}
+];
+
+// ── INIT ──
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('page-loader').classList.add('fade-out');
+    setTimeout(() => document.getElementById('page-loader').style.display = 'none', 600);
+  }, 900);
+});
+
+// ── PATH SELECTION ──
+function selectPath(p) {
+  selectedPath = p;
+  document.querySelectorAll('.path-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('btn-' + p).classList.add('selected');
+  const label = document.getElementById('prompt-label-text');
+  const hint = document.getElementById('prompt-hint-text');
+  if (p === 'profession') {
+    label.textContent = 'Tell us about yourself — skills, background, what you enjoy.';
+    hint.textContent = 'e.g. healthcare, tech, trades…';
+    document.getElementById('skills-input').placeholder = 'e.g. I have 2 years of customer service, I enjoy organizing things...';
+  } else {
+    label.textContent = 'Tell us your skills, interests, and financial goals.';
+    hint.textContent = 'e.g. I want to earn $3k/month...';
+    document.getElementById('skills-input').placeholder = 'e.g. I can cook, I have $200 to start, I want to work from home...';
+  }
+  document.getElementById('skills-input').focus();
+}
+
+function fillPrompt(text) {
+  document.getElementById('skills-input').value = text;
+  document.getElementById('skills-input').focus();
+}
+
+// ── SCREEN NAV ──
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+  document.getElementById('nav-home-btn').classList.toggle('active', name === 'main');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function resetAll() {
+  selectedPath = null;
+  savedSkills = '';
+  savedIdeas = [];
+  chosenIdeaIdx = null;
+  document.querySelectorAll('.path-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('skills-input').value = '';
+  document.getElementById('prompt-label-text').textContent = 'What\'s your situation? Skills, interests, goals — anything helps.';
+  document.getElementById('prompt-hint-text').textContent = 'Be as real as you want';
+  document.getElementById('skills-input').placeholder = 'e.g. I love cooking, I\'m good with people, I need something flexible...';
+  document.getElementById('path-chooser').style.display = '';
+  document.getElementById('prompt-wrap').style.display = '';
+  document.getElementById('pills-wrap').style.display = '';
+  document.getElementById('ideas-panel').style.display = 'none';
+  document.getElementById('journey-panel').style.display = 'none';
+  showScreen('main');
+  closeChat();
+}
+
+// ── START CHAT ──
+async function startChat() {
+  const input = document.getElementById('skills-input').value.trim();
+  if (!input) { document.getElementById('skills-input').focus(); return; }
+  savedSkills = input;
+  chatConversation = [];
+  chatMode = 'ideas';
+  openChatDrawer('Figuring out your move…');
+
+  // Show user bubble
+  addBubble('user', input);
+  showTyping();
+
+  // Decide: is input too vague?
+  const isVague = input.split(' ').length < 5 || input.length < 20;
+
+  if (isVague) {
+    await delay(1200);
+    hideTyping();
+    addBubble('ai', `Got it. Before I give you ideas, let me make sure I point you in the right direction. <strong>Are you looking to find a job/career, or are you thinking about starting your own business?</strong>`, true, [
+      {label:'🎯 Find a career / job', val:'clarify_profession'},
+      {label:'🚀 Start my own business', val:'clarify_business'}
+    ]);
+    pendingClarify = true;
+    return;
+  }
+
+  await generateIdeasFromChat(input);
+}
+
+async function generateIdeasFromChat(input, extra = '') {
+  const pathHint = selectedPath === 'profession' ? 'This person wants career/job options.' : selectedPath === 'business' ? 'This person wants business/entrepreneurship ideas.' : '';
+  const prompt = `You are a no-fluff advisor helping real people — including those starting from zero. Return EXACTLY valid JSON, no markdown, no preamble.
+${pathHint}
+Background: "${input}${extra}"
+If homeless/broke/zero resources: suggest only zero-cost, immediate cash ideas. Never suggest anything demeaning.
+If career-focused: suggest 3 realistic career paths with actionable steps.
+Return EXACTLY:
+{"clarify":false,"message":"One warm sentence acknowledging their situation","ideas":[{"name":"Name","type":"career|business|hustle","tagline":"1 sentence","description":"2 sentences max","why_you":"1 sentence — specifically why this fits them","reality_check":"1 honest sentence"}]}`;
+
+  try {
+    const data = await callClaude(prompt);
+    hideTyping();
+    if (data.message) addBubble('ai', data.message);
+    showTyping();
+    await delay(800);
+    hideTyping();
+    savedIdeas = data.ideas || [];
+    addIdeasBubble(savedIdeas);
+    document.getElementById('chat-title').textContent = 'Your Options';
+  } catch(e) {
+    hideTyping();
+    addBubble('ai', 'Something went wrong. Mind trying again?');
+  }
+}
+
+async function sendChatMessage() {
+  const inp = document.getElementById('chat-input');
+  const msg = inp.value.trim();
+  if (!msg) return;
+  inp.value = '';
+  addBubble('user', msg);
+
+  if (pendingClarify) {
+    pendingClarify = false;
+    selectedPath = msg.toLowerCase().includes('job') || msg.toLowerCase().includes('career') ? 'profession' : 'business';
+    showTyping();
+    await generateIdeasFromChat(savedSkills, ` They want: ${msg}`);
+    return;
+  }
+
+  // General follow-up chat
+  showTyping();
+  const chosenIdea = chosenIdeaIdx !== null ? savedIdeas[chosenIdeaIdx] : null;
+  const ctx = chosenIdea ? `They are pursuing: "${chosenIdea.name}". ` : '';
+  const historyText = chatConversation.slice(-6).map(m => `${m.role}: ${m.content}`).join('\n');
+  const prompt = `You are a direct, warm advisor for someone building their future. No fluff, no corporate speak. Be real.
+${ctx}Background: "${savedSkills}".
+Recent conversation:
+${historyText}
+User just asked: "${msg}"
+Reply in 2-3 short paragraphs. Be honest and practical.`;
+
+  try {
+    const r = await fetch('/api/claude', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({model:'claude-sonnet-4-20250514', max_tokens:500, messages:[{role:'user',content:prompt}]})
+    });
+    const d = await r.json();
+    const text = d.content.map(c=>c.text||'').join('');
+    hideTyping();
+    addBubble('ai', text);
+    chatConversation.push({role:'user',content:msg},{role:'assistant',content:text});
+  } catch(e) {
+    hideTyping();
+    addBubble('ai', 'Something went wrong. Try again?');
+  }
+}
+
+function handleClarifyChoice(val) {
+  pendingClarify = false;
+  const label = val === 'clarify_profession' ? '🎯 Find a career / job' : '🚀 Start my own business';
+  selectedPath = val === 'clarify_profession' ? 'profession' : 'business';
+  addBubble('user', label);
+  showTyping();
+  generateIdeasFromChat(savedSkills, ` They want: ${label}`);
+}
+
+// ── HELP CHAT ──
+function openHelpChat() {
+  chatMode = 'help';
+  chatConversation = [];
+  openChatDrawer('Ask Anything');
+  if (document.getElementById('chat-messages').children.length === 0) {
+    setTimeout(() => {
+      addBubble('ai', "What's on your mind? Ask me anything — about your options, how to get started, money, skills, you name it.");
+    }, 300);
+  }
+}
+
+// ── CHOOSE IDEA → JOURNEY ──
+function chooseIdea(idx) {
+  chosenIdeaIdx = idx;
+  closeChat();
+  const idea = savedIdeas[idx];
+  document.getElementById('path-chooser').style.display = 'none';
+  document.getElementById('prompt-wrap').style.display = 'none';
+  document.getElementById('pills-wrap').style.display = 'none';
+  document.getElementById('ideas-panel').style.display = 'none';
+
+  document.getElementById('jh-type').textContent = idea.type;
+  document.getElementById('jh-title').textContent = idea.name;
+  document.getElementById('jh-sub').textContent = idea.description;
+
+  const stagesList = document.getElementById('stages-list');
+  stagesList.innerHTML = '';
+  STAGES.forEach((s, i) => {
+    const completed = JSON.parse(localStorage.getItem(`wiad_done_${idx}`) || '[]');
+    const isDone = completed.includes(i);
+    const card = document.createElement('div');
+    card.className = 'stage-card' + (isDone ? ' done' : '') + (i === 0 ? ' open' : '');
+    card.innerHTML = `
+      <div class="stage-head" onclick="toggleStage(${i})">
+        <div class="stage-num">${isDone ? '✓' : i+1}</div>
+        <div class="stage-label">${s.label}</div>
+        <span class="stage-arrow">›</span>
+      </div>
+      <div class="stage-body">
+        <p class="stage-desc">${s.desc}</p>
+        <div class="tasks">
+          ${s.tasks.map((t,ti) => `<div class="task-row"><input type="checkbox" class="task-check" ${isDone?'checked':''} onchange="saveTask(${i},${ti},this.checked)"><span class="task-text">${t}</span></div>`).join('')}
+        </div>
+        <button class="stage-done-btn${isDone?' completed':''}" onclick="markStageDone(${i})">${isDone ? '✓ Completed' : 'Mark Complete'}</button>
+      </div>`;
+    stagesList.appendChild(card);
+  });
+
+  document.getElementById('journey-panel').style.display = 'block';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function toggleStage(i) {
+  const cards = document.querySelectorAll('.stage-card');
+  cards.forEach((c, ci) => {
+    if (ci === i) c.classList.toggle('open');
+    else c.classList.remove('open');
+  });
+}
+
+function saveTask(stageIdx, taskIdx, checked) {
+  // just visual for now
+}
+
+function markStageDone(i) {
+  if (chosenIdeaIdx === null) return;
+  const completed = JSON.parse(localStorage.getItem(`wiad_done_${chosenIdeaIdx}`) || '[]');
+  if (!completed.includes(i)) completed.push(i);
+  localStorage.setItem(`wiad_done_${chosenIdeaIdx}`, JSON.stringify(completed));
+  launchCelebration();
+  setTimeout(() => chooseIdea(chosenIdeaIdx), 1200);
+}
+
+function showIdeas() {
+  document.getElementById('journey-panel').style.display = 'none';
+  document.getElementById('ideas-panel').style.display = 'block';
+}
+
+// ── CHAT DRAWER HELPERS ──
+function openChatDrawer(title) {
+  document.getElementById('chat-title').textContent = title || 'Your Path';
+  document.getElementById('chat-drawer-bg').classList.add('open');
+  document.getElementById('chat-drawer').classList.add('open');
+  setTimeout(() => document.getElementById('chat-input').focus(), 400);
+}
+
+function closeChat() {
+  document.getElementById('chat-drawer-bg').classList.remove('open');
+  document.getElementById('chat-drawer').classList.remove('open');
+}
+
+function handleDrawerBgClick(e) {
+  if (e.target === document.getElementById('chat-drawer-bg')) closeChat();
+}
+
+let typingEl = null;
+function showTyping() {
+  const msgs = document.getElementById('chat-messages');
+  const row = document.createElement('div');
+  row.className = 'bubble-row';
+  row.id = 'typing-indicator';
+  row.innerHTML = `<div class="bubble-avatar ai">W</div><div class="bubble ai"><div class="typing-bubble"><span></span><span></span><span></span></div></div>`;
+  msgs.appendChild(row);
+  msgs.scrollTop = msgs.scrollHeight;
+  typingEl = row;
+}
+
+function hideTyping() {
+  if (typingEl) { typingEl.remove(); typingEl = null; }
+  const old = document.getElementById('typing-indicator');
+  if (old) old.remove();
+}
+
+let bubbleCount = 0;
+function addBubble(role, text, hasChoices = false, choices = []) {
+  const msgs = document.getElementById('chat-messages');
+  const row = document.createElement('div');
+  row.className = `bubble-row ${role}`;
+  row.style.animationDelay = `0ms`;
+  const avatar = role === 'ai' ? '<div class="bubble-avatar ai">W</div>' : '<div class="bubble-avatar user">U</div>';
+  let choiceHTML = '';
+  if (hasChoices && choices.length) {
+    choiceHTML = `<div class="path-choice-btns">${choices.map(c => `<button class="pch-btn" onclick="handleClarifyChoice('${c.val}')">${c.label}</button>`).join('')}</div>`;
+  }
+  const formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
+  row.innerHTML = role === 'ai'
+    ? `${avatar}<div class="bubble ai">${formattedText}${choiceHTML}</div>`
+    : `<div class="bubble user">${formattedText}</div>${avatar}`;
+  msgs.appendChild(row);
+  msgs.scrollTop = msgs.scrollHeight;
+  bubbleCount++;
+}
+
+function addIdeasBubble(ideas) {
+  const msgs = document.getElementById('chat-messages');
+  const row = document.createElement('div');
+  row.className = 'bubble-row';
+  row.innerHTML = `<div class="bubble-avatar ai">W</div><div class="bubble ai">
+    Here are <strong>${ideas.length} paths</strong> that fit your situation — tap one to explore it:
+    ${ideas.map((idea, i) => `
+      <div class="idea-card" onclick="expandIdeaFromChat(${i})">
+        <div class="idea-card-tag">${idea.type}</div>
+        <div class="idea-card-title">${idea.name}</div>
+        <div class="idea-card-desc">${idea.tagline}</div>
+      </div>`).join('')}
+  </div>`;
+  msgs.appendChild(row);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function expandIdeaFromChat(idx) {
+  const idea = savedIdeas[idx];
+  closeChat();
+  document.getElementById('path-chooser').style.display = 'none';
+  document.getElementById('prompt-wrap').style.display = 'none';
+  document.getElementById('pills-wrap').style.display = 'none';
+
+  const grid = document.getElementById('ideas-grid');
+  grid.innerHTML = '';
+  savedIdeas.forEach((id, i) => {
+    const tile = document.createElement('div');
+    tile.className = 'idea-tile';
+    tile.innerHTML = `
+      <div class="it-type">${id.type}</div>
+      <div class="it-name">${id.name}</div>
+      <div class="it-tagline">${id.tagline}</div>
+      <div class="it-why">${id.why_you || id.reality_check}</div>
+      <button class="it-choose-btn" onclick="chooseIdea(${i})">Start this journey →</button>`;
+    grid.appendChild(tile);
+  });
+  document.getElementById('ideas-panel').style.display = 'block';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ── API ──
+async function callClaude(prompt) {
+  const r = await fetch('/api/claude', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({model:'claude-sonnet-4-20250514', max_tokens:1000, messages:[{role:'user',content:prompt}]})
+  });
+  const data = await r.json();
+  const text = data.content.map(c => c.text||'').join('');
+  const clean = text.replace(/```json|```/g,'').trim();
+  const m = clean.match(/\{[\s\S]*\}/);
+  if (!m) throw new Error('No JSON');
+  return JSON.parse(m[0]);
+}
+
+function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// ── CELEBRATION ──
+function launchCelebration() {
+  const colors = ['#e8a020','#f5c842','#5c3d1a','#a07030','#ffffff','#e8d5a8'];
+  for (let i = 0; i < 60; i++) {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = 'confetti-piece';
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.background = colors[Math.floor(Math.random() * colors.length)];
+      el.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+      el.style.animationDelay = (Math.random() * .5) + 's';
+      el.style.transform = `rotate(${Math.random()*360}deg)`;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 4000);
+    }, i * 30);
+  }
+}
+</script>
+</body>
+</html>
