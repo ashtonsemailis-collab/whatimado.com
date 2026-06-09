@@ -1,7 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk';
 
 export default async function handler(req, res) {
-  // Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -13,8 +12,10 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'API key is missing from backend environment variables.' });
     }
 
+    // FIX: Force the SDK to use global fetch to prevent Node 24 handshake failures
     const anthropic = new Anthropic({
       apiKey: process.env.ANTHROPIC_API_KEY,
+      fetch: globalThis.fetch, 
     });
 
     const response = await anthropic.messages.create({
