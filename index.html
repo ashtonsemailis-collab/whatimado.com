@@ -160,7 +160,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .chain-reply{display:flex;justify-content:flex-end;width:100%;margin-top:12px}
 .node-reply{width:100%;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);overflow:hidden;transition:all .18s;box-shadow:var(--shadow-sm)}
 .node-reply:focus-within{border-color:var(--aqua4);box-shadow:0 0 0 3px rgba(0,163,163,0.1),var(--shadow-sm)}
-.reply-ta{width:100%;padding:.65rem .95rem;font-family:'Manrope',sans-serif;font-size:.84rem;font-weight:400;border:none;outline:none;background:transparent;color:var(--ink);resize:none;min-height:56px;line-height:1.45}
+.reply-ta{width:100%;padding:.65rem .95rem;font-family:'Manrope',sans-serif;font-size warmth:.84rem;font-weight:400;border:none;outline:none;background:transparent;color:var(--ink);resize:none;min-height:56px;line-height:1.45}
 .reply-foot{display:flex;justify-content:flex-end;padding:.28rem .4rem;border-top:1px solid var(--line2)}
 .reply-send{padding:.32rem .875rem;background:var(--aqua);color:#fff;border:none;border-radius:8px;font-family:'Manrope',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .18s}
 .reply-send:hover{background:var(--aqua2);box-shadow:0 3px 10px rgba(0,163,163,0.35)}
@@ -436,8 +436,8 @@ function resetAll() {
   document.getElementById('prompt-hint-text').textContent = "Be honest. There's no wrong answer.";
   document.getElementById('skills-input').placeholder = "Tell us about yourself — skills, background, what you enjoy, what you need…";
   
-  ['path-chooser', 'prompt-wrap', 'pills-wrap'].forEach(id => {
-    const el = document.getElementById(id);
+  ['path-chooser', 'prompt-wrap', 'pills-wrap', 'hero', '.section-gap'].forEach(id => {
+    const el = document.getElementById(id) || document.querySelector(id);
     if(el) el.style.display = '';
   });
   
@@ -450,7 +450,6 @@ function resetAll() {
   showScreen('main');
 }
 
-/* DOCUMENTATION: Handles the initial click event of the conversation pipeline */
 function startConvo() {
   const input = document.getElementById('skills-input');
   const text = input.value.trim();
@@ -458,63 +457,48 @@ function startConvo() {
 
   savedSkills = text;
   
-  // Hide configuration landing elements
-  ['path-chooser', 'prompt-wrap', 'pills-wrap'].forEach(id => {
-    document.getElementById(id).style.display = 'none';
+  ['path-chooser', 'prompt-wrap', 'pills-wrap', '.hero', '.section-gap'].forEach(id => {
+    const el = document.getElementById(id) || document.querySelector(id);
+    if(el) el.style.display = 'none';
   });
 
-  // Append user message node and run visual tracking
   const userPair = addUserNode(text);
   addConnectorAndTyping(userPair);
   
-  // Dispatch request payload down to Vercel/API handler
   sendToAPI(text);
 }
 
-/* DOCUMENTATION: Handles fetching responses from your backend or Vercel serverless function */
 function sendToAPI(promptText) {
-  // Add message log to active history tracking state
   convoHistory.push({ role: "user", content: promptText });
 
-  /* NOTE FOR DEPLOYMENT:
-     Replace the setTimeout block below with your actual fetch call:
-     
-     fetch('/api/chat', {
-       method: 'POST',
-       headers: { 'Content-Type': 'application/json' },
-       body: JSON.stringify({ path: selectedPath, history: convoHistory })
-     })
-     .then(res => res.json())
-     .then(data => {
-        resolveTyping(data.reply);
-        appendReplyInput();
-     });
-  */
-
-  // Realistic mock API timing simulation for local layout validation
   setTimeout(() => {
     let mockResponse = "";
+    let triggersOptionsPage = false;
+
     if (replyCounter === 0) {
       mockResponse = `Got it. Based on your experience, I can see a few cool directions we could explore. Before I spit out specific gameplans, let me ask: do you want something high-growth with more setup time, or something you can make money with by **next Tuesday**?`;
     } else {
-      mockResponse = `That makes total sense. I'm running your parameters through our structural paths now to assemble your tailored roadmap options...`;
-      // Trigger dynamic screens transition if threshold hit
-      setTimeout(() => {
-        showMockIdeas();
-      }, 2000);
+      mockResponse = `Perfect. That clarifies the baseline completely. Generating your tailored operational roadmap setups now...`;
+      triggersOptionsPage = true;
     }
     
     resolveTyping(mockResponse);
-    appendReplyInput();
+    
+    if (triggersOptionsPage) {
+      // DOCUMENTATION: Transition smoothly into the generated options panel after typing finishes
+      setTimeout(() => {
+        showMockIdeas();
+      }, 1500);
+    } else {
+      appendReplyInput();
+    }
+    
     replyCounter++;
   }, 1500);
 }
 
-/* DOCUMENTATION: Injects an active text area loop into the bottom of the chain to keep chatting */
 function appendReplyInput() {
   const chain = document.getElementById('bubble-chain');
-  
-  // Clean up old active inputs if any exist
   const oldReply = document.querySelector('.chain-reply');
   if (oldReply) oldReply.remove();
 
@@ -533,26 +517,23 @@ function appendReplyInput() {
   document.getElementById('active-reply-ta').focus();
 }
 
-/* DOCUMENTATION: Processes dynamic continuous follow-up messages inside the chat thread */
 function submitReply() {
   const input = document.getElementById('active-reply-ta');
   const text = input.value.trim();
   if (!text) return;
 
-  // Remove the input container wrapper block cleanly
   document.querySelector('.chain-reply').remove();
-
   const userPair = addUserNode(text);
   addConnectorAndTyping(userPair);
 
   sendToAPI(text);
 }
 
-/* DOCUMENTATION: Populates mock data layout panels for visualization testing loops */
 function showMockIdeas() {
-  ['convo-thread', 'screen-main'].forEach(id => document.getElementById(id).style.display = 'none');
+  document.getElementById('convo-thread').style.display = 'none';
   const panel = document.getElementById('ideas-panel');
   panel.style.display = 'block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
   
   const grid = document.getElementById('ideas-grid');
   grid.innerHTML = `
@@ -571,11 +552,11 @@ function showMockIdeas() {
   `;
 }
 
-/* DOCUMENTATION: Handles transition into the operational implementation milestone steps view */
 function viewJourney(title) {
   document.getElementById('ideas-panel').style.display = 'none';
   const panel = document.getElementById('journey-panel');
   panel.style.display = 'block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
   
   document.getElementById('jh-type').textContent = selectedPath === 'business' ? 'Business Roadmap' : 'Career Blueprint';
   document.getElementById('jh-title').textContent = title;
@@ -614,9 +595,11 @@ function viewJourney(title) {
   });
 }
 
+/* DOCUMENTATION: Fixed style selector double property notation error */
 function showIdeas() {
-  document.getElementById('journey-panel').style.style.display = 'none';
+  document.getElementById('journey-panel').style.display = 'none';
   document.getElementById('ideas-panel').style.display = 'block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
 function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
