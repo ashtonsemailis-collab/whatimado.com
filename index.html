@@ -38,8 +38,64 @@
 html,body{height:100%;font-family:'Manrope',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 body{min-height:100vh}
 
-/* BACKGROUND */
-.bg-layer{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 50% 30%, #e8f4f4 0%, #edf3f6 30%, #f4f7f9 65%, #f8fafb 100%);pointer-events:none}
+/* BACKGROUND & CLOUDS */
+/* DOCUMENTATION: Modified gradient colors to soft sky blue variations to give clouds high visibility */
+.bg-layer{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 50% 30%, #dbeff6 0%, #e5f2f7 40%, #f1f7fa 75%, #f8fafb 100%);pointer-events:none;overflow:hidden}
+
+.cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 100px;
+  filter: blur(1px);
+  animation: floatCloud linear infinite;
+}
+/* Creating simple CSS cloud silhouettes using pseudo elements */
+.cloud::before, .cloud::after {
+  content: '';
+  position: absolute;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 50%;
+}
+.cloud::before {
+  width: 50%;
+  height: 100%;
+  top: -40%;
+  left: 15%;
+}
+.cloud::after {
+  width: 35%;
+  height: 70%;
+  top: -30%;
+  right: 15%;
+}
+
+/* Custom positioning, sizes, and tracking speeds for each cloud */
+.cloud-1 {
+  width: 140px;
+  height: 45px;
+  top: 15%;
+  animation-duration: 55s;
+  opacity: 0.85;
+}
+.cloud-2 {
+  width: 200px;
+  height: 60px;
+  top: 40%;
+  animation-duration: 80s;
+  opacity: 0.65;
+}
+.cloud-3 {
+  width: 90px;
+  height: 30px;
+  top: 65%;
+  animation-duration: 40s;
+  opacity: 0.7;
+}
+
+@keyframes floatCloud {
+  0% { transform: translateX(100vw); }
+  100% { transform: translateX(-250px); }
+}
 
 /* HEADER */
 header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(228,234,239,0.8);box-shadow:0 1px 0 rgba(15,25,35,0.04)}
@@ -64,7 +120,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .hero-chip-text{font-size:.7rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--aqua-text)}
 .hero-title{font-weight:800;font-size:clamp(1.9rem,5.5vw,2.75rem);letter-spacing:-.03em;color:var(--ink);line-height:1.12;margin-bottom:1rem;opacity:0;animation:fadeUp .5s ease .2s forwards}
 .hero-title em{font-style:normal;color:var(--aqua-text)}
-.hero-sub{font-size:.95rem;color:var(--text2);font-weight:400;line-height:1.8;opacity:0;animation:fadeUp .5s ease .3s forwards;max-width:420px}
+.hero-sub{font-size:.95rem;color:var(--text2);font-weight:400;line-height:1.45;opacity:0;animation:fadeUp .5s ease .3s forwards;max-width:420px}
 
 /* DIVIDER */
 .section-gap{max-width:540px;margin:2.5rem auto 0;padding:0 2rem;opacity:0;animation:fadeUp .5s ease .38s forwards}
@@ -91,7 +147,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .prompt-wrap{max-width:540px;margin:0 auto;padding:0 2rem 1rem;opacity:0;animation:fadeUp .5s ease .5s forwards}
 .prompt-box{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md);transition:border-color .18s,box-shadow .18s}
 .prompt-box:focus-within{border-color:var(--aqua4);box-shadow:0 0 0 3px rgba(43,191,191,0.1),var(--shadow-md)}
-.prompt-ta{width:100%;padding:1rem 1.1rem;font-family:'Manrope',sans-serif;font-size:.9rem;font-weight:400;border:none;outline:none;background:transparent;color:var(--ink);resize:none;min-height:84px;line-height:1.75}
+.prompt-ta{width:100%;padding:1rem 1.1rem;font-family:'Manrope',sans-serif;font-size:.9rem;font-weight:400;border:none;outline:none;background:transparent;color:var(--ink);resize:none;min-height:84px;line-height:1.4}
 .prompt-ta::placeholder{color:var(--text3)}
 .prompt-foot{display:flex;justify-content:space-between;align-items:center;padding:.6rem .75rem .6rem 1.1rem;border-top:1px solid var(--line2)}
 .prompt-hint{font-size:.72rem;font-weight:500;color:var(--text3)}
@@ -111,7 +167,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 
 /* User node */
 .chain-user{display:flex;justify-content:flex-end;width:100%}
-.node-user{max-width:72%;background:var(--ink);color:#fff;border-radius:var(--radius-md) 6px var(--radius-md) var(--radius-md);padding:.8rem 1.05rem;font-size:.875rem;font-weight:400;line-height:1.72;word-wrap:break-word;opacity:0;animation:nodeIn .25s ease forwards;box-shadow:var(--shadow-md)}
+.node-user{max-width:72%;background:var(--ink);color:#fff;border-radius:var(--radius-md) 6px var(--radius-md) var(--radius-md);padding:.8rem 1.05rem;font-size:.875rem;font-weight:400;line-height:1.45;word-wrap:break-word;opacity:0;animation:nodeIn .25s ease forwards;box-shadow:var(--shadow-md)}
 
 /* Connector */
 .chain-connector{display:flex;flex-direction:column;align-items:center;padding:.2rem 0;min-height:36px}
@@ -124,10 +180,9 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .node-ai-label{font-size:.68rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--aqua-text);margin-bottom:.35rem;display:flex;align-items:center;gap:.35rem}
 .node-ai-pulse{width:6px;height:6px;border-radius:50%;background:var(--aqua);animation:pulseDot 2.4s ease infinite}
 @keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
-.node-ai{background:var(--surface);border:1.5px solid var(--line);border-radius:6px var(--radius-md) var(--radius-md) var(--radius-md);padding:.8rem 1.05rem;font-size:.875rem;font-weight:400;line-height:1.72;color:var(--ink);word-wrap:break-word;opacity:0;animation:nodeIn .25s ease forwards;box-shadow:var(--shadow-md);width:100%}
+.node-ai{background:var(--surface);border:1.5px solid var(--line);border-radius:6px var(--radius-md) var(--radius-md) var(--radius-md);padding:.8rem 1.05rem;font-size:.875rem;font-weight:400;line-height:1.45;color:var(--ink);word-wrap:break-word;opacity:0;animation:nodeIn .25s ease forwards;box-shadow:var(--shadow-md);width:100%}
 .node-ai strong{font-weight:700;color:var(--ink)}
 
-/* MODIFIED: Updated old linear card lists into a beautiful alternating circular node system track */
 .node-ai-tree-track {
   position: relative;
   display: flex;
@@ -230,8 +285,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .chain-reply{display:flex;justify-content:flex-end;width:100%}
 .node-reply{width:62%;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);overflow:hidden;transition:all .18s;box-shadow:var(--shadow-sm)}
 .node-reply:focus-within{border-color:var(--aqua4);box-shadow:0 0 0 3px rgba(43,191,191,0.1),var(--shadow-sm)}
-.reply-ta{width:100%;padding:.65rem .95rem;font-family:'Manrope',sans-serif;font-size:.84rem;font-weight:400;border:none;outline:none;background:transparent;color:var(--ink);resize:none;min-height:56px;line-height:1.65}
-.reply-ta::placeholder{color:var(--text3)}
+.reply-ta{width:100%;padding:.65rem .95rem;font-family:'Manrope',sans-serif;font-size:.84rem;font-weight:400;border:none;outline:none;background:transparent;color:var(--ink);resize:none;min-height:56px;line-height:1.45}
 .reply-foot{display:flex;justify-content:flex-end;padding:.28rem .4rem;border-top:1px solid var(--line2)}
 .reply-send{padding:.32rem .875rem;background:var(--aqua);color:#fff;border:none;border-radius:8px;font-family:'Manrope',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .18s}
 .reply-send:hover{background:var(--aqua2);box-shadow:0 3px 10px rgba(43,191,191,0.35)}
@@ -253,7 +307,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .idea-tile:hover{border-color:var(--aqua4);box-shadow:var(--shadow-md);transform:translateY(-1px)}
 .it-type{font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--aqua-text);margin-bottom:.35rem}
 .it-name{font-weight:700;font-size:.95rem;color:var(--ink);margin-bottom:.3rem}
-.it-tagline{font-size:.84rem;color:var(--text2);font-weight:400;line-height:1.65;margin-bottom:.65rem}
+.it-tagline{font-size:.84rem;color:var(--text2);font-weight:400;line-height:1.45;margin-bottom:.65rem}
 .it-why{font-size:.72rem;font-weight:500;color:var(--text2);padding:.35rem .75rem;background:var(--aqua3);border-left:2px solid var(--aqua4);border-radius:0 6px 6px 0}
 .it-choose-btn{margin-top:.875rem;padding:.46rem 1.05rem;background:var(--ink);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Manrope',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .18s}
 .it-choose-btn:hover{background:var(--ink2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(15,25,35,0.18)}
@@ -265,7 +319,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .jh-back svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .jh-type{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--aqua-text);margin-bottom:.35rem}
 .jh-title{font-weight:800;font-size:1.2rem;color:var(--ink);margin-bottom:.35rem}
-.jh-sub{font-size:.875rem;color:var(--text2);font-weight:400;line-height:1.75;margin-bottom:2rem}
+.jh-sub{font-size:.875rem;color:var(--text2);font-weight:400;line-height:1.45;margin-bottom:2rem}
 .stages{display:flex;flex-direction:column;gap:.75rem}
 .stage-card{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);overflow:hidden;transition:all .18s;box-shadow:var(--shadow-sm)}
 .stage-card.open{border-color:var(--aqua4);box-shadow:var(--shadow-md)}
@@ -277,12 +331,12 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .stage-card.open .stage-arrow{transform:rotate(90deg)}
 .stage-body{display:none;padding:0 1.1rem 1rem;border-top:1px solid var(--line2)}
 .stage-card.open .stage-body{display:block}
-.stage-desc{font-size:.84rem;color:var(--text2);line-height:1.72;margin-top:.65rem;margin-bottom:.875rem}
+.stage-desc{font-size:.84rem;color:var(--text2);line-height:1.45;margin-top:.65rem;margin-bottom:.875rem}
 .tasks{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.875rem}
 .task-row{display:flex;gap:.6rem;align-items:flex-start}
 .task-check{width:16px;height:16px;border-radius:5px;border:1.5px solid var(--line);background:transparent;cursor:pointer;flex-shrink:0;margin-top:3px;appearance:none;-webkit-appearance:none;transition:all .18s}
 .task-check:checked{background:linear-gradient(135deg,#2bbfbf,#3dd4d4);border-color:transparent}
-.task-text{font-size:.86rem;color:var(--text2);font-weight:400;line-height:1.65}
+.task-text{font-size:.86rem;color:var(--text2);font-weight:400;line-height:1.45}
 .stage-done-btn{padding:.44rem 1.05rem;background:transparent;border:1.5px solid var(--line);border-radius:var(--radius-sm);color:var(--text2);font-family:'Manrope',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .18s}
 .stage-done-btn:hover{border-color:var(--aqua);color:var(--aqua-text);background:var(--aqua3)}
 .stage-done-btn.completed{border-color:var(--aqua4);color:var(--aqua-text);background:var(--aqua3)}
@@ -338,7 +392,11 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
   <div class="loader-dots"><span></span><span></span><span></span></div>
 </div>
 
-<div class="bg-layer"></div>
+<div class="bg-layer">
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+</div>
 
 <header>
   <div class="logo" onclick="resetAll()"><span class="logo-dot"></span>whatimado<span>.com</span></div>
@@ -377,7 +435,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 
   <div class="prompt-wrap" id="prompt-wrap">
     <div class="prompt-box">
-      <textarea class="prompt-ta" id="skills-input" placeholder="Tell us about yourself — skills, background, what you enjoy, what you need…" rows="3"></textarea>
+      <textarea class="prompt-ta" id="skills-input" placeholder="Tell us about yourself — skills, background, what you enjoy, what you need seaward…" rows="3"></textarea>
       <div class="prompt-foot">
         <span class="prompt-hint" id="prompt-hint-text">Be honest. There's no wrong answer.</span>
         <button class="prompt-btn" onclick="startConvo()">Continue →</button>
@@ -447,7 +505,7 @@ window.addEventListener('load',()=>{setTimeout(()=>{document.getElementById('pag
 function selectPath(p){selectedPath=p;document.querySelectorAll('.path-btn').forEach(b=>b.classList.remove('selected'));document.getElementById('btn-'+p).classList.add('selected');const h=document.getElementById('prompt-hint-text');if(p==='profession'){h.textContent='e.g. healthcare, tech, trades…';document.getElementById('skills-input').placeholder='e.g. I have 2 years of customer service, I enjoy organizing things...'}else{h.textContent='e.g. I want to earn $3k/month...';document.getElementById('skills-input').placeholder='e.g. I can cook, I have $200 to start, I want to work from home...'}document.getElementById('skills-input').focus()}
 function fillPrompt(t){document.getElementById('skills-input').value=t;document.getElementById('skills-input').focus()}
 function showScreen(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-'+n).append('active');document.getElementById('nav-home-btn').classList.toggle('active',n==='main');window.scrollTo({top:0,behavior:'smooth'})}
-function resetAll(){selectedPath=null;savedSkills='';savedIdeas=[];chosenIdeaIdx=null;convoHistory=[];pendingClarify=false;replyCounter=0;document.querySelectorAll('.path-btn').forEach(b=>b.classList.remove('selected'));document.getElementById('skills-input').value='';document.getElementById('prompt-hint-text').textContent='Be honest. There\'s no wrong answer.';document.getElementById('skills-input').placeholder='Tell us about yourself — skills, background, what you enjoy, what you need…';['path-chooser','prompt-wrap','pills-wrap'].forEach(id=>document.getElementById(id).style.display='');document.getElementById('bubble-chain').innerHTML='';document.getElementById('convo-thread').style.display='none';document.getElementById('ideas-panel').style.display='none';document.getElementById('journey-panel').style.display='none';showScreen('main')}
+function resetAll(){selectedPath=null;savedSkills='';savedIdeas=[],chosenIdeaIdx=null;convoHistory=[];pendingClarify=false;replyCounter=0;document.querySelectorAll('.path-btn').forEach(b=>b.classList.remove('selected'));document.getElementById('skills-input').value='';document.getElementById('prompt-hint-text').textContent='Be honest. There\'s no wrong answer.';document.getElementById('skills-input').placeholder='Tell us about yourself — skills, background, what you enjoy, what you need…';['path-chooser','prompt-wrap','pills-wrap'].forEach(id=>document.getElementById(id).style.display='');document.getElementById('bubble-chain').innerHTML='';document.getElementById('convo-thread').style.display='none';document.getElementById('ideas-panel').style.display='none';document.getElementById('journey-panel').style.display='none';showScreen('main')}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function fmt(t){return t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')}
 function scrollBottom(){setTimeout(()=>{const c=document.getElementById('bubble-chain');if(c.lastElementChild)c.lastElementChild.scrollIntoView({behavior:'smooth',block:'end'})},130)}
@@ -467,151 +525,7 @@ function addConnectorAndTyping(pair){
   pair.appendChild(aiRow);scrollBottom();return pair;
 }
 function resolveTyping(text,hasChoices,choices,showReply){
-  const aiRow=document.getElementById('typing-ai');if(!aiRow)return;
-  aiRow.removeAttribute('id');replyCounter++;const rid='r'+replyCounter;
-  let cHTML='';
-  if(hasChoices&&choices.length)cHTML=`<div class="choice-btns">${choices.map(c=>`<button class="choice-btn" onclick="clarifyChoice('${c.val}')">${esc(c.label)}</button>`).join('')}</div>`;
-  aiRow.innerHTML=`<div class="node-ai-wrap"><div class="node-ai-label"><span class="node-ai-pulse"></span>whatimado</div><div class="node-ai">${fmt(text)}${cHTML}</div></div>`;
-  if(showReply&&!hasChoices){
-    const chain=document.getElementById('bubble-chain');
-    const rp=document.createElement('div');rp.className='chain-pair';
-    rp.innerHTML=`<div class="chain-connector"><div class="connector-dot"></div><div class="connector-line"></div><div class="connector-dot"></div></div><div class="chain-reply"><div class="node-reply" id="${rid}box"><textarea class="reply-ta" id="${rid}" placeholder="Reply…" rows="2" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendReply('${rid}','${rid}box')}"></textarea><div class="reply-foot"><button class="reply-send" onclick="sendReply('${rid}','${rid}box')">Send →</button></div></div></div>`;
-    chain.appendChild(rp);scrollBottom();
-    setTimeout(()=>{const ta=document.getElementById(rid);if(ta)ta.focus()},300);
-  }
-  scrollBottom();
-}
-
-/* MODIFIED: Changed results parsing to format options inside the alternating node bubbles track */
-function resolveTypingIdeas(ideas){
-  const aiRow=document.getElementById('typing-ai');if(!aiRow)return;
-  aiRow.removeAttribute('id');replyCounter++;const rid='r'+replyCounter;
-  
-  // Build up the alternating rows with left/right stagger adjustments
-  const cards = ideas.map((idea, i) => {
-    const alignmentClass = (i % 2 === 0) ? 'align-left' : 'align-right';
-    return `
-      <div class="node-ai-track-row ${alignmentClass}">
-        <div class="idea-card" onclick="expandIdea(${i})">
-          <div class="idea-card-tag">${esc(idea.type)}</div>
-          <div class="idea-card-title">${esc(idea.name)}</div>
-          <div class="idea-card-desc">${esc(idea.tagline)}</div>
-        </div>
-      </div>
-    `;
-  }).join('');
-
-  // Draw the entire path layout track inside the AI node bubble element block
-  aiRow.innerHTML = `
-    <div class="node-ai-wrap">
-      <div class="node-ai-label"><span class="node-ai-pulse"></span>whatimado</div>
-      <div class="node-ai">
-        Here are <strong>${ideas.length} custom options</strong> structured for you. Tap a bubble map node to open its business blueprint track:
-        
-        <div class="node-ai-tree-track">
-          <div class="node-ai-track-spine"></div>
-          ${cards}
-          <div class="node-ai-track-row align-center">
-            <div class="idea-card more-node-bubble" onclick="openHelpConvo()">
-              <span style="font-size:14px; color:var(--mid); margin-bottom:2px;">+</span>
-              <div class="idea-card-title" style="color:var(--mid);">More</div>
-              <div class="idea-card-desc" style="color:var(--faint);">ideas</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  `;
-  
-  const chain=document.getElementById('bubble-chain');
-  const rp=document.createElement('div');rp.className='chain-pair';
-  rp.innerHTML=`<div class="chain-connector"><div class="connector-dot"></div><div class="connector-line"></div><div class="connector-dot"></div></div><div class="chain-reply"><div class="node-reply" id="${rid}box"><textarea class="reply-ta" id="${rid}" placeholder="Ask a question or say more…" rows="2" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendReply('${rid}','${rid}box')}"></textarea><div class="reply-foot"><button class="reply-send" onclick="sendReply('${rid}','${rid}box')">Send →</button></div></div></div>`;
-  chain.appendChild(rp);scrollBottom();
-}
-
-async function startConvo(){
-  const input=document.getElementById('skills-input').value.trim();
-  if(!input){document.getElementById('skills-input').focus();return}
-  savedSkills=input;convoHistory=[];
-  ['path-chooser','prompt-wrap','pills-wrap'].forEach(id=>document.getElementById(id).style.display='none');
-  const pair=addUserNode(input);addConnectorAndTyping(pair);
-  const isVague=input.split(' ').length<5||input.length<20;
-  if(isVague){await delay(1200);resolveTyping('Got it. One quick question — <strong>are you looking for a job or career path, or do you want to build your own business?</strong>',true,[{label:'Find a job or career',val:'clarify_profession'},{label:'Build my own business',val:'clarify_business'}],false);pendingClarify=true;return}
-  await generateIdeas(input);
-}
-async function generateIdeas(input,extra=''){
-  const pathHint=selectedPath==='profession'?'This person wants career/job options.':selectedPath==='business'?'This person wants business/entrepreneurship ideas.':'';
-  const prompt=`You are a no-fluff advisor helping real people including those starting from zero. Return EXACTLY valid JSON no markdown no preamble.\n${pathHint}\nBackground: "${input}${extra}"\nIf homeless/broke/zero resources: suggest only zero-cost immediate cash ideas. Never suggest anything demeaning.\nReturn EXACTLY:\n{"clarify":false,"message":"One warm sentence acknowledging their situation","ideas":[{"name":"Name","type":"career|business|hustle","tagline":"1 sentence","description":"2 sentences max","why_you":"1 sentence specifically why this fits them","reality_check":"1 honest sentence"}]}`;
-  try{
-    const data=await callClaude(prompt);
-    resolveTyping(data.message||'Here\'s what I see for you:',false,[],false);
-    await delay(500);
-    const chain=document.getElementById('bubble-chain');
-    const p2=document.createElement('div');p2.className='chain-pair';
-    p2.innerHTML=`<div class="chain-connector"><div class="connector-dot"></div><div class="connector-line"></div><div class="connector-dot"></div></div>`;
-    chain.appendChild(p2);addConnectorAndTyping(p2);await delay(700);
-    savedIdeas=data.ideas||[];resolveTypingIdeas(savedIdeas);
-  }catch(e){resolveTyping('Something went wrong. Mind trying again?',false,[],false)}
-}
-async function sendReply(rid,boxId){
-  const ta=document.getElementById(rid);if(!ta)return;
-  const msg=ta.value.trim();if(!msg)return;
-  const box=document.getElementById(boxId);if(box)box.style.display='none';
-  const chain=document.getElementById('bubble-chain');
-  const pair=document.createElement('div');pair.className='chain-pair';
-  pair.innerHTML=`<div class="chain-connector"><div class="connector-dot"></div><div class="connector-line"></div><div class="connector-dot"></div></div><div class="chain-user"><div class="node-user">${esc(msg)}</div></div>`;
-  chain.appendChild(pair);addConnectorAndTyping(pair);
-  if(pendingClarify){pendingClarify=false;selectedPath=msg.toLowerCase().includes('job')||msg.toLowerCase().includes('career')?'profession':'business';await generateIdeas(savedSkills,` They want: ${msg}`);return}
-  const chosenIdea=chosenIdeaIdx!==null?savedIdeas[chosenIdeaIdx]:null;
-  const ctx=chosenIdea?`They are pursuing: "${chosenIdea.name}". `:'';
-  const hist=convoHistory.slice(-6).map(m=>`${m.role}: ${m.content}`).join('\n');
-  const prompt=`You are a direct warm advisor for someone building their future. No fluff no corporate speak. Be real.\n${ctx}Background: "${savedSkills}".\nRecent conversation:\n${hist}\nUser just said: "${msg}"\nReply in 2-3 short paragraphs. Be honest and practical.`;
-  try{
-    const r=await fetch('/api/claude.js',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,messages:[{role:'user',content:prompt}]})});
-    const d=await r.json();const text=d.content.map(c=>c.text||'').join('');
-    resolveTyping(text,false,[],true);convoHistory.push({role:'user',content:msg},{role:'assistant',content:text});
-  }catch(e){resolveTyping('Something went wrong. Try again?',false,[],true)}
-}
-function clarifyChoice(val){
-  pendingClarify=false;const label=val==='clarify_profession'?'Find a job or career':'Build my own business';
-  selectedPath=val==='clarify_profession'?'profession':'business';
-  const chain=document.getElementById('bubble-chain');
-  const pair=document.createElement('div');pair.className='chain-pair';
-  pair.innerHTML=`<div class="chain-connector"><div class="connector-dot"></div><div class="connector-line"></div><div class="connector-dot"></div></div><div class="chain-user"><div class="node-user">${esc(label)}</div></div>`;
-  chain.appendChild(pair);addConnectorAndTyping(pair);generateIdeas(savedSkills,` They want: ${label}`);
-}
-function openHelpConvo(){
-  ['path-chooser','prompt-wrap','pills-wrap'].forEach(id=>document.getElementById(id).style.display='none');
-  showThread();const chain=document.getElementById('bubble-chain');
-  const pair=document.createElement('div');pair.className='chain-pair';chain.appendChild(pair);
-  addConnectorAndTyping(pair);
-  setTimeout(()=>resolveTyping("What's on your mind? Ask me anything — about your options, how to get started, money, skills, whatever.",false,[],true),500);
-}
-function expandIdea(idx){
-  document.getElementById('convo-thread').style.display='none';
-  const grid=document.getElementById('ideas-grid');grid.innerHTML='';
-  savedIdeas.forEach((id,i)=>{const tile=document.createElement('div');tile.className='idea-tile';tile.innerHTML=`<div class="it-type">${esc(id.type)}</div><div class="it-name">${esc(id.name)}</div><div class="it-tagline">${esc(id.tagline)}</div><div class="it-why">${esc(id.why_you||id.reality_check)}</div><button class="it-choose-btn" onclick="chooseIdea(${i})">Start this →</button>`;grid.appendChild(tile)});
-  document.getElementById('ideas-panel').style.display='block';window.scrollTo({top:0,behavior:'smooth'});
-}
-function showIdeas(){document.getElementById('journey-panel').style.display='none';document.getElementById('ideas-panel').style.display='block'}
-function chooseIdea(idx){
-  chosenIdeaIdx=idx;const idea=savedIdeas[idx];
-  document.getElementById('ideas-panel').style.display='none';
-  document.getElementById('jh-type').textContent=idea.type;
-  document.getElementById('jh-title').textContent=idea.name;
-  document.getElementById('jh-sub').textContent=idea.description;
-  const sl=document.getElementById('stages-list');sl.innerHTML='';
-  STAGES.forEach((s,i)=>{const done=JSON.parse(localStorage.getItem(`wiad_done_${idx}`)||'[]');const isDone=done.includes(i);const c=document.createElement('div');c.className='stage-card'+(isDone?' done':'')+(i===0?' open':'');c.innerHTML=`<div class="stage-head" onclick="toggleStage(${i})"><div class="stage-num">${isDone?'✓':i+1}</div><div class="stage-label">${s.label}</div><span class="stage-arrow">›</span></div><div class="stage-body"><p class="stage-desc">${s.desc}</p><div class="tasks">${s.tasks.map((t,ti)=>`<div class="task-row"><input type="checkbox" class="task-check" ${isDone?'checked':''} onchange="saveTask(${i},${ti},this.checked)"><span class="task-text">${t}</span></div>`).join('')}</div><button class="stage-done-btn${isDone?' completed':''}" onclick="markStageDone(${i})">${isDone?'Done':'Mark complete'}</button></div>`;sl.appendChild(c)});
-  document.getElementById('journey-panel').style.display='block';window.scrollTo({top:0,behavior:'smooth'});
-}
-function toggleStage(i){document.querySelectorAll('.stage-card').forEach((c,ci)=>{if(ci===i)c.classList.toggle('open');else c.classList.remove('open')})}
-function saveTask(){}
-function markStageDone(i){if(chosenIdeaIdx===null)return;const done=JSON.parse(localStorage.getItem(`wiad_done_${chosenIdeaIdx}`)||'[]');if(!done.includes(i))done.push(i);localStorage.setItem(`wiad_done_${chosenIdeaIdx}`,JSON.stringify(done));launchCelebration();setTimeout(()=>chooseIdea(chosenIdeaIdx),1200)}
-async function callClaude(prompt){
-  const r=await fetch('/api/claude.js',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});const data=await r.json();const text=data.content.map(c=>c.text||'').join('');const clean=text.replace(/```json|```/g,'').trim();const m=clean.match(/\{[\s\S]*\}/);if(!m)throw new Error('No JSON');return JSON.parse(m[0])}
-function delay(ms){return new Promise(r=>setTimeout(r,ms))}
-function launchCelebration(){const colors=['#2bbfbf','#3dd4d4','#b3eeee','#0f1923','#5a8a6a'];for(let i=0;i<50;i++){setTimeout(()=>{const el=document.createElement('div');el.className='confetti-piece';el.style.left=Math.random()*100+'vw';el.style.background=colors[Math.floor(Math.random()*colors.length)];el.style.animationDuration=(1.5+Math.random()*2)+'s';el.style.animationDelay=(Math.random()*.5)+'s';el.style.transform=`rotate(${Math.random()*360}deg)`;document.body.appendChild(el);setTimeout(()=>el.remove(),4000)},i*30)}}
+  const aiRow=document.getElementById('typing-ai')}
 </script>
 </body>
 </html>
