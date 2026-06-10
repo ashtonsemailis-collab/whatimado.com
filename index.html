@@ -373,8 +373,7 @@ let selectedPath = null,
     savedIdeas = [],
     chosenIdeaIdx = null,
     convoHistory = [],
-    pendingClarify = false,
-    replyCounter = 0;
+    currentStep = 1; // Explicit state tracking: 1 = Initial prompt, 2 = Clarification response
 
 const STAGES = [
   {label:'First Win',desc:'Get your first result — proof this works.',tasks:['Complete one paying transaction or get first interview callback','Tell 5 people what you\'re doing','Spend 30 minutes per day on this — no exceptions']},
@@ -428,8 +427,7 @@ function resetAll() {
   savedIdeas = [];
   chosenIdeaIdx = null;
   convoHistory = [];
-  pendingClarify = false;
-  replyCounter = 0;
+  currentStep = 1; // Reset step tracking back to start
   
   document.querySelectorAll('.path-btn').forEach(b => b.classList.remove('selected'));
   document.getElementById('skills-input').value = '';
@@ -468,33 +466,31 @@ function startConvo() {
   sendToAPI(text);
 }
 
+/* DOCUMENTATION: Streamlined step engine to explicitly guide chat flow state switches */
 function sendToAPI(promptText) {
   convoHistory.push({ role: "user", content: promptText });
 
   setTimeout(() => {
-    let mockResponse = "";
-    let triggersOptionsPage = false;
-
-    if (replyCounter === 0) {
-      mockResponse = `Got it. Based on your experience, I can see a few cool directions we could explore. Before I spit out specific gameplans, let me ask: do you want something high-growth with more setup time, or something you can make money with by **next Tuesday**?`;
-    } else {
-      mockResponse = `Perfect. That clarifies the baseline completely. Generating your tailored operational roadmap setups now...`;
-      triggersOptionsPage = true;
-    }
-    
-    resolveTyping(mockResponse);
-    
-    if (triggersOptionsPage) {
-      // DOCUMENTATION: Transition smoothly into the generated options panel after typing finishes
+    if (currentStep === 1) {
+      // Step 1: Clarification prompt phase
+      let mockResponse = `Got it. Based on your experience, I can see a few cool directions we could explore. Before I spit out specific gameplans, let me ask: do you want something high-growth with more setup time, or something you can make money with by **next Tuesday**?`;
+      
+      resolveTyping(mockResponse);
+      appendReplyInput();
+      
+      currentStep = 2; // Progress to options generation stage upon next input trigger
+    } else if (currentStep === 2) {
+      // Step 2: Generation notification statement phase
+      let mockResponse = `Perfect. That clarifies the baseline completely. Generating your tailored operational roadmap setups now...`;
+      
+      resolveTyping(mockResponse);
+      
+      // Immediately switch views to options layout after typing text maps out
       setTimeout(() => {
         showMockIdeas();
-      }, 1500);
-    } else {
-      appendReplyInput();
+      }, 1200);
     }
-    
-    replyCounter++;
-  }, 1500);
+  }, 1200);
 }
 
 function appendReplyInput() {
@@ -530,7 +526,9 @@ function submitReply() {
 }
 
 function showMockIdeas() {
+  // Hide the entire chat stream container cleanly
   document.getElementById('convo-thread').style.display = 'none';
+  
   const panel = document.getElementById('ideas-panel');
   panel.style.display = 'block';
   window.scrollTo({top: 0, behavior: 'smooth'});
@@ -595,7 +593,6 @@ function viewJourney(title) {
   });
 }
 
-/* DOCUMENTATION: Fixed style selector double property notation error */
 function showIdeas() {
   document.getElementById('journey-panel').style.display = 'none';
   document.getElementById('ideas-panel').style.display = 'block';
