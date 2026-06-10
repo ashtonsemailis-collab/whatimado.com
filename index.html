@@ -39,7 +39,6 @@ html,body{height:100%;font-family:'Manrope',sans-serif;background:var(--bg);colo
 body{min-height:100vh}
 
 /* BACKGROUND & CLOUDS */
-/* DOCUMENTATION: Modified gradient colors to soft sky blue variations to give clouds high visibility */
 .bg-layer{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 50% 30%, #dbeff6 0%, #e5f2f7 40%, #f1f7fa 75%, #f8fafb 100%);pointer-events:none;overflow:hidden}
 
 .cloud {
@@ -49,7 +48,6 @@ body{min-height:100vh}
   filter: blur(1px);
   animation: floatCloud linear infinite;
 }
-/* Creating simple CSS cloud silhouettes using pseudo elements */
 .cloud::before, .cloud::after {
   content: '';
   position: absolute;
@@ -69,7 +67,6 @@ body{min-height:100vh}
   right: 15%;
 }
 
-/* Custom positioning, sizes, and tracking speeds for each cloud */
 .cloud-1 {
   width: 140px;
   height: 45px;
@@ -111,25 +108,29 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 /* SCREENS */
 .screen{position:relative;z-index:10;display:none;min-height:100vh}
 .screen.active{display:block}
-#screen-main{padding-top:5rem}
+
+/* DOCUMENTATION: Reduced main screen padding to bring the top sections higher up */
+#screen-main{padding-top:4.25rem}
 
 /* HERO */
-.hero{max-width:540px;margin:0 auto;padding:4.5rem 2rem 2rem;position:relative;z-index:10}
-.hero-chip{display:inline-flex;align-items:center;gap:.4rem;background:var(--aqua3);border:1px solid var(--aqua4);border-radius:100px;padding:.28rem .85rem;margin-bottom:1.25rem;opacity:0;animation:fadeUp .5s ease .1s forwards}
+/* DOCUMENTATION: Cut down top/bottom padding to dramatically reduce spacing gaps */
+.hero{max-width:540px;margin:0 auto;padding:2.5rem 2rem 1.25rem;position:relative;z-index:10}
+.hero-chip{display:inline-flex;align-items:center;gap:.4rem;background:var(--aqua3);border:1px solid var(--aqua4);border-radius:100px;padding:.28rem .85rem;margin-bottom:1rem;opacity:0;animation:fadeUp .5s ease .1s forwards}
 .hero-chip-dot{width:5px;height:5px;border-radius:50%;background:var(--aqua)}
 .hero-chip-text{font-size:.7rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--aqua-text)}
-.hero-title{font-weight:800;font-size:clamp(1.9rem,5.5vw,2.75rem);letter-spacing:-.03em;color:var(--ink);line-height:1.12;margin-bottom:1rem;opacity:0;animation:fadeUp .5s ease .2s forwards}
+.hero-title{font-weight:800;font-size:clamp(1.9rem,5.5vw,2.75rem);letter-spacing:-.03em;color:var(--ink);line-height:1.12;margin-bottom:.75rem;opacity:0;animation:fadeUp .5s ease .2s forwards}
 .hero-title em{font-style:normal;color:var(--aqua-text)}
 .hero-sub{font-size:.95rem;color:var(--text2);font-weight:400;line-height:1.45;opacity:0;animation:fadeUp .5s ease .3s forwards;max-width:420px}
 
 /* DIVIDER */
-.section-gap{max-width:540px;margin:2.5rem auto 0;padding:0 2rem;opacity:0;animation:fadeUp .5s ease .38s forwards}
-.section-gap hr{border:none;border-top:1px solid var(--line);margin-bottom:1.75rem}
+/* DOCUMENTATION: Squeezed top margin so sections flow together tighter */
+.section-gap{max-width:540px;margin:1.25rem auto 0;padding:0 2rem;opacity:0;animation:fadeUp .5s ease .38s forwards}
+.section-gap hr{border:none;border-top:1px solid var(--line);margin-bottom:1.25rem}
 
 /* PATH CHOOSER */
 .path-chooser{max-width:540px;margin:0 auto;padding:0 2rem;opacity:0;animation:fadeUp .5s ease .44s forwards}
-.path-label{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:.875rem}
-.path-btns{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.75rem}
+.path-label{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:.75rem}
+.path-btns{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.25rem}
 .path-btn{padding:1.1rem 1rem;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);color:var(--text);cursor:pointer;transition:all .18s;text-align:left;font-family:'Manrope',sans-serif;display:flex;flex-direction:column;gap:.5rem;box-shadow:var(--shadow-sm)}
 .path-btn:hover{border-color:var(--aqua4);box-shadow:var(--shadow-md);transform:translateY(-1px)}
 .path-btn.selected{border-color:var(--aqua);background:var(--aqua3);box-shadow:0 0 0 3px rgba(43,191,191,0.12),var(--shadow-sm)}
@@ -140,7 +141,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .path-btn .pb-title{font-weight:700;font-size:.88rem;color:var(--ink);transition:color .18s}
 .path-btn.selected .pb-title{color:var(--aqua-text)}
 .path-btn .pb-sub{font-size:.78rem;color:var(--text3);font-weight:400}
-.path-or{font-size:.72rem;font-weight:500;letter-spacing:.04em;color:var(--text3);margin-bottom:1.75rem;display:flex;align-items:center;gap:.875rem;text-transform:uppercase}
+.path-or{font-size:.72rem;font-weight:500;letter-spacing:.04em;color:var(--text3);margin-bottom:1.25rem;display:flex;align-items:center;gap:.875rem;text-transform:uppercase}
 .path-or::before,.path-or::after{content:'';flex:1;height:1px;background:var(--line2)}
 
 /* PROMPT BOX */
@@ -156,7 +157,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .prompt-btn:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
 
 /* PILLS */
-.pills{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.875rem;max-width:540px;padding:0 2rem;opacity:0;animation:fadeUp .5s ease .55s forwards}
+.pills{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.65rem;max-width:540px;padding:0 2rem;opacity:0;animation:fadeUp .5s ease .55s forwards}
 .pill{font-size:.72rem;font-weight:500;padding:.3rem .8rem;border:1.5px solid var(--line);border-radius:100px;color:var(--text2);background:var(--surface);cursor:pointer;transition:all .15s;box-shadow:var(--shadow-sm)}
 .pill:hover{border-color:var(--aqua4);color:var(--aqua-text);background:var(--aqua3);box-shadow:none}
 
