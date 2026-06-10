@@ -23,29 +23,32 @@
   --aqua3:#e6f9f9;
   --aqua4:#b3eeee;
   --aqua-text:#1a9090;
+  --text:#0f1923;
   --text2:#5c6b78;
   --text3:#9aaab8;
-  --shadow-sm:0 1px 4px rgba(15,25,35,.06),0 2px 12px rgba(15,25,35,.04);
-  --shadow-md:0 2px 8px rgba(15,25,35,.07),0 8px 24px rgba(15,25,35,.05);
-  --shadow-lg:0 4px 16px rgba(15,25,35,.08),0 16px 40px rgba(15,25,35,.06);
+  --shadow-sm:0 1px 4px rgba(15,25,35,0.06),0 2px 12px rgba(15,25,35,0.04);
+  --shadow-md:0 2px 8px rgba(15,25,35,0.07),0 8px 24px rgba(15,25,35,0.05);
+  --shadow-lg:0 4px 16px rgba(15,25,35,0.08),0 16px 40px rgba(15,25,35,0.06);
   --radius-sm:10px;
   --radius-md:16px;
   --radius-lg:22px;
   --radius-xl:28px;
+  --connector:#d0dbe4;
 }
-html,body{height:100%;font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+html,body{height:100%;font-family:'Manrope',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{min-height:100vh}
 
 /* BACKGROUND */
-.bg-layer{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 50% 30%,#e8f4f4 0%,#edf3f6 30%,#f4f7f9 65%,#f8fafb 100%);pointer-events:none}
+.bg-layer{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 50% 30%, #e8f4f4 0%, #edf3f6 30%, #f4f7f9 65%, #f8fafb 100%);pointer-events:none}
 
 /* HEADER */
-header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(228,234,239,.8);box-shadow:0 1px 0 rgba(15,25,35,.04)}
-.logo{font-weight:700;font-size:1.05rem;letter-spacing:-.02em;color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:.5rem}
+header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(228,234,239,0.8);box-shadow:0 1px 0 rgba(15,25,35,0.04)}
+.logo{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:-.02em;color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:.5rem}
 .logo-dot{width:8px;height:8px;border-radius:50%;background:var(--aqua)}
 .logo span{color:var(--faint);font-weight:400}
 .tagline{font-size:.72rem;font-weight:500;letter-spacing:.04em;color:var(--text3);text-transform:uppercase}
 .nav{display:flex;gap:.25rem;align-items:center}
-.nav-btn{font-size:.82rem;font-weight:500;color:var(--text2);background:none;border:none;cursor:pointer;transition:color .15s;padding:.35rem .75rem;border-radius:var(--radius-sm);font-family:'Manrope',sans-serif}
+.nav-btn{font-family:'Manrope',sans-serif;font-size:.82rem;font-weight:500;color:var(--text2);background:none;border:none;cursor:pointer;transition:color .15s;padding:.35rem .75rem;border-radius:var(--radius-sm)}
 .nav-btn:hover{color:var(--ink);background:var(--surface2)}
 .nav-btn.active{color:var(--aqua-text);background:var(--aqua3)}
 
@@ -55,53 +58,53 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 #screen-main{padding-top:5rem}
 
 /* HERO */
-.hero{max-width:540px;margin:0 auto;padding:2.5rem 2rem .75rem;position:relative;z-index:10}
-.hero-chip{display:inline-flex;align-items:center;gap:.4rem;background:var(--aqua3);border:1px solid var(--aqua4);border-radius:100px;padding:.28rem .85rem;margin-bottom:.875rem;opacity:0;animation:fadeUp .5s ease .1s forwards}
+.hero{max-width:540px;margin:0 auto;padding:4.5rem 2rem 2rem;position:relative;z-index:10}
+.hero-chip{display:inline-flex;align-items:center;gap:.4rem;background:var(--aqua3);border:1px solid var(--aqua4);border-radius:100px;padding:.28rem .85rem;margin-bottom:1.25rem;opacity:0;animation:fadeUp .5s ease .1s forwards}
 .hero-chip-dot{width:5px;height:5px;border-radius:50%;background:var(--aqua)}
 .hero-chip-text{font-size:.7rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--aqua-text)}
-.hero-title{font-weight:800;font-size:clamp(1.9rem,5.5vw,2.75rem);letter-spacing:-.03em;color:var(--ink);line-height:1.12;margin-bottom:.75rem;opacity:0;animation:fadeUp .5s ease .2s forwards}
+.hero-title{font-weight:800;font-size:clamp(1.9rem,5.5vw,2.75rem);letter-spacing:-.03em;color:var(--ink);line-height:1.12;margin-bottom:1rem;opacity:0;animation:fadeUp .5s ease .2s forwards}
 .hero-title em{font-style:normal;color:var(--aqua-text)}
 .hero-sub{font-size:.95rem;color:var(--text2);font-weight:400;line-height:1.8;opacity:0;animation:fadeUp .5s ease .3s forwards;max-width:420px}
 
 /* DIVIDER */
-.section-gap{max-width:540px;margin:.5rem auto 0;padding:0 2rem;opacity:0;animation:fadeUp .5s ease .38s forwards}
-.section-gap hr{border:none;border-top:1px solid var(--line);margin-bottom:.75rem}
+.section-gap{max-width:540px;margin:2.5rem auto 0;padding:0 2rem;opacity:0;animation:fadeUp .5s ease .38s forwards}
+.section-gap hr{border:none;border-top:1px solid var(--line);margin-bottom:1.75rem}
 
 /* PATH CHOOSER */
 .path-chooser{max-width:540px;margin:0 auto;padding:0 2rem;opacity:0;animation:fadeUp .5s ease .44s forwards}
-.path-label{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:.75rem}
-.path-btns{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.25rem}
-.path-btn{padding:1.1rem 1rem;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);color:var(--ink);cursor:pointer;transition:all .18s;text-align:left;font-family:'Manrope',sans-serif;display:flex;flex-direction:column;gap:.5rem;box-shadow:var(--shadow-sm)}
+.path-label{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:.875rem}
+.path-btns{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.75rem}
+.path-btn{padding:1.1rem 1rem;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);color:var(--text);cursor:pointer;transition:all .18s;text-align:left;font-family:'Manrope',sans-serif;display:flex;flex-direction:column;gap:.5rem;box-shadow:var(--shadow-sm)}
 .path-btn:hover{border-color:var(--aqua4);box-shadow:var(--shadow-md);transform:translateY(-1px)}
-.path-btn.selected{border-color:var(--aqua);background:var(--aqua3);box-shadow:0 0 0 3px rgba(43,191,191,.12),var(--shadow-sm)}
+.path-btn.selected{border-color:var(--aqua);background:var(--aqua3);box-shadow:0 0 0 3px rgba(43,191,191,0.12),var(--shadow-sm)}
 .path-btn .pb-icon{width:32px;height:32px;border-radius:8px;background:var(--surface2);display:flex;align-items:center;justify-content:center;color:var(--faint);transition:all .18s}
-.path-btn:hover .pb-icon,.path-btn.selected .pb-icon{background:var(--aqua3);color:var(--aqua)}
-.path-btn.selected .pb-icon{background:rgba(43,191,191,.18)}
+.path-btn:hover .pb-icon{background:var(--aqua3);color:var(--aqua)}
+.path-btn.selected .pb-icon{background:rgba(43,191,191,0.18);color:var(--aqua)}
 .path-btn .pb-icon svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .path-btn .pb-title{font-weight:700;font-size:.88rem;color:var(--ink);transition:color .18s}
 .path-btn.selected .pb-title{color:var(--aqua-text)}
 .path-btn .pb-sub{font-size:.78rem;color:var(--text3);font-weight:400}
-.path-or{font-size:.72rem;font-weight:500;letter-spacing:.04em;color:var(--text3);margin-bottom:1rem;display:flex;align-items:center;gap:.875rem;text-transform:uppercase}
+.path-or{font-size:.72rem;font-weight:500;letter-spacing:.04em;color:var(--text3);margin-bottom:1.75rem;display:flex;align-items:center;gap:.875rem;text-transform:uppercase}
 .path-or::before,.path-or::after{content:'';flex:1;height:1px;background:var(--line2)}
 
 /* PROMPT BOX */
-.prompt-wrap{max-width:540px;margin:0 auto;padding:0 2rem .5rem;opacity:0;animation:fadeUp .5s ease .5s forwards}
+.prompt-wrap{max-width:540px;margin:0 auto;padding:0 2rem 1rem;opacity:0;animation:fadeUp .5s ease .5s forwards}
 .prompt-box{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md);transition:border-color .18s,box-shadow .18s}
-.prompt-box:focus-within{border-color:var(--aqua4);box-shadow:0 0 0 3px rgba(43,191,191,.1),var(--shadow-md)}
+.prompt-box:focus-within{border-color:var(--aqua4);box-shadow:0 0 0 3px rgba(43,191,191,0.1),var(--shadow-md)}
 .prompt-ta{width:100%;padding:1rem 1.1rem;font-family:'Manrope',sans-serif;font-size:.9rem;font-weight:400;border:none;outline:none;background:transparent;color:var(--ink);resize:none;min-height:84px;line-height:1.75}
 .prompt-ta::placeholder{color:var(--text3)}
 .prompt-foot{display:flex;justify-content:space-between;align-items:center;padding:.6rem .75rem .6rem 1.1rem;border-top:1px solid var(--line2)}
 .prompt-hint{font-size:.72rem;font-weight:500;color:var(--text3)}
 .prompt-btn{padding:.52rem 1.2rem;background:var(--ink);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Manrope',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .18s;letter-spacing:-.01em}
-.prompt-btn:hover{background:var(--ink2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(15,25,35,.2)}
+.prompt-btn:hover{background:var(--ink2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(15,25,35,0.2)}
 .prompt-btn:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
 
 /* PILLS */
-.pills{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.5rem;max-width:540px;padding:0 2rem;opacity:0;animation:fadeUp .5s ease .55s forwards}
+.pills{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.875rem;max-width:540px;padding:0 2rem;opacity:0;animation:fadeUp .5s ease .55s forwards}
 .pill{font-size:.72rem;font-weight:500;padding:.3rem .8rem;border:1.5px solid var(--line);border-radius:100px;color:var(--text2);background:var(--surface);cursor:pointer;transition:all .15s;box-shadow:var(--shadow-sm)}
 .pill:hover{border-color:var(--aqua4);color:var(--aqua-text);background:var(--aqua3);box-shadow:none}
 
-/* BUBBLE CHAIN */
+/* ── BUBBLE CHAIN ── */
 #convo-thread{display:none;max-width:540px;margin:0 auto;padding:2.5rem 2rem 7rem;position:relative;z-index:10}
 .bubble-chain{display:flex;flex-direction:column;align-items:center;position:relative}
 .chain-pair{display:flex;flex-direction:column;align-items:center;width:100%}
@@ -112,7 +115,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 
 /* Connector */
 .chain-connector{display:flex;flex-direction:column;align-items:center;padding:.2rem 0;min-height:36px}
-.connector-line{width:1.5px;background:linear-gradient(to bottom,#d0dbe4,transparent);flex:1;min-height:20px}
+.connector-line{width:1.5px;background:linear-gradient(to bottom, var(--connector), transparent);flex:1;min-height:20px}
 .connector-dot{width:6px;height:6px;border-radius:50%;background:var(--aqua4);flex-shrink:0}
 
 /* AI node */
@@ -120,23 +123,103 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .node-ai-wrap{display:flex;flex-direction:column;align-items:flex-start;max-width:72%}
 .node-ai-label{font-size:.68rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--aqua-text);margin-bottom:.35rem;display:flex;align-items:center;gap:.35rem}
 .node-ai-pulse{width:6px;height:6px;border-radius:50%;background:var(--aqua);animation:pulseDot 2.4s ease infinite}
+@keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
 .node-ai{background:var(--surface);border:1.5px solid var(--line);border-radius:6px var(--radius-md) var(--radius-md) var(--radius-md);padding:.8rem 1.05rem;font-size:.875rem;font-weight:400;line-height:1.72;color:var(--ink);word-wrap:break-word;opacity:0;animation:nodeIn .25s ease forwards;box-shadow:var(--shadow-md);width:100%}
 .node-ai strong{font-weight:700;color:var(--ink)}
 
-/* Idea bubble track */
-.node-ai-tree-track{position:relative;display:flex;flex-direction:column;width:100%;gap:24px;padding:24px 0 12px}
-.node-ai-track-spine{position:absolute;top:40px;bottom:40px;left:50%;width:1.5px;background:var(--line);transform:translateX(-50%);z-index:1}
-.node-ai-track-row{display:flex;width:100%;z-index:2}
-.node-ai-track-row.align-left{justify-content:flex-start;padding-left:4%}
-.node-ai-track-row.align-right{justify-content:flex-end;padding-right:4%}
-.node-ai-track-row.align-center{justify-content:center}
-.idea-card{width:154px;height:154px;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);box-shadow:var(--shadow-sm);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;padding:16px;transition:all .22s cubic-bezier(.4,0,.2,1)}
-.idea-card:hover{border-color:var(--aqua);background:var(--aqua3);transform:translateY(-4px);box-shadow:var(--shadow-md)}
-.idea-card-tag{font-size:.62rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--aqua-text);margin-bottom:.2rem}
-.idea-card-title{font-weight:700;font-size:.84rem;color:var(--ink);line-height:1.25;margin-bottom:.2rem;max-width:120px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.idea-card-desc{font-size:.72rem;color:var(--text2);line-height:1.3;max-width:115px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.more-node-bubble{width:124px;height:124px;border:1.5px dashed var(--faint);background:transparent;box-shadow:none}
-.more-node-bubble:hover{background:var(--surface2);border-color:var(--mid)}
+/* MODIFIED: Updated old linear card lists into a beautiful alternating circular node system track */
+.node-ai-tree-track {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 24px;
+  padding: 24px 0 12px 0;
+}
+.node-ai-track-spine {
+  position: absolute;
+  top: 40px;
+  bottom: 40px;
+  left: 50%;
+  width: 1.5px;
+  background-color: var(--line);
+  transform: translateX(-50%);
+  z-index: 1;
+}
+.node-ai-track-row {
+  display: flex;
+  width: 100%;
+  z-index: 2;
+}
+.node-ai-track-row.align-left { justify-content: flex-start; padding-left: 4%; }
+.node-ai-track-row.align-right { justify-content: flex-end; padding-right: 4%; }
+.node-ai-track-row.align-center { justify-content: center; }
+
+.node-ai .idea-card {
+  width: 154px;
+  height: 154px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  padding: 16px;
+  margin: 0;
+  box-sizing: border-box;
+  transition: all .22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.node-ai .idea-card:hover {
+  border-color: var(--aqua);
+  background: var(--aqua3);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.node-ai .idea-card-tag {
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--aqua-text);
+  margin-bottom: .2rem;
+}
+.node-ai .idea-card-title {
+  font-weight: 700;
+  font-size: .84rem;
+  color: var(--ink);
+  line-height: 1.25;
+  margin-bottom: .2rem;
+  max-width: 120px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.node-ai .idea-card-desc {
+  font-size: .72rem;
+  color: var(--text2);
+  line-height: 1.3;
+  max-width: 115px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.node-ai .more-node-bubble {
+  width: 124px;
+  height: 124px;
+  border: 1.5px dashed var(--faint);
+  background: transparent;
+  box-shadow: none;
+}
+.node-ai .more-node-bubble:hover {
+  background: var(--surface2);
+  border-color: var(--mid);
+}
 
 /* Choice buttons */
 .choice-btns{display:flex;flex-direction:column;gap:.35rem;margin-top:.65rem}
@@ -146,20 +229,21 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 /* Reply node */
 .chain-reply{display:flex;justify-content:flex-end;width:100%}
 .node-reply{width:62%;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);overflow:hidden;transition:all .18s;box-shadow:var(--shadow-sm)}
-.node-reply:focus-within{border-color:var(--aqua4);box-shadow:0 0 0 3px rgba(43,191,191,.1),var(--shadow-sm)}
+.node-reply:focus-within{border-color:var(--aqua4);box-shadow:0 0 0 3px rgba(43,191,191,0.1),var(--shadow-sm)}
 .reply-ta{width:100%;padding:.65rem .95rem;font-family:'Manrope',sans-serif;font-size:.84rem;font-weight:400;border:none;outline:none;background:transparent;color:var(--ink);resize:none;min-height:56px;line-height:1.65}
 .reply-ta::placeholder{color:var(--text3)}
 .reply-foot{display:flex;justify-content:flex-end;padding:.28rem .4rem;border-top:1px solid var(--line2)}
 .reply-send{padding:.32rem .875rem;background:var(--aqua);color:#fff;border:none;border-radius:8px;font-family:'Manrope',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .18s}
-.reply-send:hover{background:var(--aqua2);box-shadow:0 3px 10px rgba(43,191,191,.35)}
+.reply-send:hover{background:var(--aqua2);box-shadow:0 3px 10px rgba(43,191,191,0.35)}
 
-/* Typing indicator */
+/* Typing */
 .typing-dots{display:flex;align-items:center;gap:5px;padding:.1rem 0}
 .typing-dots span{width:5px;height:5px;background:var(--aqua4);border-radius:50%;animation:typingDot 1.3s ease-in-out infinite}
 .typing-dots span:nth-child(2){animation-delay:.2s}
 .typing-dots span:nth-child(3){animation-delay:.4s}
+@keyframes typingDot{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
 
-/* IDEAS PANEL */
+/* ── IDEAS PANEL ── */
 #ideas-panel{display:none;max-width:540px;margin:0 auto;padding:2rem 2rem 7rem;position:relative;z-index:10}
 .panel-back{font-size:.75rem;font-weight:600;letter-spacing:.02em;color:var(--text2);background:none;border:none;cursor:pointer;padding:.4rem 0;transition:color .15s;margin-bottom:2rem;display:inline-flex;align-items:center;gap:.35rem}
 .panel-back:hover{color:var(--aqua-text)}
@@ -172,9 +256,9 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .it-tagline{font-size:.84rem;color:var(--text2);font-weight:400;line-height:1.65;margin-bottom:.65rem}
 .it-why{font-size:.72rem;font-weight:500;color:var(--text2);padding:.35rem .75rem;background:var(--aqua3);border-left:2px solid var(--aqua4);border-radius:0 6px 6px 0}
 .it-choose-btn{margin-top:.875rem;padding:.46rem 1.05rem;background:var(--ink);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Manrope',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .18s}
-.it-choose-btn:hover{background:var(--ink2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(15,25,35,.18)}
+.it-choose-btn:hover{background:var(--ink2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(15,25,35,0.18)}
 
-/* JOURNEY PANEL */
+/* ── JOURNEY ── */
 #journey-panel{display:none;max-width:540px;margin:0 auto;padding:2rem 2rem 7rem;position:relative;z-index:10}
 .jh-back{font-size:.75rem;font-weight:600;color:var(--text2);background:none;border:none;cursor:pointer;transition:color .15s;margin-bottom:1rem;display:inline-flex;align-items:center;gap:.35rem;padding:.4rem 0}
 .jh-back:hover{color:var(--aqua-text)}
@@ -184,10 +268,10 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .jh-sub{font-size:.875rem;color:var(--text2);font-weight:400;line-height:1.75;margin-bottom:2rem}
 .stages{display:flex;flex-direction:column;gap:.75rem}
 .stage-card{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);overflow:hidden;transition:all .18s;box-shadow:var(--shadow-sm)}
-.stage-card.open {border-color:var(--aqua4);box-shadow:var(--shadow-md)}
+.stage-card.open{border-color:var(--aqua4);box-shadow:var(--shadow-md)}
 .stage-head{display:flex;align-items:center;gap:.875rem;padding:.95rem 1.1rem;cursor:pointer}
 .stage-num{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:var(--text3);flex-shrink:0;transition:all .18s}
-.stage-card.done .stage-num{background:linear-gradient(135deg,#2bbfbf,#3dd4d4);border-color:transparent;color:#fff;box-shadow:0 2px 8px rgba(43,191,191,.4)}
+.stage-card.done .stage-num{background:linear-gradient(135deg,#2bbfbf,#3dd4d4);border-color:transparent;color:#fff;box-shadow:0 2px 8px rgba(43,191,191,0.4)}
 .stage-label{font-weight:600;font-size:.9rem;color:var(--ink);flex:1}
 .stage-arrow{font-size:.65rem;color:var(--text3);transition:transform .2s}
 .stage-card.open .stage-arrow{transform:rotate(90deg)}
@@ -200,9 +284,10 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .task-check:checked{background:linear-gradient(135deg,#2bbfbf,#3dd4d4);border-color:transparent}
 .task-text{font-size:.86rem;color:var(--text2);font-weight:400;line-height:1.65}
 .stage-done-btn{padding:.44rem 1.05rem;background:transparent;border:1.5px solid var(--line);border-radius:var(--radius-sm);color:var(--text2);font-family:'Manrope',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .18s}
-.stage-done-btn:hover,.stage-done-btn.completed{border-color:var(--aqua);color:var(--aqua-text);background:var(--aqua3)}
+.stage-done-btn:hover{border-color:var(--aqua);color:var(--aqua-text);background:var(--aqua3)}
+.stage-done-btn.completed{border-color:var(--aqua4);color:var(--aqua-text);background:var(--aqua3)}
 
-/* STORE */
+/* ── STORE ── */
 #screen-store{padding-top:5rem}
 .store-inner{max-width:540px;margin:0 auto;padding:4rem 2rem;text-align:left}
 .store-eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--aqua-text);margin-bottom:.75rem;display:flex;align-items:center;gap:.4rem}
@@ -218,31 +303,28 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .store-soon{font-size:.72rem;font-weight:500;letter-spacing:.04em;color:var(--text3);margin-top:.75rem;text-transform:uppercase}
 
 /* FAB */
-.help-fab{position:fixed;bottom:1.75rem;right:1.75rem;z-index:700;width:46px;height:46px;border-radius:50%;background:var(--aqua);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(43,191,191,.4),0 1px 4px rgba(43,191,191,.2);transition:all .18s}
-.help-fab:hover{background:var(--aqua2);transform:scale(1.08);box-shadow:0 6px 20px rgba(43,191,191,.5)}
+.help-fab{position:fixed;bottom:1.75rem;right:1.75rem;z-index:700;width:46px;height:46px;border-radius:50%;background:var(--aqua);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(43,191,191,0.4),0 1px 4px rgba(43,191,191,0.2);transition:all .18s}
+.help-fab:hover{background:var(--aqua2);transform:scale(1.08);box-shadow:0 6px 20px rgba(43,191,191,0.5)}
 .help-fab svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
 /* CONFETTI */
 .confetti-piece{position:fixed;width:6px;height:6px;top:-10px;border-radius:2px;pointer-events:none;z-index:9999;animation:confettiFall linear forwards}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes nodeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-/* PAGE LOADER */
+/* LOADER */
 #page-loader{position:fixed;inset:0;z-index:9000;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.25rem;transition:opacity .4s ease}
 #page-loader.fade-out{opacity:0;pointer-events:none}
-.loader-logo{font-weight:700;font-size:1.25rem;color:var(--ink);letter-spacing:-.02em;display:flex;align-items:center;gap:.45rem;font-family:'Manrope',sans-serif}
+.loader-logo{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.25rem;color:var(--ink);letter-spacing:-.02em;display:flex;align-items:center;gap:.45rem}
 .loader-logo-dot{width:8px;height:8px;border-radius:50%;background:var(--aqua)}
 .loader-dots{display:flex;gap:.45rem}
 .loader-dots span{width:5px;height:5px;background:var(--aqua4);border-radius:50%;animation:typingDot 1.3s ease-in-out infinite}
 .loader-dots span:nth-child(2){animation-delay:.2s}
 .loader-dots span:nth-child(3){animation-delay:.4s}
 
-/* ANIMATIONS */
-@keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
-@keyframes typingDot{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-@keyframes nodeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-@keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
-
 @media(max-width:600px){
+  .path-btns,.store-grid{grid-template-columns:1fr 1fr}
   header{padding:.75rem 1.25rem}
   .tagline{display:none}
   .node-user,.node-ai-wrap,.node-reply{max-width:88%;width:88%}
@@ -262,8 +344,8 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
   <div class="logo" onclick="resetAll()"><span class="logo-dot"></span>whatimado<span>.com</span></div>
   <div class="tagline">Casual name. Serious business.</div>
   <nav class="nav">
-    <button class="nav-btn active" id="nav-home-btn" onclick="showScreen('main')">Home</button>
-    <button class="nav-btn" id="nav-store-btn" onclick="showScreen('store')">Shop</button>
+    <button class="nav-btn active" id="nav-home-btn" onclick="resetAll()">Home</button>
+    <button class="nav-btn" onclick="showScreen('store')">Shop</button>
   </nav>
 </header>
 
@@ -354,564 +436,182 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 </button>
 
 <script>
-// ─── State ───────────────────────────────────────────────────────────────────
-let selectedPath = null;   // 'profession' | 'business' | null
-let savedSkills  = '';
-let savedIdeas   = [];
-let chosenIdeaIdx = null;
-let convoHistory = [];
-let pendingClarify = false;
-let replyCounter = 0;
-
-// ─── Static data ─────────────────────────────────────────────────────────────
-const STAGES = [
-  {
-    label: 'First Win',
-    desc: 'Get your first result — proof this works.',
-    tasks: [
-      "Complete one paying transaction or get first interview callback",
-      "Tell 5 people what you're doing",
-      "Spend 30 minutes per day on this — no exceptions"
-    ]
-  },
-  {
-    label: 'Getting Established',
-    desc: 'Build consistency and a small reputation.',
-    tasks: [
-      "Get 3 repeat clients or 3 interviews",
-      "Set up a simple online presence",
-      "Track your income or progress weekly"
-    ]
-  },
-  {
-    label: 'Sustainable Income',
-    desc: 'Make this your primary income stream.',
-    tasks: [
-      "Hit your monthly income goal for 3 months straight",
-      "Automate or streamline at least one process",
-      "Set aside savings for the first time"
-    ]
-  },
-  {
-    label: 'Scale Up',
-    desc: 'Grow beyond just yourself.',
-    tasks: [
-      "Bring in help or delegate one task",
-      "Set a 12-month growth goal",
-      "Invest back into your business or skills"
-    ]
-  }
+let selectedPath=null,savedSkills='',savedIdeas=[],chosenIdeaIdx=null,convoHistory=[],pendingClarify=false,replyCounter=0;
+const STAGES=[
+  {label:'First Win',desc:'Get your first result — proof this works.',tasks:['Complete one paying transaction or get first interview callback','Tell 5 people what you\'re doing','Spend 30 minutes per day on this — no exceptions']},
+  {label:'Getting Established',desc:'Build consistency and a small reputation.',tasks:['Get 3 repeat clients or 3 interviews','Set up a simple online presence','Track your income or progress weekly']},
+  {label:'Sustainable Income',desc:'Make this your primary income stream.',tasks:['Hit your monthly income goal for 3 months straight','Automate or streamline at least one process','Set aside savings for the first time']},
+  {label:'Scale Up',desc:'Grow beyond just yourself.',tasks:['Bring in help or delegate one task','Set a 12-month growth goal','Invest back into your business or skills']}
 ];
-
-// ─── Utilities ───────────────────────────────────────────────────────────────
-const delay = ms => new Promise(r => setTimeout(r, ms));
-
-function esc(s) {
-  return String(s)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+window.addEventListener('load',()=>{setTimeout(()=>{document.getElementById('page-loader').classList.add('fade-out');setTimeout(()=>document.getElementById('page-loader').style.display='none',500)},800)});
+function selectPath(p){selectedPath=p;document.querySelectorAll('.path-btn').forEach(b=>b.classList.remove('selected'));document.getElementById('btn-'+p).classList.add('selected');const h=document.getElementById('prompt-hint-text');if(p==='profession'){h.textContent='e.g. healthcare, tech, trades…';document.getElementById('skills-input').placeholder='e.g. I have 2 years of customer service, I enjoy organizing things...'}else{h.textContent='e.g. I want to earn $3k/month...';document.getElementById('skills-input').placeholder='e.g. I can cook, I have $200 to start, I want to work from home...'}document.getElementById('skills-input').focus()}
+function fillPrompt(t){document.getElementById('skills-input').value=t;document.getElementById('skills-input').focus()}
+function showScreen(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-'+n).append('active');document.getElementById('nav-home-btn').classList.toggle('active',n==='main');window.scrollTo({top:0,behavior:'smooth'})}
+function resetAll(){selectedPath=null;savedSkills='';savedIdeas=[];chosenIdeaIdx=null;convoHistory=[];pendingClarify=false;replyCounter=0;document.querySelectorAll('.path-btn').forEach(b=>b.classList.remove('selected'));document.getElementById('skills-input').value='';document.getElementById('prompt-hint-text').textContent='Be honest. There\'s no wrong answer.';document.getElementById('skills-input').placeholder='Tell us about yourself — skills, background, what you enjoy, what you need…';['path-chooser','prompt-wrap','pills-wrap'].forEach(id=>document.getElementById(id).style.display='');document.getElementById('bubble-chain').innerHTML='';document.getElementById('convo-thread').style.display='none';document.getElementById('ideas-panel').style.display='none';document.getElementById('journey-panel').style.display='none';showScreen('main')}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function fmt(t){return t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')}
+function scrollBottom(){setTimeout(()=>{const c=document.getElementById('bubble-chain');if(c.lastElementChild)c.lastElementChild.scrollIntoView({behavior:'smooth',block:'end'})},130)}
+function showThread(){document.getElementById('convo-thread').style.display='block'}
+function addUserNode(text){
+  showThread();const chain=document.getElementById('bubble-chain');
+  const pair=document.createElement('div');pair.className='chain-pair';
+  pair.innerHTML=`<div class="chain-user"><div class="node-user">${esc(text)}</div></div>`;
+  chain.appendChild(pair);scrollBottom();return pair;
+}
+function addConnectorAndTyping(pair){
+  const conn=document.createElement('div');conn.className='chain-connector';
+  conn.innerHTML=`<div class="connector-dot"></div><div class="connector-line"></div><div class="connector-dot"></div>`;
+  pair.appendChild(conn);
+  const aiRow=document.createElement('div');aiRow.className='chain-ai';aiRow.id='typing-ai';
+  aiRow.innerHTML=`<div class="node-ai-wrap"><div class="node-ai-label"><span class="node-ai-pulse"></span>whatimado</div><div class="node-ai"><div class="typing-dots"><span></span><span></span><span></span></div></div></div>`;
+  pair.appendChild(aiRow);scrollBottom();return pair;
+}
+function resolveTyping(text,hasChoices,choices,showReply){
+  const aiRow=document.getElementById('typing-ai');if(!aiRow)return;
+  aiRow.removeAttribute('id');replyCounter++;const rid='r'+replyCounter;
+  let cHTML='';
+  if(hasChoices&&choices.length)cHTML=`<div class="choice-btns">${choices.map(c=>`<button class="choice-btn" onclick="clarifyChoice('${c.val}')">${esc(c.label)}</button>`).join('')}</div>`;
+  aiRow.innerHTML=`<div class="node-ai-wrap"><div class="node-ai-label"><span class="node-ai-pulse"></span>whatimado</div><div class="node-ai">${fmt(text)}${cHTML}</div></div>`;
+  if(showReply&&!hasChoices){
+    const chain=document.getElementById('bubble-chain');
+    const rp=document.createElement('div');rp.className='chain-pair';
+    rp.innerHTML=`<div class="chain-connector"><div class="connector-dot"></div><div class="connector-line"></div><div class="connector-dot"></div></div><div class="chain-reply"><div class="node-reply" id="${rid}box"><textarea class="reply-ta" id="${rid}" placeholder="Reply…" rows="2" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendReply('${rid}','${rid}box')}"></textarea><div class="reply-foot"><button class="reply-send" onclick="sendReply('${rid}','${rid}box')">Send →</button></div></div></div>`;
+    chain.appendChild(rp);scrollBottom();
+    setTimeout(()=>{const ta=document.getElementById(rid);if(ta)ta.focus()},300);
+  }
+  scrollBottom();
 }
 
-function fmt(t) {
-  return t
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\n\n/g, '<br><br>')
-    .replace(/\n/g, '<br>');
-}
-
-function scrollToBottom() {
-  setTimeout(() => {
-    const last = document.getElementById('bubble-chain').lastElementChild;
-    if (last) last.scrollIntoView({ behavior: 'smooth', block: 'end' });
-  }, 130);
-}
-
-// ─── Init ────────────────────────────────────────────────────────────────────
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    const loader = document.getElementById('page-loader');
-    if (loader) {
-      loader.classList.add('fade-out');
-      setTimeout(() => loader.style.display = 'none', 500);
-    }
-  }, 800);
-});
-
-// ─── Navigation ──────────────────────────────────────────────────────────────
-function showScreen(name) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  const target = document.getElementById('screen-' + name);
-  if (target) target.classList.add('active');
+/* MODIFIED: Changed results parsing to format options inside the alternating node bubbles track */
+function resolveTypingIdeas(ideas){
+  const aiRow=document.getElementById('typing-ai');if(!aiRow)return;
+  aiRow.removeAttribute('id');replyCounter++;const rid='r'+replyCounter;
   
-  document.getElementById('nav-home-btn').classList.toggle('active', name === 'main');
-  document.getElementById('nav-store-btn').classList.toggle('active', name === 'store');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function resetAll() {
-  selectedPath   = null;
-  savedSkills    = '';
-  savedIdeas     = [];
-  chosenIdeaIdx  = null;
-  convoHistory   = [];
-  pendingClarify = false;
-  replyCounter   = 0;
-
-  document.querySelectorAll('.path-btn').forEach(b => b.classList.remove('selected'));
-  document.getElementById('skills-input').value = '';
-  document.getElementById('prompt-hint-text').textContent = "Be honest. There's no wrong answer.";
-  document.getElementById('skills-input').placeholder = 'Tell us about yourself — skills, background, what you enjoy, what you need…';
-
-  ['path-chooser', 'prompt-wrap', 'pills-wrap'].forEach(id => {
-    document.getElementById(id).style.display = '';
-  });
-
-  document.getElementById('bubble-chain').innerHTML = '';
-  document.getElementById('convo-thread').style.display = 'none';
-  document.getElementById('ideas-panel').style.display = 'none';
-  document.getElementById('journey-panel').style.display = 'none';
-
-  showScreen('main');
-}
-
-// ─── Input helpers ───────────────────────────────────────────────────────────
-function selectPath(p) {
-  selectedPath = p;
-  document.querySelectorAll('.path-btn').forEach(b => b.classList.remove('selected'));
-  document.getElementById('btn-' + p).classList.add('selected');
-
-  const ta   = document.getElementById('skills-input');
-  const hint = document.getElementById('prompt-hint-text');
-  if (p === 'profession') {
-    hint.textContent  = 'e.g. healthcare, tech, trades…';
-    ta.placeholder    = 'e.g. I have 2 years of customer service, I enjoy organizing things...';
-  } else {
-    hint.textContent  = 'e.g. I want to earn $3k/month...';
-    ta.placeholder    = 'e.g. I can cook, I have $200 to start, I want to work from home...';
-  }
-  ta.focus();
-}
-
-// ─── Bubble chain builders ────────────────────────────────────────────────────
-function showThread() {
-  document.getElementById('convo-thread').style.display = 'block';
-}
-
-function makeConnectorHTML() {
-  return `<div class="chain-connector">
-    <div class="connector-dot"></div>
-    <div class="connector-line"></div>
-    <div class="connector-dot"></div>
-  </div>`;
-}
-
-function addUserNode(text) {
-  showThread();
-  const chain = document.getElementById('bubble-chain');
-  const pair  = document.createElement('div');
-  pair.className = 'chain-pair';
-  pair.innerHTML = `<div class="chain-user"><div class="node-user">${esc(text)}</div></div>`;
-  chain.appendChild(pair);
-  scrollToBottom();
-  return pair;
-}
-
-function addTypingIndicator(pair) {
-  pair.insertAdjacentHTML('beforeend', makeConnectorHTML());
-  pair.insertAdjacentHTML('beforeend', `
-    <div class="chain-ai" id="typing-ai">
-      <div class="node-ai-wrap">
-        <div class="node-ai-label"><span class="node-ai-pulse"></span>whatimado</div>
-        <div class="node-ai"><div class="typing-dots"><span></span><span></span><span></span></div></div>
-      </div>
-    </div>`);
-  scrollToBottom();
-}
-
-function makeReplyBoxHTML(id) {
-  return `
-    ${makeConnectorHTML()}
-    <div class="chain-reply">
-      <div class="node-reply" id="${id}box">
-        <textarea class="reply-ta" id="${id}" placeholder="Reply…" rows="2"
-          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendReply('${id}')}"></textarea>
-        <div class="reply-foot">
-          <button class="reply-send" onclick="sendReply('${id}')">Send →</button>
-        </div>
-      </div>
-    </div>`;
-}
-
-function resolveTyping(text, choices = [], showReply = false) {
-  const aiRow = document.getElementById('typing-ai');
-  if (!aiRow) return;
-  aiRow.removeAttribute('id');
-
-  const choiceHTML = choices.length
-    ? `<div class="choice-btns">${choices.map(c =>
-        `<button class="choice-btn" onclick="clarifyChoice('${c.val}')">${esc(c.label)}</button>`
-      ).join('')}</div>`
-    : '';
-
-  aiRow.innerHTML = `
-    <div class="node-ai-wrap">
-      <div class="node-ai-label"><span class="node-ai-pulse"></span>whatimado</div>
-      <div class="node-ai">${fmt(text)}${choiceHTML}</div>
-    </div>`;
-
-  if (showReply && !choices.length) {
-    replyCounter++;
-    const rid  = 'r' + replyCounter;
-    const pair = document.createElement('div');
-    pair.className = 'chain-pair';
-    pair.innerHTML = makeReplyBoxHTML(rid);
-    document.getElementById('bubble-chain').appendChild(pair);
-    scrollToBottom();
-    setTimeout(() => document.getElementById(rid)?.focus(), 300);
-  }
-
-  scrollToBottom();
-}
-
-function resolveTypingIdeas(ideas) {
-  const aiRow = document.getElementById('typing-ai');
-  if (!aiRow) return;
-  aiRow.removeAttribute('id');
-  replyCounter++;
-  const rid = 'r' + replyCounter;
-
-  const cardsHTML = ideas.map((idea, i) => {
-    const align = i % 2 === 0 ? 'align-left' : 'align-right';
+  // Build up the alternating rows with left/right stagger adjustments
+  const cards = ideas.map((idea, i) => {
+    const alignmentClass = (i % 2 === 0) ? 'align-left' : 'align-right';
     return `
-      <div class="node-ai-track-row ${align}">
+      <div class="node-ai-track-row ${alignmentClass}">
         <div class="idea-card" onclick="expandIdea(${i})">
           <div class="idea-card-tag">${esc(idea.type)}</div>
           <div class="idea-card-title">${esc(idea.name)}</div>
           <div class="idea-card-desc">${esc(idea.tagline)}</div>
         </div>
-      </div>`;
+      </div>
+    `;
   }).join('');
 
+  // Draw the entire path layout track inside the AI node bubble element block
   aiRow.innerHTML = `
     <div class="node-ai-wrap">
       <div class="node-ai-label"><span class="node-ai-pulse"></span>whatimado</div>
       <div class="node-ai">
-        Here are <strong>${ideas.length} custom options</strong> structured for you.
-        Tap a bubble map node to open its business blueprint track:
+        Here are <strong>${ideas.length} custom options</strong> structured for you. Tap a bubble map node to open its business blueprint track:
+        
         <div class="node-ai-tree-track">
           <div class="node-ai-track-spine"></div>
-          ${cardsHTML}
+          ${cards}
           <div class="node-ai-track-row align-center">
             <div class="idea-card more-node-bubble" onclick="openHelpConvo()">
-              <span style="font-size:14px;color:var(--mid);margin-bottom:2px;">+</span>
+              <span style="font-size:14px; color:var(--mid); margin-bottom:2px;">+</span>
               <div class="idea-card-title" style="color:var(--mid);">More</div>
               <div class="idea-card-desc" style="color:var(--faint);">ideas</div>
             </div>
           </div>
         </div>
-      </div>
-    </div>`;
 
-  const pair = document.createElement('div');
-  pair.className = 'chain-pair';
-  pair.innerHTML = `
-    ${makeConnectorHTML()}
-    <div class="chain-reply">
-      <div class="node-reply" id="${rid}box">
-        <textarea class="reply-ta" id="${rid}" placeholder="Ask a question or say more…" rows="2"
-          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendReply('${rid}')}"></textarea>
-        <div class="reply-foot">
-          <button class="reply-send" onclick="sendReply('${rid}')">Send →</button>
-        </div>
       </div>
-    </div>`;
-  document.getElementById('bubble-chain').appendChild(pair);
-  scrollToBottom();
+    </div>
+  `;
+  
+  const chain=document.getElementById('bubble-chain');
+  const rp=document.createElement('div');rp.className='chain-pair';
+  rp.innerHTML=`<div class="chain-connector"><div class="connector-dot"></div><div class="connector-line"></div><div class="connector-dot"></div></div><div class="chain-reply"><div class="node-reply" id="${rid}box"><textarea class="reply-ta" id="${rid}" placeholder="Ask a question or say more…" rows="2" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendReply('${rid}','${rid}box')}"></textarea><div class="reply-foot"><button class="reply-send" onclick="sendReply('${rid}','${rid}box')">Send →</button></div></div></div>`;
+  chain.appendChild(rp);scrollBottom();
 }
 
-// ─── Conversation flow ────────────────────────────────────────────────────────
-async function startConvo() {
-  const input = document.getElementById('skills-input').value.trim();
-  if (!input) { document.getElementById('skills-input').focus(); return; }
-
-  savedSkills  = input;
-  convoHistory = [];
-
-  ['path-chooser', 'prompt-wrap', 'pills-wrap'].forEach(id => {
-    document.getElementById(id).style.display = 'none';
-  });
-
-  const pair = addUserNode(input);
-  addTypingIndicator(pair);
-
-  const isVague = input.split(' ').length < 5 || input.length < 20;
-  if (isVague) {
-    await delay(1200);
-    resolveTyping(
-      'Got it. One quick question — <strong>are you looking for a job or career path, or do you want to build your own business?</strong>',
-      [
-        { label: 'Find a job or career',   val: 'clarify_profession' },
-        { label: 'Build my own business',  val: 'clarify_business'   }
-      ]
-    );
-    pendingClarify = true;
-    return;
-  }
-
+async function startConvo(){
+  const input=document.getElementById('skills-input').value.trim();
+  if(!input){document.getElementById('skills-input').focus();return}
+  savedSkills=input;convoHistory=[];
+  ['path-chooser','prompt-wrap','pills-wrap'].forEach(id=>document.getElementById(id).style.display='none');
+  const pair=addUserNode(input);addConnectorAndTyping(pair);
+  const isVague=input.split(' ').length<5||input.length<20;
+  if(isVague){await delay(1200);resolveTyping('Got it. One quick question — <strong>are you looking for a job or career path, or do you want to build your own business?</strong>',true,[{label:'Find a job or career',val:'clarify_profession'},{label:'Build my own business',val:'clarify_business'}],false);pendingClarify=true;return}
   await generateIdeas(input);
 }
-
-async function generateIdeas(input, extra = '') {
-  const pathHint = selectedPath === 'profession'
-    ? 'This person wants career/job options.'
-    : selectedPath === 'business'
-    ? 'This person wants business/entrepreneurship ideas.'
-    : '';
-
-  const prompt = `You are a no-fluff advisor helping real people including those starting from zero. Return EXACTLY valid JSON no markdown no preamble.
-${pathHint}
-Background: "${input}${extra}"
-If homeless/broke/zero resources: suggest only zero-cost immediate cash ideas. Never suggest anything demeaning.
-Return EXACTLY:
-{"clarify":false,"message":"One warm sentence acknowledging their situation","ideas":[{"name":"Name","type":"career|business|hustle","tagline":"1 sentence","description":"2 sentences max","why_you":"1 sentence specifically why this fits them","reality_check":"1 honest sentence"}]}`;
-
-  try {
-    const data = await callClaude(prompt);
-    resolveTyping(data.message || "Here's what I see for you:");
+async function generateIdeas(input,extra=''){
+  const pathHint=selectedPath==='profession'?'This person wants career/job options.':selectedPath==='business'?'This person wants business/entrepreneurship ideas.':'';
+  const prompt=`You are a no-fluff advisor helping real people including those starting from zero. Return EXACTLY valid JSON no markdown no preamble.\n${pathHint}\nBackground: "${input}${extra}"\nIf homeless/broke/zero resources: suggest only zero-cost immediate cash ideas. Never suggest anything demeaning.\nReturn EXACTLY:\n{"clarify":false,"message":"One warm sentence acknowledging their situation","ideas":[{"name":"Name","type":"career|business|hustle","tagline":"1 sentence","description":"2 sentences max","why_you":"1 sentence specifically why this fits them","reality_check":"1 honest sentence"}]}`;
+  try{
+    const data=await callClaude(prompt);
+    resolveTyping(data.message||'Here\'s what I see for you:',false,[],false);
     await delay(500);
-
-    const chain = document.getElementById('bubble-chain');
-    const pair2 = document.createElement('div');
-    pair2.className = 'chain-pair';
-    pair2.innerHTML = makeConnectorHTML();
-    chain.appendChild(pair2);
-    addTypingIndicator(pair2);
-    await delay(700);
-
-    savedIdeas = data.ideas || [];
-    resolveTypingIdeas(savedIdeas);
-  } catch(e) {
-    resolveTyping('Something went wrong. Mind trying again?');
-  }
+    const chain=document.getElementById('bubble-chain');
+    const p2=document.createElement('div');p2.className='chain-pair';
+    p2.innerHTML=`<div class="chain-connector"><div class="connector-dot"></div><div class="connector-line"></div><div class="connector-dot"></div></div>`;
+    chain.appendChild(p2);addConnectorAndTyping(p2);await delay(700);
+    savedIdeas=data.ideas||[];resolveTypingIdeas(savedIdeas);
+  }catch(e){resolveTyping('Something went wrong. Mind trying again?',false,[],false)}
 }
-
-function clarifyChoice(val) {
-  pendingClarify = false;
-  selectedPath   = val === 'clarify_profession' ? 'profession' : 'business';
-  const label    = val === 'clarify_profession' ? 'Find a job or career' : 'Build my own business';
-
-  const chain = document.getElementById('bubble-chain');
-  const pair  = document.createElement('div');
-  pair.className = 'chain-pair';
-  pair.innerHTML = `${makeConnectorHTML()}<div class="chain-user"><div class="node-user">${esc(label)}</div></div>`;
-  chain.appendChild(pair);
-  addTypingIndicator(pair);
-
-  generateIdeas(savedSkills, ` They want: ${label}`);
+async function sendReply(rid,boxId){
+  const ta=document.getElementById(rid);if(!ta)return;
+  const msg=ta.value.trim();if(!msg)return;
+  const box=document.getElementById(boxId);if(box)box.style.display='none';
+  const chain=document.getElementById('bubble-chain');
+  const pair=document.createElement('div');pair.className='chain-pair';
+  pair.innerHTML=`<div class="chain-connector"><div class="connector-dot"></div><div class="connector-line"></div><div class="connector-dot"></div></div><div class="chain-user"><div class="node-user">${esc(msg)}</div></div>`;
+  chain.appendChild(pair);addConnectorAndTyping(pair);
+  if(pendingClarify){pendingClarify=false;selectedPath=msg.toLowerCase().includes('job')||msg.toLowerCase().includes('career')?'profession':'business';await generateIdeas(savedSkills,` They want: ${msg}`);return}
+  const chosenIdea=chosenIdeaIdx!==null?savedIdeas[chosenIdeaIdx]:null;
+  const ctx=chosenIdea?`They are pursuing: "${chosenIdea.name}". `:'';
+  const hist=convoHistory.slice(-6).map(m=>`${m.role}: ${m.content}`).join('\n');
+  const prompt=`You are a direct warm advisor for someone building their future. No fluff no corporate speak. Be real.\n${ctx}Background: "${savedSkills}".\nRecent conversation:\n${hist}\nUser just said: "${msg}"\nReply in 2-3 short paragraphs. Be honest and practical.`;
+  try{
+    const r=await fetch('/api/claude.js',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,messages:[{role:'user',content:prompt}]})});
+    const d=await r.json();const text=d.content.map(c=>c.text||'').join('');
+    resolveTyping(text,false,[],true);convoHistory.push({role:'user',content:msg},{role:'assistant',content:text});
+  }catch(e){resolveTyping('Something went wrong. Try again?',false,[],true)}
 }
-
-async function sendReply(rid) {
-  const ta = document.getElementById(rid);
-  if (!ta) return;
-  const msg = ta.value.trim();
-  if (!msg) return;
-
-  const box = document.getElementById(rid + 'box');
-  if (box) box.style.display = 'none';
-
-  const chain = document.getElementById('bubble-chain');
-  const pair  = document.createElement('div');
-  pair.className = 'chain-pair';
-  pair.innerHTML = `${makeConnectorHTML()}<div class="chain-user"><div class="node-user">${esc(msg)}</div></div>`;
-  chain.appendChild(pair);
-  addTypingIndicator(pair);
-
-  if (pendingClarify) {
-    pendingClarify = false;
-    selectedPath   = msg.toLowerCase().includes('job') || msg.toLowerCase().includes('career')
-      ? 'profession'
-      : 'business';
-    await generateIdeas(savedSkills, ` They want: ${msg}`);
-    return;
-  }
-
-  const ctx  = chosenIdeaIdx !== null ? `They are pursuing: "${savedIdeas[chosenIdeaIdx].name}". ` : '';
-  const hist = convoHistory.slice(-6).map(m => `${m.role}: ${m.content}`).join('\n');
-  const prompt = `You are a direct warm advisor for someone building their future. No fluff no corporate speak. Be real.
-${ctx}Background: "${savedSkills}".
-Recent conversation:
-${hist}
-User just said: "${msg}"
-Reply in 2-3 short paragraphs. Be honest and practical.`;
-
-  try {
-    const r    = await fetch('/api/claude.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-3-5-sonnet-20241022', max_tokens: 500, messages: [{ role: 'user', content: prompt }] })
-    });
-    const d    = await r.json();
-    const text = d.content.map(c => c.text || '').join('');
-    resolveTyping(text, [], true);
-    convoHistory.push({ role: 'user', content: msg }, { role: 'assistant', content: text });
-  } catch(e) {
-    resolveTyping('Something went wrong. Try again?', [], true);
-  }
+function clarifyChoice(val){
+  pendingClarify=false;const label=val==='clarify_profession'?'Find a job or career':'Build my own business';
+  selectedPath=val==='clarify_profession'?'profession':'business';
+  const chain=document.getElementById('bubble-chain');
+  const pair=document.createElement('div');pair.className='chain-pair';
+  pair.innerHTML=`<div class="chain-connector"><div class="connector-dot"></div><div class="connector-line"></div><div class="connector-dot"></div></div><div class="chain-user"><div class="node-user">${esc(label)}</div></div>`;
+  chain.appendChild(pair);addConnectorAndTyping(pair);generateIdeas(savedSkills,` They want: ${label}`);
 }
-
-function openHelpConvo() {
-  ['path-chooser', 'prompt-wrap', 'pills-wrap'].forEach(id => {
-    document.getElementById(id).style.display = 'none';
-  });
-  showThread();
-
-  const chain = document.getElementById('bubble-chain');
-  const pair  = document.createElement('div');
-  pair.className = 'chain-pair';
-  chain.appendChild(pair);
-  addTypingIndicator(pair);
-
-  setTimeout(() => {
-    resolveTyping(
-      "What's on your mind? Ask me anything — about your options, how to get started, money, skills, whatever.",
-      [], true
-    );
-  }, 500);
+function openHelpConvo(){
+  ['path-chooser','prompt-wrap','pills-wrap'].forEach(id=>document.getElementById(id).style.display='none');
+  showThread();const chain=document.getElementById('bubble-chain');
+  const pair=document.createElement('div');pair.className='chain-pair';chain.appendChild(pair);
+  addConnectorAndTyping(pair);
+  setTimeout(()=>resolveTyping("What's on your mind? Ask me anything — about your options, how to get started, money, skills, whatever.",false,[],true),500);
 }
-
-// ─── Ideas & Journey panels ───────────────────────────────────────────────────
-function expandIdea(idx) {
-  document.getElementById('convo-thread').style.display = 'none';
-
-  const grid = document.getElementById('ideas-grid');
-  grid.innerHTML = '';
-
-  savedIdeas.forEach((idea, i) => {
-    const tile = document.createElement('div');
-    tile.className = 'idea-tile';
-    tile.innerHTML = `
-      <div class="it-type">${esc(idea.type)}</div>
-      <div class="it-name">${esc(idea.name)}</div>
-      <div class="it-tagline">${esc(idea.tagline)}</div>
-      <div class="it-why">${esc(idea.why_you || idea.reality_check)}</div>
-      <button class="it-choose-btn" onclick="chooseIdea(${i})">Start this →</button>`;
-    grid.appendChild(tile);
-  });
-
-  document.getElementById('ideas-panel').style.display = 'block';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+function expandIdea(idx){
+  document.getElementById('convo-thread').style.display='none';
+  const grid=document.getElementById('ideas-grid');grid.innerHTML='';
+  savedIdeas.forEach((id,i)=>{const tile=document.createElement('div');tile.className='idea-tile';tile.innerHTML=`<div class="it-type">${esc(id.type)}</div><div class="it-name">${esc(id.name)}</div><div class="it-tagline">${esc(id.tagline)}</div><div class="it-why">${esc(id.why_you||id.reality_check)}</div><button class="it-choose-btn" onclick="chooseIdea(${i})">Start this →</button>`;grid.appendChild(tile)});
+  document.getElementById('ideas-panel').style.display='block';window.scrollTo({top:0,behavior:'smooth'});
 }
-
-function showIdeas() {
-  document.getElementById('journey-panel').style.display = 'none';
-  document.getElementById('ideas-panel').style.display = 'block';
+function showIdeas(){document.getElementById('journey-panel').style.display='none';document.getElementById('ideas-panel').style.display='block'}
+function chooseIdea(idx){
+  chosenIdeaIdx=idx;const idea=savedIdeas[idx];
+  document.getElementById('ideas-panel').style.display='none';
+  document.getElementById('jh-type').textContent=idea.type;
+  document.getElementById('jh-title').textContent=idea.name;
+  document.getElementById('jh-sub').textContent=idea.description;
+  const sl=document.getElementById('stages-list');sl.innerHTML='';
+  STAGES.forEach((s,i)=>{const done=JSON.parse(localStorage.getItem(`wiad_done_${idx}`)||'[]');const isDone=done.includes(i);const c=document.createElement('div');c.className='stage-card'+(isDone?' done':'')+(i===0?' open':'');c.innerHTML=`<div class="stage-head" onclick="toggleStage(${i})"><div class="stage-num">${isDone?'✓':i+1}</div><div class="stage-label">${s.label}</div><span class="stage-arrow">›</span></div><div class="stage-body"><p class="stage-desc">${s.desc}</p><div class="tasks">${s.tasks.map((t,ti)=>`<div class="task-row"><input type="checkbox" class="task-check" ${isDone?'checked':''} onchange="saveTask(${i},${ti},this.checked)"><span class="task-text">${t}</span></div>`).join('')}</div><button class="stage-done-btn${isDone?' completed':''}" onclick="markStageDone(${i})">${isDone?'Done':'Mark complete'}</button></div>`;sl.appendChild(c)});
+  document.getElementById('journey-panel').style.display='block';window.scrollTo({top:0,behavior:'smooth'});
 }
-
-function chooseIdea(idx) {
-  chosenIdeaIdx = idx;
-  const idea    = savedIdeas[idx];
-
-  document.getElementById('ideas-panel').style.display = 'none';
-  document.getElementById('jh-type').textContent  = idea.type;
-  document.getElementById('jh-title').textContent = idea.name;
-  document.getElementById('jh-sub').textContent   = idea.description;
-
-  const doneStages = JSON.parse(localStorage.getItem(`wiad_done_${idx}`) || '[]');
-  const list = document.getElementById('stages-list');
-  list.innerHTML = '';
-
-  STAGES.forEach((stage, i) => {
-    const isDone = doneStages.includes(i);
-    const card   = document.createElement('div');
-    card.className = 'stage-card' + (isDone ? ' done' : '') + (i === 0 ? ' open' : '');
-    card.innerHTML = `
-      <div class="stage-head" onclick="toggleStage(${i})">
-        <div class="stage-num">${isDone ? '✓' : i + 1}</div>
-        <div class="stage-label">${stage.label}</div>
-        <span class="stage-arrow">›</span>
-      </div>
-      <div class="stage-body">
-        <p class="stage-desc">${stage.desc}</p>
-        <div class="tasks">
-          ${stage.tasks.map(t => `
-            <div class="task-row">
-              <input type="checkbox" class="task-check" ${isDone ? 'checked' : ''} disabled>
-              <span class="task-text">${t}</span>
-            </div>`).join('')}
-        </div>
-        <button class="stage-done-btn${isDone ? ' completed' : ''}" onclick="markStageDone(${i}); event.stopPropagation();">
-          ${isDone ? 'Done' : 'Mark complete'}
-        </button>
-      </div>`;
-    list.appendChild(card);
-  });
-
-  document.getElementById('journey-panel').style.display = 'block';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function toggleStage(i) {
-  const cards = document.querySelectorAll('.stage-card');
-  if(cards[i]) {
-    cards[i].classList.toggle('open');
-  }
-}
-
-function markStageDone(i) {
-  if (chosenIdeaIdx === null) return;
-  const key  = `wiad_done_${chosenIdeaIdx}`;
-  const done = JSON.parse(localStorage.getItem(key) || '[]');
-  if (!done.includes(i)) done.push(i);
-  localStorage.setItem(key, JSON.stringify(done));
-  launchCelebration();
-  setTimeout(() => chooseIdea(chosenIdeaIdx), 1200);
-}
-
-// ─── API ──────────────────────────────────────────────────────────────────────
-async function callClaude(prompt) {
-  const r = await fetch('/api/claude.js', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 
-      model: 'claude-3-5-sonnet-20241022', 
-      max_tokens: 1000, 
-      messages: [{ role: 'user', content: prompt }] 
-    })
-  });
-  
-  const data = await r.json();
-  const text = data.content.map(c => c.text || '').join('');
-  const clean = text.replace(/```json|```/g, '').trim();
-  const match = clean.match(/\{[\s\S]*\}/);
-  if (!match) throw new Error('No JSON found in response');
-  return JSON.parse(match[0]);
-}
-
-// ─── Celebration ──────────────────────────────────────────────────────────────
-function launchCelebration() {
-  const colors = ['#2bbfbf', '#3dd4d4', '#b3eeee', '#0f1923', '#5a8a6a'];
-  for (let i = 0; i < 50; i++) {
-    setTimeout(() => {
-      const el = document.createElement('div');
-      el.className = 'confetti-piece';
-      el.style.cssText = `
-        left:${Math.random() * 100}vw;
-        background:${colors[Math.floor(Math.random() * colors.length)]};
-        animation-duration:${1.5 + Math.random() * 2}s;
-        animation-delay:${Math.random() * .5}s;
-        transform:rotate(${Math.random() * 360}deg)`;
-      document.body.appendChild(el);
-      setTimeout(() => el.remove(), 4000);
-    }, i * 30);
-  }
-}
-
-function fillPrompt(text) {
-  document.getElementById('skills-input').value = text;
-  document.getElementById('skills-input').focus();
-}
+function toggleStage(i){document.querySelectorAll('.stage-card').forEach((c,ci)=>{if(ci===i)c.classList.toggle('open');else c.classList.remove('open')})}
+function saveTask(){}
+function markStageDone(i){if(chosenIdeaIdx===null)return;const done=JSON.parse(localStorage.getItem(`wiad_done_${chosenIdeaIdx}`)||'[]');if(!done.includes(i))done.push(i);localStorage.setItem(`wiad_done_${chosenIdeaIdx}`,JSON.stringify(done));launchCelebration();setTimeout(()=>chooseIdea(chosenIdeaIdx),1200)}
+async function callClaude(prompt){
+  const r=await fetch('/api/claude.js',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});const data=await r.json();const text=data.content.map(c=>c.text||'').join('');const clean=text.replace(/```json|```/g,'').trim();const m=clean.match(/\{[\s\S]*\}/);if(!m)throw new Error('No JSON');return JSON.parse(m[0])}
+function delay(ms){return new Promise(r=>setTimeout(r,ms))}
+function launchCelebration(){const colors=['#2bbfbf','#3dd4d4','#b3eeee','#0f1923','#5a8a6a'];for(let i=0;i<50;i++){setTimeout(()=>{const el=document.createElement('div');el.className='confetti-piece';el.style.left=Math.random()*100+'vw';el.style.background=colors[Math.floor(Math.random()*colors.length)];el.style.animationDuration=(1.5+Math.random()*2)+'s';el.style.animationDelay=(Math.random()*.5)+'s';el.style.transform=`rotate(${Math.random()*360}deg)`;document.body.appendChild(el);setTimeout(()=>el.remove(),4000)},i*30)}}
 </script>
 </body>
 </html>
