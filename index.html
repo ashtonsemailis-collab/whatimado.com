@@ -184,7 +184,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .jh-sub{font-size:.875rem;color:var(--text2);font-weight:400;line-height:1.75;margin-bottom:2rem}
 .stages{display:flex;flex-direction:column;gap:.75rem}
 .stage-card{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);overflow:hidden;transition:all .18s;box-shadow:var(--shadow-sm)}
-.stage-card.open{border-color:var(--aqua4);box-shadow:var(--shadow-md)}
+.stage-card.open {border-color:var(--aqua4);box-shadow:var(--shadow-md)}
 .stage-head{display:flex;align-items:center;gap:.875rem;padding:.95rem 1.1rem;cursor:pointer}
 .stage-num{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:var(--text3);flex-shrink:0;transition:all .18s}
 .stage-card.done .stage-num{background:linear-gradient(135deg,#2bbfbf,#3dd4d4);border-color:transparent;color:#fff;box-shadow:0 2px 8px rgba(43,191,191,.4)}
@@ -432,15 +432,19 @@ function scrollToBottom() {
 window.addEventListener('load', () => {
   setTimeout(() => {
     const loader = document.getElementById('page-loader');
-    loader.classList.add('fade-out');
-    setTimeout(() => loader.style.display = 'none', 500);
+    if (loader) {
+      loader.classList.add('fade-out');
+      setTimeout(() => loader.style.display = 'none', 500);
+    }
   }, 800);
 });
 
 // ─── Navigation ──────────────────────────────────────────────────────────────
 function showScreen(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById('screen-' + name).classList.add('active');
+  const target = document.getElementById('screen-' + name);
+  if (target) target.classList.add('active');
+  
   document.getElementById('nav-home-btn').classList.toggle('active', name === 'main');
   document.getElementById('nav-store-btn').classList.toggle('active', name === 'store');
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -488,11 +492,6 @@ function selectPath(p) {
     ta.placeholder    = 'e.g. I can cook, I have $200 to start, I want to work from home...';
   }
   ta.focus();
-}
-
-function fillPrompt(text) {
-  document.getElementById('skills-input').value = text;
-  document.getElementById('skills-input').focus();
 }
 
 // ─── Bubble chain builders ────────────────────────────────────────────────────
@@ -693,7 +692,7 @@ Return EXACTLY:
 
     savedIdeas = data.ideas || [];
     resolveTypingIdeas(savedIdeas);
-  } catch {
+  } catch(e) {
     resolveTyping('Something went wrong. Mind trying again?');
   }
 }
@@ -719,11 +718,9 @@ async function sendReply(rid) {
   const msg = ta.value.trim();
   if (!msg) return;
 
-  // Hide the reply box
   const box = document.getElementById(rid + 'box');
   if (box) box.style.display = 'none';
 
-  // Append user bubble
   const chain = document.getElementById('bubble-chain');
   const pair  = document.createElement('div');
   pair.className = 'chain-pair';
@@ -731,7 +728,6 @@ async function sendReply(rid) {
   chain.appendChild(pair);
   addTypingIndicator(pair);
 
-  // If we were waiting on a clarification answer, use it as path selection
   if (pendingClarify) {
     pendingClarify = false;
     selectedPath   = msg.toLowerCase().includes('job') || msg.toLowerCase().includes('career')
@@ -741,7 +737,6 @@ async function sendReply(rid) {
     return;
   }
 
-  // Regular follow-up conversation
   const ctx  = chosenIdeaIdx !== null ? `They are pursuing: "${savedIdeas[chosenIdeaIdx].name}". ` : '';
   const hist = convoHistory.slice(-6).map(m => `${m.role}: ${m.content}`).join('\n');
   const prompt = `You are a direct warm advisor for someone building their future. No fluff no corporate speak. Be real.
@@ -755,13 +750,13 @@ Reply in 2-3 short paragraphs. Be honest and practical.`;
     const r    = await fetch('/api/claude.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 500, messages: [{ role: 'user', content: prompt }] })
+      body: JSON.stringify({ model: 'claude-3-5-sonnet-20241022', max_tokens: 500, messages: [{ role: 'user', content: prompt }] })
     });
     const d    = await r.json();
     const text = d.content.map(c => c.text || '').join('');
     resolveTyping(text, [], true);
     convoHistory.push({ role: 'user', content: msg }, { role: 'assistant', content: text });
-  } catch {
+  } catch(e) {
     resolveTyping('Something went wrong. Try again?', [], true);
   }
 }
@@ -842,11 +837,11 @@ function chooseIdea(idx) {
         <div class="tasks">
           ${stage.tasks.map(t => `
             <div class="task-row">
-              <input type="checkbox" class="task-check" ${isDone ? 'checked' : ''}>
+              <input type="checkbox" class="task-check" ${isDone ? 'checked' : ''} disabled>
               <span class="task-text">${t}</span>
             </div>`).join('')}
         </div>
-        <button class="stage-done-btn${isDone ? ' completed' : ''}" onclick="markStageDone(${i})">
+        <button class="stage-done-btn${isDone ? ' completed' : ''}" onclick="markStageDone(${i}); event.stopPropagation();">
           ${isDone ? 'Done' : 'Mark complete'}
         </button>
       </div>`;
@@ -858,9 +853,10 @@ function chooseIdea(idx) {
 }
 
 function toggleStage(i) {
-  document.querySelectorAll('.stage-card').forEach((card, ci) => {
-    card.classList.toggle('open', ci === i && !card.classList.contains('open'));
-  });
+  const cards = document.querySelectorAll('.stage-card');
+  if(cards[i]) {
+    cards[i].classList.toggle('open');
+  }
 }
 
 function markStageDone(i) {
@@ -875,11 +871,16 @@ function markStageDone(i) {
 
 // ─── API ──────────────────────────────────────────────────────────────────────
 async function callClaude(prompt) {
-  const r    = await fetch('/api/claude.js', {
+  const r = await fetch('/api/claude.js', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, messages: [{ role: 'user', content: prompt }] })
+    body: JSON.stringify({ 
+      model: 'claude-3-5-sonnet-20241022', 
+      max_tokens: 1000, 
+      messages: [{ role: 'user', content: prompt }] 
+    })
   });
+  
   const data = await r.json();
   const text = data.content.map(c => c.text || '').join('');
   const clean = text.replace(/```json|```/g, '').trim();
@@ -905,6 +906,11 @@ function launchCelebration() {
       setTimeout(() => el.remove(), 4000);
     }, i * 30);
   }
+}
+
+function fillPrompt(text) {
+  document.getElementById('skills-input').value = text;
+  document.getElementById('skills-input').focus();
 }
 </script>
 </body>
