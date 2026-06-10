@@ -9,7 +9,6 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  /* DOCUMENTATION: Darkened the sky background and enriched color tones for less blandness */
   --bg:#e6f0f5;
   --surface:#ffffff;
   --surface2:#f1f6f9;
@@ -40,7 +39,6 @@ html,body{height:100%;font-family:'Manrope',sans-serif;background:var(--bg);colo
 body{min-height:100vh}
 
 /* BACKGROUND & CLOUDS */
-/* DOCUMENTATION: Richer, deeper sky gradient blend */
 .bg-layer{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 50% 30%, #b3e0f2 0%, #cce6f4 40%, #e6f0f5 75%, #f0f5f8 100%);pointer-events:none;overflow:hidden}
 
 .cloud {
@@ -55,37 +53,16 @@ body{min-height:100vh}
   background: rgba(255, 255, 255, 1);
   border-radius: 50%;
 }
-.cloud::before {
-  width: 50%;
-  height: 100%;
-  top: -40%;
-  left: 15%;
-}
-.cloud::after {
-  width: 35%;
-  height: 70%;
-  top: -30%;
-  right: 15%;
-}
+.cloud::before { width: 50%; height: 100%; top: -40%; left: 15%; }
+.cloud::after { width: 35%; height: 70%; top: -30%; right: 15%; }
 
-/* DOCUMENTATION: Added unique animations per cloud with custom initial positioning */
 .cloud-1 { width: 140px; height: 45px; top: 15%; animation: floatCloud1 55s linear infinite; opacity: 0.9; }
 .cloud-2 { width: 200px; height: 60px; top: 40%; animation: floatCloud2 80s linear infinite; opacity: 0.75; }
 .cloud-3 { width: 90px; height: 30px; top: 65%; animation: floatCloud3 40s linear infinite; opacity: 0.8; }
 
-/* DOCUMENTATION: Clouds start scattered immediately across the page, but seamlessly loop back onto the screen */
-@keyframes floatCloud1 {
-  0% { transform: translateX(20vw); }
-  100% { transform: translateX(-250px); }
-}
-@keyframes floatCloud2 {
-  0% { transform: translateX(65vw); }
-  100% { transform: translateX(-250px); }
-}
-@keyframes floatCloud3 {
-  0% { transform: translateX(10vw); }
-  100% { transform: translateX(-250px); }
-}
+@keyframes floatCloud1 { 0% { transform: translateX(20vw); } 100% { transform: translateX(-250px); } }
+@keyframes floatCloud2 { 0% { transform: translateX(65vw); } 100% { transform: translateX(-250px); } }
+@keyframes floatCloud3 { 0% { transform: translateX(10vw); } 100% { transform: translateX(-250px); } }
 
 /* HEADER */
 header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(204,220,231,0.8);box-shadow:0 1px 0 rgba(11,21,30,0.04)}
@@ -111,7 +88,6 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
   z-index:10;
 }
 
-/* INDIVIDUAL SPACING OVERRIDES */
 .hero{padding-top:2.5rem;padding-bottom:1.25rem}
 .hero-chip{display:inline-flex;align-items:center;gap:.4rem;background:var(--aqua3);border:1px solid var(--aqua4);border-radius:100px;padding:.28rem .85rem;margin-bottom:1rem;opacity:0;animation:fadeUp .5s ease .1s forwards}
 .hero-chip-dot{width:5px;height:5px;border-radius:50%;background:var(--aqua)}
@@ -120,7 +96,6 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .hero-title em{font-style:normal;color:var(--aqua-text)}
 .hero-sub{font-size:.95rem;color:var(--text2);font-weight:500;line-height:1.45;opacity:0;animation:fadeUp .5s ease .3s forwards;max-width:420px}
 
-/* DIVIDER */
 .section-gap{max-width:540px;margin:1.25rem auto 0;padding:0 2rem;opacity:0;animation:fadeUp .5s ease .38s forwards}
 .section-gap hr{border:none;border-top:1px solid var(--line);margin-bottom:1.25rem}
 
@@ -147,7 +122,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .prompt-box:focus-within{border-color:var(--aqua4);box-shadow:0 0 0 3px rgba(0,163,163,0.1),var(--shadow-md)}
 .prompt-ta{width:100%;padding:1rem 1.1rem;font-family:'Manrope',sans-serif;font-size:.9rem;font-weight:400;border:none;outline:none;background:transparent;color:var(--ink);resize:none;min-height:84px;line-height:1.4}
 .prompt-ta::placeholder{color:var(--mid)}
-.prompt-foot{display:flex;justify-space:between;align-items:center;padding:.6rem .75rem .6rem 1.1rem;border-top:1px solid var(--line2)}
+.prompt-foot{display:flex;justify-content:space-between;align-items:center;padding:.6rem .75rem .6rem 1.1rem;border-top:1px solid var(--line2)}
 .prompt-hint{font-size:.72rem;font-weight:600;color:var(--mid)}
 .prompt-btn{padding:.52rem 1.2rem;background:var(--ink);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Manrope',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .18s;letter-spacing:-.01em}
 .prompt-btn:hover{background:var(--ink2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(11,21,30,0.2)}
@@ -178,65 +153,12 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .node-ai{background:var(--surface);border:1.5px solid var(--line);border-radius:6px var(--radius-md) var(--radius-md) var(--radius-md);padding:.8rem 1.05rem;font-size:.875rem;font-weight:400;line-height:1.45;color:var(--ink);word-wrap:break-word;opacity:0;animation:nodeIn .25s ease forwards;box-shadow:var(--shadow-md);width:100%}
 .node-ai strong{font-weight:700;color:var(--ink)}
 
-.node-ai-tree-track {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 24px;
-  padding: 24px 0 12px 0;
-}
-.node-ai-track-spine {
-  position: absolute;
-  top: 40px;
-  bottom: 40px;
-  left: 50%;
-  width: 1.5px;
-  background-color: var(--line);
-  transform: translateX(-50%);
-  z-index: 1;
-}
-.node-ai-track-row { display: flex; width: 100%; z-index: 2; }
-.node-ai-track-row.align-left { justify-content: flex-start; padding-left: 4%; }
-.node-ai-track-row.align-right { justify-content: flex-end; padding-right: 4%; }
-.node-ai-track-row.align-center { justify-content: center; }
-
-.node-ai .idea-card {
-  width: 154px;
-  height: 154px;
-  border-radius: 50%;
-  border: 1.5px solid var(--line);
-  background: var(--surface);
-  box-shadow: var(--shadow-sm);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  cursor: pointer;
-  padding: 16px;
-  margin: 0;
-  box-sizing: border-box;
-  transition: all .22s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.node-ai .idea-card:hover {
-  border-color: var(--aqua);
-  background: var(--aqua3);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
-}
-.node-ai .idea-card-tag { font-size: .62rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--aqua-text); margin-bottom: .2rem; }
-.node-ai .idea-card-title { font-weight: 700; font-size: .84rem; color: var(--ink); line-height: 1.25; margin-bottom: .2rem; max-width: 120px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.node-ai .idea-card-desc { font-size: .72rem; color: var(--text2); line-height: 1.3; max-width: 115px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.node-ai .more-node-bubble { width: 124px; height: 124px; border: 1.5px dashed var(--faint); background: transparent; box-shadow: none; }
-.node-ai .more-node-bubble:hover { background: var(--surface2); border-color: var(--mid); }
-
 .choice-btns{display:flex;flex-direction:column;gap:.35rem;margin-top:.65rem}
 .choice-btn{padding:.55rem .95rem;background:var(--surface2);border:1.5px solid var(--line);border-radius:var(--radius-sm);color:var(--ink);cursor:pointer;font-family:'Manrope',sans-serif;font-size:.84rem;font-weight:500;text-align:left;transition:all .18s}
 .choice-btn:hover{border-color:var(--aqua);background:var(--aqua3);color:var(--aqua-text)}
 
-.chain-reply{display:flex;justify-content:flex-end;width:100%}
-.node-reply{width:62%;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);overflow:hidden;transition:all .18s;box-shadow:var(--shadow-sm)}
+.chain-reply{display:flex;justify-content:flex-end;width:100%;margin-top:12px}
+.node-reply{width:100%;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);overflow:hidden;transition:all .18s;box-shadow:var(--shadow-sm)}
 .node-reply:focus-within{border-color:var(--aqua4);box-shadow:0 0 0 3px rgba(0,163,163,0.1),var(--shadow-sm)}
 .reply-ta{width:100%;padding:.65rem .95rem;font-family:'Manrope',sans-serif;font-size:.84rem;font-weight:400;border:none;outline:none;background:transparent;color:var(--ink);resize:none;min-height:56px;line-height:1.45}
 .reply-foot{display:flex;justify-content:flex-end;padding:.28rem .4rem;border-top:1px solid var(--line2)}
@@ -387,7 +309,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 
   <div class="prompt-wrap" id="prompt-wrap">
     <div class="prompt-box">
-      <textarea class="prompt-ta" id="skills-input" placeholder="Tell us about yourself — skills, background, what you enjoy, what you need seaward…" rows="3"></textarea>
+      <textarea class="prompt-ta" id="skills-input" placeholder="Tell us about yourself — skills, background, what you enjoy, what you need…" rows="3"></textarea>
       <div class="prompt-foot">
         <span class="prompt-hint" id="prompt-hint-text">Be honest. There's no wrong answer.</span>
         <button class="prompt-btn" onclick="startConvo()">Continue →</button>
@@ -528,24 +450,184 @@ function resetAll() {
   showScreen('main');
 }
 
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+/* DOCUMENTATION: Handles the initial click event of the conversation pipeline */
+function startConvo() {
+  const input = document.getElementById('skills-input');
+  const text = input.value.trim();
+  if (!text) return;
+
+  savedSkills = text;
+  
+  // Hide configuration landing elements
+  ['path-chooser', 'prompt-wrap', 'pills-wrap'].forEach(id => {
+    document.getElementById(id).style.display = 'none';
+  });
+
+  // Append user message node and run visual tracking
+  const userPair = addUserNode(text);
+  addConnectorAndTyping(userPair);
+  
+  // Dispatch request payload down to Vercel/API handler
+  sendToAPI(text);
 }
 
-function fmt(t) {
-  return t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
+/* DOCUMENTATION: Handles fetching responses from your backend or Vercel serverless function */
+function sendToAPI(promptText) {
+  // Add message log to active history tracking state
+  convoHistory.push({ role: "user", content: promptText });
+
+  /* NOTE FOR DEPLOYMENT:
+     Replace the setTimeout block below with your actual fetch call:
+     
+     fetch('/api/chat', {
+       method: 'POST',
+       headers: { 'Content-Type': 'application/json' },
+       body: JSON.stringify({ path: selectedPath, history: convoHistory })
+     })
+     .then(res => res.json())
+     .then(data => {
+        resolveTyping(data.reply);
+        appendReplyInput();
+     });
+  */
+
+  // Realistic mock API timing simulation for local layout validation
+  setTimeout(() => {
+    let mockResponse = "";
+    if (replyCounter === 0) {
+      mockResponse = `Got it. Based on your experience, I can see a few cool directions we could explore. Before I spit out specific gameplans, let me ask: do you want something high-growth with more setup time, or something you can make money with by **next Tuesday**?`;
+    } else {
+      mockResponse = `That makes total sense. I'm running your parameters through our structural paths now to assemble your tailored roadmap options...`;
+      // Trigger dynamic screens transition if threshold hit
+      setTimeout(() => {
+        showMockIdeas();
+      }, 2000);
+    }
+    
+    resolveTyping(mockResponse);
+    appendReplyInput();
+    replyCounter++;
+  }, 1500);
 }
 
+/* DOCUMENTATION: Injects an active text area loop into the bottom of the chain to keep chatting */
+function appendReplyInput() {
+  const chain = document.getElementById('bubble-chain');
+  
+  // Clean up old active inputs if any exist
+  const oldReply = document.querySelector('.chain-reply');
+  if (oldReply) oldReply.remove();
+
+  const replyNode = document.createElement('div');
+  replyNode.className = 'chain-reply';
+  replyNode.innerHTML = `
+    <div class="node-reply">
+      <textarea class="reply-ta" id="active-reply-ta" placeholder="Type your response..." rows="2"></textarea>
+      <div class="reply-foot">
+        <button class="reply-send" onclick="submitReply()">Send</button>
+      </div>
+    </div>
+  `;
+  chain.appendChild(replyNode);
+  scrollBottom();
+  document.getElementById('active-reply-ta').focus();
+}
+
+/* DOCUMENTATION: Processes dynamic continuous follow-up messages inside the chat thread */
+function submitReply() {
+  const input = document.getElementById('active-reply-ta');
+  const text = input.value.trim();
+  if (!text) return;
+
+  // Remove the input container wrapper block cleanly
+  document.querySelector('.chain-reply').remove();
+
+  const userPair = addUserNode(text);
+  addConnectorAndTyping(userPair);
+
+  sendToAPI(text);
+}
+
+/* DOCUMENTATION: Populates mock data layout panels for visualization testing loops */
+function showMockIdeas() {
+  ['convo-thread', 'screen-main'].forEach(id => document.getElementById(id).style.display = 'none');
+  const panel = document.getElementById('ideas-panel');
+  panel.style.display = 'block';
+  
+  const grid = document.getElementById('ideas-grid');
+  grid.innerHTML = `
+    <div class="idea-tile" onclick="viewJourney('Local Independent Tech Support')">
+      <div class="it-type">Option 1 • Service Business</div>
+      <div class="it-name">Local Independent Tech Support</div>
+      <div class="it-tagline">Helping non-tech-savvy neighborhood residents set up home networks, devices, and backup plans.</div>
+      <div class="it-why">Why it fits: Low startup cost, matches your preference for working with computing hardware, immediate local cash flow potential.</div>
+    </div>
+    <div class="idea-tile" onclick="viewJourney('Junior Web Implementation Consultant')">
+      <div class="it-type">Option 2 • Career Path</div>
+      <div class="it-name">Junior Web Implementation Consultant</div>
+      <div class="it-tagline">Configuring landing platforms, CMS templates, and analytics setups for local corporate agencies.</div>
+      <div class="it-why">Why it fits: Leverages technical comfort while avoiding heavy engineering loops early on.</div>
+    </div>
+  `;
+}
+
+/* DOCUMENTATION: Handles transition into the operational implementation milestone steps view */
+function viewJourney(title) {
+  document.getElementById('ideas-panel').style.display = 'none';
+  const panel = document.getElementById('journey-panel');
+  panel.style.display = 'block';
+  
+  document.getElementById('jh-type').textContent = selectedPath === 'business' ? 'Business Roadmap' : 'Career Blueprint';
+  document.getElementById('jh-title').textContent = title;
+  document.getElementById('jh-sub').textContent = 'Follow these sequential project phases to get your operational blueprint fully off the ground.';
+  
+  const list = document.getElementById('stages-list');
+  list.innerHTML = '';
+  
+  STAGES.forEach((s, idx) => {
+    const openClass = idx === 0 ? 'open' : '';
+    const card = document.createElement('div');
+    card.className = `stage-card ${openClass}`;
+    
+    let taskRows = '';
+    s.tasks.forEach(t => {
+      taskRows += `
+        <div class="task-row">
+          <input type="checkbox" class="task-check" onclick="event.stopPropagation()">
+          <span class="task-text">${t}</span>
+        </div>
+      `;
+    });
+
+    card.innerHTML = `
+      <div class="stage-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="stage-num">${idx + 1}</div>
+        <div class="stage-label">${s.label}</div>
+        <div class="stage-arrow">▶</div>
+      </div>
+      <div class="stage-body">
+        <p class="stage-desc">${s.desc}</p>
+        <div class="tasks">${taskRows}</div>
+      </div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function showIdeas() {
+  document.getElementById('journey-panel').style.style.display = 'none';
+  document.getElementById('ideas-panel').style.display = 'block';
+}
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function fmt(t) { return t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>'); }
 function scrollBottom() {
   setTimeout(() => {
     const c = document.getElementById('bubble-chain');
     if (c && c.lastElementChild) c.lastElementChild.scrollIntoView({behavior: 'smooth', block: 'end'});
   }, 130);
 }
-
-function showThread() {
-  document.getElementById('convo-thread').style.display = 'block';
-}
+function showThread() { document.getElementById('convo-thread').style.display = 'block'; }
 
 function addUserNode(text) {
   showThread();
@@ -573,7 +655,7 @@ function addConnectorAndTyping(pair) {
   return pair;
 }
 
-function resolveTyping(text, hasChoices, choices, showReply) {
+function resolveTyping(text, hasChoices, choices) {
   const aiRow = document.getElementById('typing-ai');
   if (aiRow) {
     const targetNode = aiRow.querySelector('.node-ai');
