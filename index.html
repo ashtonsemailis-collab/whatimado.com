@@ -348,11 +348,26 @@ function startConvo(){
 }
 
 async function sendToAPI(promptText){
-  convoHistory.push({role:'user',content:promptText});
   const isFirst=currentStep===1;
-  const systemPrompt=isFirst
-    ? `You are whatimado, a sharp and direct advisor. The user described themselves. Reply with ONE short follow-up question — 1 to 2 sentences only. No headers. No bullet points. No markdown. No lists. Plain conversational text only. Do not give advice yet.`
-    : `You are whatimado. Based on the conversation, generate exactly 3 tailored ideas. Respond ONLY with a raw JSON array — no markdown, no code fences, no commentary, nothing else before or after the array. Each object must have: "title" (string), "type" (string, e.g. "Service Business" or "Career Path"), "tagline" (string, one punchy sentence), "why" (string, one sentence on why it fits them). Example: [{"title":"Dog Walker","type":"Local Service","tagline":"Walk dogs in your neighborhood on your schedule.","why":"Low barrier, uses your love of animals."}]`;
+
+  // Build messages with instruction baked into first user turn
+  let messages;
+  if(isFirst){
+    messages=[{
+      role:'user',
+      content:`INSTRUCTIONS (follow exactly): You are whatimado. Reply with ONE single question — maximum 2 sentences, no more. Absolutely no headers, no bullet points, no numbered lists, no markdown, no bold, no advice. Just one plain conversational question. Nothing else.\n\nUser said: ${promptText}`
+    }];
+  } else {
+    messages=[
+      ...convoHistory,
+      {
+        role:'user',
+        content:`INSTRUCTIONS (follow exactly): Based on everything above, output ONLY a raw JSON array of exactly 3 objects. No text before it. No text after it. No markdown. No code fences. Just the raw JSON array.\nEach object: {"title":"...","type":"...","tagline":"one sentence","why":"one sentence why it fits"}.\nExample output: [{"title":"Dog Walker","type":"Local Service","tagline":"Walk dogs on your schedule.","why":"Low cost, matches your love of animals."}]`
+      }
+    ];
+  }
+
+  convoHistory.push({role:'user',content:promptText});
 
   try{
     const res=await fetch('/api/claude',{
@@ -360,9 +375,8 @@ async function sendToAPI(promptText){
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         model:'claude-sonnet-4-5',
-        max_tokens:1000,
-        system:systemPrompt,
-        messages:convoHistory
+        max_tokens:800,
+        messages
       })
     });
     if(!res.ok)throw new Error('API '+res.status);
