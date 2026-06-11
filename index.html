@@ -35,21 +35,23 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .nav-btn.active{color:var(--aqua-text);background:var(--aqua3)}
 .screen{position:relative;z-index:10;display:none;min-height:100vh}
 .screen.active{display:block}
-#screen-main{padding-top:4.25rem;display:flex;flex-direction:column;justify-content:center;min-height:100vh}
-.hero,.path-chooser,.prompt-wrap,.pills,#convo-thread,#ideas-panel,#journey-panel{max-width:540px;margin:0 auto;padding:0 2rem;position:relative;z-index:10}
-.hero{padding-top:1rem;padding-bottom:1rem}
+#screen-main{display:flex;flex-direction:column;justify-content:center;min-height:100vh}
+#landing-wrap{width:100%;padding-top:56px;padding-bottom:56px;}
+#screen-main > *{position:relative;z-index:10}
+.hero,.path-chooser,.prompt-wrap,.pills,#convo-thread,#ideas-panel,#journey-panel{width:100%;max-width:480px;margin:0 auto;padding:0 1.5rem;position:relative;z-index:10;box-sizing:border-box}
+.hero{padding-top:1rem;padding-bottom:1rem;text-align:left}
 .hero-chip{display:inline-flex;align-items:center;gap:.4rem;background:var(--aqua3);border:1px solid var(--aqua4);border-radius:100px;padding:.28rem .85rem;margin-bottom:1rem;opacity:0;animation:fadeUp .5s ease .1s forwards}
 .hero-chip-dot{width:5px;height:5px;border-radius:50%;background:var(--aqua)}
 .hero-chip-text{font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--aqua-text)}
 .hero-title{font-weight:800;font-size:clamp(1.9rem,5.5vw,2.75rem);letter-spacing:-.03em;color:var(--ink);line-height:1.12;margin-bottom:.75rem;opacity:0;animation:fadeUp .5s ease .2s forwards}
 .hero-title em{font-style:normal;color:var(--aqua-text)}
 .hero-sub{font-size:.95rem;color:var(--text2);font-weight:500;line-height:1.45;opacity:0;animation:fadeUp .5s ease .3s forwards;max-width:420px}
-.section-gap{max-width:540px;margin:1.25rem auto 0;padding:0 2rem;opacity:0;animation:fadeUp .5s ease .38s forwards}
+.section-gap{width:100%;max-width:480px;margin:1.25rem auto 0;padding:0 1.5rem;box-sizing:border-box;opacity:0;animation:fadeUp .5s ease .38s forwards}
 .section-gap hr{border:none;border-top:1px solid var(--line);margin-bottom:1.25rem}
 .path-chooser{opacity:0;animation:fadeUp .5s ease .44s forwards}
 .path-label{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text2);margin-bottom:.75rem}
-.path-btns{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.25rem}
-.path-btn{padding:1.1rem 1rem;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);color:var(--text);cursor:pointer;transition:all .18s;text-align:left;font-family:'Manrope',sans-serif;display:flex;flex-direction:column;gap:.5rem;box-shadow:var(--shadow-sm)}
+.path-btns{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.25rem;text-align:left}
+.path-btn{padding:1.1rem 1rem;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);color:var(--text);cursor:pointer;transition:all .18s;text-align:left;width:100%;font-family:'Manrope',sans-serif;display:flex;flex-direction:column;gap:.5rem;box-shadow:var(--shadow-sm)}
 .path-btn:hover{border-color:var(--aqua4);box-shadow:var(--shadow-md);transform:translateY(-1px)}
 .path-btn.selected{border-color:var(--aqua);background:var(--aqua3);box-shadow:0 0 0 3px rgba(0,163,163,0.12),var(--shadow-sm)}
 .path-btn .pb-icon{width:32px;height:32px;border-radius:8px;background:var(--surface2);display:flex;align-items:center;justify-content:center;color:var(--mid);transition:all .18s}
@@ -70,7 +72,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .prompt-btn{padding:.52rem 1.2rem;background:var(--ink);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Manrope',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .18s}
 .prompt-btn:hover{background:var(--ink2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(11,21,30,0.2)}
 .prompt-btn:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
-.pills{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.65rem;opacity:0;animation:fadeUp .5s ease .55s forwards}
+.pills{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.65rem;opacity:0;animation:fadeUp .5s ease .55s forwards;justify-content:center}
 .pill{font-size:.72rem;font-weight:600;padding:.3rem .8rem;border:1.5px solid var(--line);border-radius:100px;color:var(--text2);background:var(--surface);cursor:pointer;transition:all .15s;box-shadow:var(--shadow-sm)}
 .pill:hover{border-color:var(--aqua4);color:var(--aqua-text);background:var(--aqua3);box-shadow:none}
 #convo-thread{display:none;padding-top:2.5rem;padding-bottom:7rem}
@@ -231,6 +233,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 </header>
 
 <div id="screen-main" class="screen active">
+  <div id="landing-wrap">
   <div id="hero-area" class="hero">
     <div class="hero-chip"><span class="hero-chip-dot"></span><span class="hero-chip-text">Start here</span></div>
     <h1 class="hero-title">So… <em>what you</em><br>gonna do?</h1>
@@ -269,6 +272,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
     <button class="pill" onclick="fillPrompt('I am creative and artistic')">creative</button>
     <button class="pill" onclick="fillPrompt('I have no money but I have time and hustle')">starting from zero</button>
   </div>
+  </div><!-- /landing-wrap -->
   <div id="convo-thread">
     <div class="bubble-chain" id="bubble-chain"></div>
   </div>
@@ -360,7 +364,7 @@ function resetAll(){
   document.querySelectorAll('.path-btn').forEach(b=>b.classList.remove('selected'));
   document.getElementById('skills-input').value='';
   document.getElementById('prompt-hint-text').textContent="Be honest. There's no wrong answer.";
-  ['path-chooser','prompt-wrap','pills-wrap','hero-area','divider-line'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='';});
+  const lw=document.getElementById('landing-wrap');if(lw)lw.style.display='';
   document.getElementById('bubble-chain').innerHTML='';
   document.getElementById('nodes-rail').innerHTML='';
   ['convo-thread','ideas-panel','journey-panel'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
@@ -370,7 +374,7 @@ function startConvo(){
   const text=document.getElementById('skills-input').value.trim();
   if(!text)return;
   savedSkills=text;
-  ['path-chooser','prompt-wrap','pills-wrap','hero-area','divider-line'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
+  const lw=document.getElementById('landing-wrap');if(lw)lw.style.display='none';
   const pair=addUserNode(text);
   addConnectorAndTyping(pair);
   sendToAPI(text);
