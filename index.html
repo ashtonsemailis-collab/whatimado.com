@@ -109,19 +109,31 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .scroll-hint{font-size:.7rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text3);display:flex;align-items:center;gap:.35rem;margin-bottom:1rem;animation:hintPulse 2s ease infinite}
 .scroll-hint svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 @keyframes hintPulse{0%,100%{opacity:.4;transform:translateX(0)}50%{opacity:1;transform:translateX(4px)}}
-.nodes-track-outer{width:100vw;position:relative;left:50%;transform:translateX(-50%);overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:1.5rem 2.5rem 2.5rem;cursor:grab;user-select:none}
+.nodes-track-outer{width:100vw;position:relative;left:50%;transform:translateX(-50%);overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:2rem 0 3rem;cursor:grab;user-select:none}
 .nodes-track-outer::-webkit-scrollbar{display:none}
 .nodes-track-outer.grabbing{cursor:grabbing}
-.nodes-rail{display:flex;align-items:center;min-width:max-content;gap:0}
-.node-connector-h{width:40px;height:1.5px;background:linear-gradient(to right,var(--aqua4),var(--line));flex-shrink:0}
-.node-bubble{width:152px;height:152px;border-radius:50%;background:var(--surface);border:1.5px solid var(--line);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:1rem;cursor:pointer;transition:all .22s cubic-bezier(.4,0,.2,1);flex-shrink:0;font-family:'Manrope',sans-serif}
+/* centre rail when it fits; scroll when it doesn't */
+.nodes-rail{display:flex;align-items:center;gap:0;min-width:max-content;margin:0 auto;padding:0 3rem;justify-content:center}
+.node-connector-h{width:36px;height:1.5px;background:linear-gradient(to right,var(--aqua4),var(--line));flex-shrink:0}
+/* bubble: 200px, text clipped inside 70.7% inset (circle geometry) */
+.node-bubble{
+  width:200px;height:200px;border-radius:50%;
+  background:var(--surface);border:1.5px solid var(--line);
+  box-shadow:var(--shadow-md);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;
+  /* safe inner padding = (1 - 1/√2)/2 * 200 ≈ 29px each side */
+  padding:0 30px;
+  cursor:pointer;transition:all .22s cubic-bezier(.4,0,.2,1);flex-shrink:0;
+  font-family:'Manrope',sans-serif;overflow:hidden;
+}
 .node-bubble:hover{transform:translateY(-6px);border-color:var(--aqua);box-shadow:0 14px 40px rgba(0,163,163,0.2),var(--shadow-md)}
 .node-bubble.more-bubble{border-style:dashed;background:transparent;box-shadow:none;opacity:.6}
 .node-bubble.more-bubble:hover{background:var(--aqua3);opacity:1;border-color:var(--aqua4);box-shadow:none;transform:translateY(-4px)}
-.nb-icon{font-size:1.1rem;margin-bottom:.35rem}
-.nb-type{font-size:.58rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--aqua-text);margin-bottom:.2rem}
-.nb-title{font-size:.8rem;font-weight:700;color:var(--ink);line-height:1.25;max-width:118px}
-.nb-sub{font-size:.66rem;color:var(--mid);margin-top:.25rem;font-weight:400;line-height:1.3;max-width:118px}
+.nb-icon{font-size:1rem;margin-bottom:.3rem;flex-shrink:0}
+.nb-type{font-size:.58rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--aqua-text);margin-bottom:.25rem;flex-shrink:0;width:100%}
+.nb-title{font-size:.82rem;font-weight:700;color:var(--ink);line-height:1.25;width:100%;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
+.nb-sub{font-size:.65rem;color:var(--mid);margin-top:.3rem;font-weight:400;line-height:1.3;width:100%;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
 
 /* JOURNEY */
 #journey-panel{display:none;padding-top:2rem;padding-bottom:7rem}
@@ -176,7 +188,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .loader-dots span{width:5px;height:5px;background:var(--aqua4);border-radius:50%;animation:typingDot 1.3s ease-in-out infinite}
 .loader-dots span:nth-child(2){animation-delay:.2s}
 .loader-dots span:nth-child(3){animation-delay:.4s}
-@media(max-width:600px){header{padding:.75rem 1.25rem}.tagline{display:none}.node-user,.node-ai-wrap,.node-reply{max-width:88%;width:88%}.node-bubble{width:132px;height:132px}}
+@media(max-width:600px){header{padding:.75rem 1.25rem}.tagline{display:none}.node-user,.node-ai-wrap,.node-reply{max-width:88%;width:88%}.node-bubble{width:172px;height:172px;padding:0 26px}}
 </style>
 </head>
 <body>
