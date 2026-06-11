@@ -35,9 +35,9 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .nav-btn.active{color:var(--aqua-text);background:var(--aqua3)}
 .screen{position:relative;z-index:10;display:none;min-height:100vh}
 .screen.active{display:block}
-#screen-main{padding-top:4.25rem}
+#screen-main{padding-top:4.25rem;display:flex;flex-direction:column;justify-content:center;min-height:100vh}
 .hero,.path-chooser,.prompt-wrap,.pills,#convo-thread,#ideas-panel,#journey-panel{max-width:540px;margin:0 auto;padding:0 2rem;position:relative;z-index:10}
-.hero{padding-top:2.5rem;padding-bottom:1.25rem}
+.hero{padding-top:1rem;padding-bottom:1rem}
 .hero-chip{display:inline-flex;align-items:center;gap:.4rem;background:var(--aqua3);border:1px solid var(--aqua4);border-radius:100px;padding:.28rem .85rem;margin-bottom:1rem;opacity:0;animation:fadeUp .5s ease .1s forwards}
 .hero-chip-dot{width:5px;height:5px;border-radius:50%;background:var(--aqua)}
 .hero-chip-text{font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--aqua-text)}
@@ -153,6 +153,23 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .stage-arrow{font-size:.65rem;color:var(--text3);transition:transform .2s}
 .stage-card.open .stage-arrow{transform:rotate(90deg)}
 .stage-body{display:none;padding:0 1.1rem 1rem;border-top:1px solid var(--line2)}
+.task-row{position:relative;display:flex;align-items:flex-start;gap:.5rem}
+.task-expand-btn{background:none;border:none;cursor:pointer;font-size:.62rem;font-weight:700;color:var(--text3);padding:.15rem .45rem;border-radius:6px;transition:all .15s;flex-shrink:0;margin-top:2px;line-height:1.4}
+.task-expand-btn:hover,.task-expand-btn.active{background:var(--aqua3);color:var(--aqua-text)}
+.task-detail{display:none;margin-top:.5rem;margin-left:1.6rem;border-left:2px solid var(--aqua4);padding-left:.75rem}
+.task-detail.open{display:block}
+.task-notes-label{font-size:.63rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text3);margin-bottom:.3rem}
+.task-notes-ta{width:100%;padding:.5rem .7rem;font-family:'Manrope',sans-serif;font-size:.8rem;border:1.5px solid var(--line);border-radius:var(--radius-sm);background:var(--surface2);color:var(--ink);resize:none;outline:none;min-height:56px;line-height:1.45;transition:border-color .15s;box-sizing:border-box}
+.task-notes-ta:focus{border-color:var(--aqua4)}
+.task-ask-wrap{display:flex;gap:.4rem;margin-top:.5rem}
+.task-ask-input{flex:1;padding:.45rem .75rem;font-family:'Manrope',sans-serif;font-size:.8rem;border:1.5px solid var(--line);border-radius:var(--radius-sm);background:var(--surface);color:var(--ink);outline:none;transition:border-color .15s}
+.task-ask-input:focus{border-color:var(--aqua4)}
+.task-ask-btn{padding:.45rem .85rem;background:var(--aqua);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Manrope',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer;transition:all .18s;white-space:nowrap}
+.task-ask-btn:hover{background:var(--aqua2)}
+.task-ask-btn:disabled{opacity:.4;cursor:not-allowed}
+.task-ai-answer{margin-top:.5rem;font-size:.8rem;color:var(--text2);line-height:1.5;background:var(--aqua3);border-radius:var(--radius-sm);padding:.6rem .75rem;display:none}
+.task-ai-answer.visible{display:block}
+.task-ai-answer strong{color:var(--ink)}
 .stage-card.open .stage-body{display:block}
 .stage-desc{font-size:.84rem;color:var(--text2);line-height:1.45;margin-top:.65rem;margin-bottom:.875rem}
 .tasks{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.875rem}
@@ -480,7 +497,25 @@ function viewJourney(title,type){
   STAGES.forEach((s,idx)=>{
     const card=document.createElement('div');
     card.className='stage-card'+(idx===0?' open':'');
-    const taskRows=s.tasks.map(t=>`<div class="task-row"><input type="checkbox" class="task-check" onclick="event.stopPropagation()"><span class="task-text">${t}</span></div>`).join('');
+    const taskRows=s.tasks.map((t,ti)=>{
+      const uid=`task-${idx}-${ti}`;
+      return `<div>
+        <div class="task-row">
+          <input type="checkbox" class="task-check" onclick="event.stopPropagation()">
+          <span class="task-text">${t}</span>
+          <button class="task-expand-btn" id="btn-${uid}" onclick="toggleTaskDetail('${uid}',event)">Notes / Ask</button>
+        </div>
+        <div class="task-detail" id="${uid}">
+          <p class="task-notes-label">My Notes</p>
+          <textarea class="task-notes-ta" placeholder="Jot down your thoughts, progress, links…" onclick="event.stopPropagation()"></textarea>
+          <div class="task-ask-wrap">
+            <input class="task-ask-input" id="q-${uid}" placeholder="Ask AI about this task…" onclick="event.stopPropagation()" onkeydown="if(event.key==='Enter'){askTask('${uid}','${t.replace(/'/g,"\\'")}');event.preventDefault();}">
+            <button class="task-ask-btn" id="askbtn-${uid}" onclick="askTask('${uid}','${t.replace(/'/g,"\\'")}');event.stopPropagation()">Ask</button>
+          </div>
+          <div class="task-ai-answer" id="ans-${uid}"></div>
+        </div>
+      </div>`;
+    }).join('');
     card.innerHTML=`<div class="stage-head" onclick="this.parentElement.classList.toggle('open')"><div class="stage-num">${idx+1}</div><div class="stage-label">${s.label}</div><div class="stage-arrow">▶</div></div><div class="stage-body"><p class="stage-desc">${s.desc}</p><div class="tasks">${taskRows}</div></div>`;
     list.appendChild(card);
   });
@@ -489,6 +524,48 @@ function showIdeas(){
   document.getElementById('journey-panel').style.display='none';
   document.getElementById('ideas-panel').style.display='block';
   window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleTaskDetail(uid,e){
+  e.stopPropagation();
+  const panel=document.getElementById(uid);
+  const btn=document.getElementById('btn-'+uid);
+  const isOpen=panel.classList.contains('open');
+  panel.classList.toggle('open',!isOpen);
+  btn.classList.toggle('active',!isOpen);
+}
+async function askTask(uid,taskText){
+  const input=document.getElementById('q-'+uid);
+  const btn=document.getElementById('askbtn-'+uid);
+  const ansEl=document.getElementById('ans-'+uid);
+  const question=input?input.value.trim():'';
+  if(!question)return;
+  btn.disabled=true;
+  btn.textContent='...';
+  ansEl.classList.add('visible');
+  ansEl.innerHTML='<em style="color:var(--text3)">Thinking…</em>';
+  const ideaTitle=document.getElementById('jh-title')?document.getElementById('jh-title').textContent:'';
+  try{
+    const res=await fetch('/api/claude',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-5',
+        max_tokens:400,
+        messages:[{
+          role:'user',
+          content:'You are whatimado, a direct business and career advisor. Answer the user\'s question about their specific task in 2-4 sentences. No markdown. No bullet points. Plain text only.\n\nIdea they are pursuing: '+ideaTitle+'\nTask: '+taskText+'\nUser question: '+question
+        }]
+      })
+    });
+    const data=await res.json();
+    const text=data.content.filter(b=>b.type==='text').map(b=>b.text).join('');
+    ansEl.innerHTML=fmt(text);
+  }catch(err){
+    ansEl.innerHTML='Could not connect. Try again.';
+  }
+  btn.disabled=false;
+  btn.textContent='Ask';
+  if(input)input.value='';
 }
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function fmt(t){return t.replace(/^#{1,3}\s+/gm,'').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'$1').replace(/^[-•]\s+/gm,'').replace(/\n{2,}/g,'<br><br>').replace(/\n/g,'<br>');}
