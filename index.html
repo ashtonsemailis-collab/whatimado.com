@@ -26,21 +26,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: max-width 0.3s ease;
-        }
-
-        /* Expand the layout bounds when showing the horizontal scroll results track */
-        .container.canvas-mode {
-            max-width: 100%;
-            padding: 40px 0;
         }
 
         header {
             text-align: center;
             margin-bottom: 40px;
             width: 100%;
-            padding: 0 20px;
-            box-sizing: border-box;
         }
 
         h1 {
@@ -146,53 +137,46 @@
             margin: 0 0 40px 0;
         }
 
-        /* HORIZONTAL SCROLL TIMELINE PIPELINE CANVAS */
-        .node-track-viewport {
-            width: 100vw;
-            overflow-x: auto;
-            overflow-y: hidden;
-            display: flex;
-            padding: 40px 0 60px 0;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .node-tree-horizontal {
+        .node-tree {
             position: relative;
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            width: 100%;
             gap: 32px;
-            padding: 0 40px;
-            margin: 0 auto; /* Keeps track centered if items don't overflow viewport width */
         }
 
-        /* Central connecting baseline horizontal wire spine */
-        .connecting-line-horizontal {
+        /* Central connecting line spine */
+        .connecting-line-vertical {
             position: absolute;
-            left: 80px;
-            right: 80px;
-            top: 50%;
-            height: 1.5px;
+            top: 80px;
+            bottom: 80px;
+            left: 50%;
+            width: 1.5px;
             background-color: #e5e5e5;
-            transform: translateY(-50%);
+            transform: translateX(-50%);
             z-index: 1;
         }
 
-        .node-column-wrap {
+        .node-row {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
+            width: 100%;
             z-index: 2;
+            box-sizing: border-box;
         }
 
-        /* Staggered alternating height configurations */
-        .node-column-wrap.stagger-up {
-            transform: translateY(-24px);
+        /* Staggered left/right positioning rules */
+        .node-row.align-left {
+            justify-content: flex-start;
+            padding-left: 5%;
         }
 
-        .node-column-wrap.stagger-down {
-            transform: translateY(24px);
+        .node-row.align-right {
+            justify-content: flex-end;
+            padding-right: 5%;
+        }
+
+        .node-row.align-center {
+            justify-content: center;
         }
 
         /* Round Node Button Styles */
@@ -216,7 +200,7 @@
         }
 
         .circle-node:hover {
-            transform: scale(1.03);
+            transform: translateY(-4px);
             border-color: #111111;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
         }
@@ -238,7 +222,6 @@
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
-            overflow: hidden;
         }
 
         .node-subtitle {
@@ -264,7 +247,7 @@
 </head>
 <body>
 
-    <div class="container" id="main-container">
+    <div class="container">
         <header id="app-header">
             <h1>whatimado</h1>
             <p class="subtitle">Discover custom side hustles built around you.</p>
@@ -279,19 +262,16 @@
 
         <div id="node-screen" class="node-screen">
             <button class="back-btn" onclick="showInputScreen()">← Back to prompt</button>
-            <p class="instruction-text">Scroll sideways to explore idea options</p>
+            <p class="instruction-text">Tap any bubble to explore that idea</p>
             
-            <div class="node-track-viewport">
-                <div class="node-tree-horizontal" id="node-tree-container">
-                    <div class="connecting-line-horizontal"></div>
-                    </div>
-            </div>
+            <div class="node-tree" id="node-tree-container">
+                <div class="connecting-line-vertical"></div>
+                </div>
         </div>
     </div>
 
     <script>
         // Adjust elements for visibility switching
-        const mainContainer = document.getElementById('main-container');
         const inputScreen = document.getElementById('input-screen');
         const nodeScreen = document.getElementById('node-screen');
         const loadingIndicator = document.getElementById('loading-indicator');
@@ -299,7 +279,6 @@
         const promptInput = document.getElementById('prompt-input');
 
         function showInputScreen() {
-            mainContainer.classList.remove('canvas-mode');
             nodeScreen.style.display = 'none';
             inputScreen.style.display = 'flex';
         }
@@ -308,15 +287,15 @@
             const prompt = promptInput.value.trim();
             if (!prompt) return alert('Please tell the system a bit about yourself first.');
 
-            // Clear previous generation records cleanly, safeguarding the connector wire element
-            const elementsToRemove = nodeTreeContainer.querySelectorAll('.node-column-wrap');
+            // Clear previous generation records
+            const elementsToRemove = nodeTreeContainer.querySelectorAll('.node-row');
             elementsToRemove.forEach(el => el.remove());
 
             inputScreen.style.display = 'none';
             loadingIndicator.style.display = 'block';
 
             try {
-                // Call the secure Vercel edge endpoint format structure
+                // Call the freshly fixed, secure Vercel raw fetch serverless function endpoint
                 const response = await fetch('/api/claude', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -339,9 +318,8 @@
                 const cleanJsonText = textOutput.replace(/```json|```/g, '').trim();
                 const ideas = JSON.parse(cleanJsonText);
 
-                // Expand viewport boundaries and render horizontal tree track
-                mainContainer.add('canvas-mode');
-                renderHorizontalNodeTree(ideas);
+                // Build and render the circle node track visually
+                renderNodeTree(ideas);
 
                 loadingIndicator.style.display = 'none';
                 nodeScreen.style.display = 'flex';
@@ -350,38 +328,38 @@
                 console.error(error);
                 alert('Something went wrong. Mind trying that prompt again?');
                 loadingIndicator.style.display = 'none';
-                showInputScreen();
+                inputScreen.style.display = 'flex';
             }
         }
 
-        function renderHorizontalNodeTree(ideas) {
+        function renderNodeTree(ideas) {
             ideas.forEach((idea, index) => {
-                const columnWrap = document.createElement('div');
-                // Alternates height layout alignment vectors cleanly down the line timeline path track
-                const stagger = index % 2 === 0 ? 'stagger-up' : 'stagger-down';
-                columnWrap.className = `node-column-wrap ${stagger}`;
+                const row = document.createElement('div');
+                // Alternates classes cleanly: Row 0 is Left, Row 1 is Right, Row 2 is Left
+                const alignment = index % 2 === 0 ? 'align-left' : 'align-right';
+                row.className = `node-row ${alignment}`;
 
-                columnWrap.innerHTML = `
-                    <button class="circle-node" onclick="alert('Exploring: ${idea.title.replace(/'/g, "\\'")}')">
+                row.innerHTML = `
+                    <button class="circle-node" onclick="alert('Exploring: ${idea.title}')">
                         <span class="node-icon">✦</span>
                         <h3 class="node-title">${idea.title}</h3>
                         <span class="node-subtitle">${idea.type || 'Side Hustle'}</span>
                     </button>
                 `;
-                nodeTreeContainer.appendChild(columnWrap);
+                nodeTreeContainer.appendChild(row);
             });
 
-            // Append the final static "+ More" bubble structural node down at the end of track length
-            const moreColumn = document.createElement('div');
-            moreColumn.className = 'node-column-wrap';
-            moreColumn.innerHTML = `
+            // Append the final static "+ More" bubble dynamically centered at the bottom
+            const moreRow = document.createElement('div');
+            moreRow.className = 'node-row align-center';
+            moreRow.innerHTML = `
                 <button class="circle-node more-node" onclick="alert('More options coming soon!')">
                     <span class="node-icon">+</span>
                     <h3 class="node-title">More</h3>
                     <span class="node-subtitle">ideas</span>
                 </button>
             `;
-            nodeTreeContainer.appendChild(moreColumn);
+            nodeTreeContainer.appendChild(moreRow);
         }
     </script>
 </body>
