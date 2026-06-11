@@ -363,7 +363,8 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 <script>
 let selectedPath = null,
     savedSkills = '',
-    convoHistory = [];
+    convoHistory = [],
+    currentStep = 1;
 
 const STAGES = [
   {label:'First Win',desc:'Get your first result — proof this works.',tasks:['Complete one paying transaction or get first interview callback','Tell 5 people what you\'re doing','Spend 30 minutes per day on this — no exceptions']},
@@ -425,6 +426,7 @@ function resetAll() {
   selectedPath = null;
   savedSkills = '';
   convoHistory = [];
+  currentStep = 1;
   
   document.querySelectorAll('.path-btn').forEach(b => b.classList.remove('selected'));
   
@@ -469,71 +471,51 @@ function startConvo() {
   sendToAPI(text);
 }
 
-/* DOCUMENTATION: Connected directly to your live backend endpoint via standard POST fetch pipeline */
+/* MODIFIED NETWORK CONTROLLER WITH THE ROUTE INTEGRATED */
 async function sendToAPI(promptText) {
   convoHistory.push({ role: "user", content: promptText });
 
   try {
-    const response = await fetch('/api/chat', {
-      method: 'POST',
+    // Queries the cloud endpoint route established by your file hierarchy structure
+    const API_ENDPOINT = "/api/claude"; 
+
+    const response = await fetch(API_ENDPOINT, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({ 
-        history: convoHistory, 
-        path: selectedPath 
+      body: JSON.stringify({
+        selectedPath: selectedPath,
+        history: convoHistory
       })
     });
 
-    if (!response.ok) throw new Error('Backend unavailable');
+    if (!response.ok) {
+      throw new Error(`HTTP network error status check: ${response.status}`);
+    }
+
     const data = await response.json();
+    
+    // Expects response keys to contain text details and view status actions
+    const responseText = data.text || "Empty string data processed by the server function.";
+    const action = data.action || "continue";
 
-    convoHistory.push({ role: "assistant", content: data.reply });
-    resolveTyping(data.reply);
+    resolveTyping(responseText);
 
-    if (data.action === "show_ideas" && Array.isArray(data.ideas)) {
+    if (action === "show_ideas") {
       setTimeout(() => {
-        renderLiveIdeas(data.ideas);
-      }, 1200);
+        showMockIdeas();
+      }, 1500);
     } else {
       appendReplyInput();
+      currentStep++;
     }
 
   } catch (error) {
-    console.error("Live connection error:", error);
-    resolveTyping("Connection error. Please confirm your local backend server application is listening on this port.");
+    console.error("API Connection failure breakdown:", error);
+    resolveTyping(`**Connection error:** Please confirm your local backend server application is listening on this port.`);
     appendReplyInput();
   }
-}
-
-/* DOCUMENTATION: Dynamically processes incoming real API structural data inside your design layout */
-function renderLiveIdeas(ideasArray) {
-  const convo = document.getElementById('convo-thread');
-  if(convo) convo.style.display = 'none';
-  
-  const panel = document.getElementById('ideas-panel');
-  if(panel) panel.style.display = 'block';
-  window.scrollTo({top: 0, behavior: 'smooth'});
-  
-  const grid = document.getElementById('ideas-grid');
-  if(!grid) return;
-  
-  grid.innerHTML = '';
-  
-  ideasArray.forEach((idea, index) => {
-    const tile = document.createElement('div');
-    tile.className = 'idea-tile';
-    tile.onclick = () => viewJourney(idea.name);
-    
-    // Infuses the live AI's context into your exact HTML arrangement structural syntax
-    tile.innerHTML = `
-      <div class="it-type">Option ${index + 1} • ${selectedPath === 'business' ? 'Service Business' : 'Career Path'}</div>
-      <div class="it-name">${esc(idea.name)}</div>
-      <div class="it-tagline">${esc(idea.tagline)}</div>
-      <div class="it-why">${fmt(idea.whyFits)}</div>
-    `;
-    grid.appendChild(tile);
-  });
 }
 
 function appendReplyInput() {
@@ -573,6 +555,33 @@ function submitReply() {
   addConnectorAndTyping(userPair);
 
   sendToAPI(text);
+}
+
+function showMockIdeas() {
+  const convo = document.getElementById('convo-thread');
+  if(convo) convo.style.display = 'none';
+  
+  const panel = document.getElementById('ideas-panel');
+  if(panel) panel.style.display = 'block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  
+  const grid = document.getElementById('ideas-grid');
+  if(!grid) return;
+  
+  grid.innerHTML = `
+    <div class="idea-tile" onclick="viewJourney('Local Independent Tech Support')">
+      <div class="it-type">Option 1 • Service Business</div>
+      <div class="it-name">Local Independent Tech Support</div>
+      <div class="it-tagline">Helping non-tech-savvy neighborhood residents set up home networks, devices, and backup plans.</div>
+      <div class="it-why">Why it fits: Low startup cost, matches your preference for working with computing hardware, immediate local cash flow potential.</div>
+    </div>
+    <div class="idea-tile" onclick="viewJourney('Junior Web Implementation Consultant')">
+      <div class="it-type">Option 2 • Career Path</div>
+      <div class="it-name">Junior Web Implementation Consultant</div>
+      <div class="it-tagline">Configuring landing platforms, CMS templates, and analytics setups for local corporate agencies.</div>
+      <div class="it-why">Why it fits: Leverages technical comfort while avoiding heavy engineering loops early on.</div>
+    </div>
+  `;
 }
 
 function viewJourney(title) {
