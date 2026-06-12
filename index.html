@@ -14,7 +14,11 @@
 html,body{height:100%;font-family:'Manrope',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 body{min-height:100vh}
 .bg-layer{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 50% 30%,#b3e0f2 0%,#cce6f4 40%,#e6f0f5 75%,#f0f5f8 100%);pointer-events:none;overflow:hidden}
-@keyframes floatCloud{0%{transform:translateX(110vw)}100%{transform:translateX(-320px)}}
+@keyframes floatCloud{0%{transform:translateX(110vw)}100%{transform:translateX(-600px)}}
+@keyframes floatCloudR{0%{transform:translateX(-600px)}100%{transform:translateX(110vw)}}
+@keyframes floatCloudDiagDown{0%{transform:translate(110vw,-5vh)}100%{transform:translate(-600px,8vh)}}
+@keyframes floatCloudDiagUp{0%{transform:translate(110vw,8vh)}100%{transform:translate(-320px,-5vh)}}
+@keyframes floatCloudSlowR{0%{transform:translateX(-600px)}100%{transform:translateX(110vw)}}
 @keyframes cloudFadeIn{from{opacity:0}to{opacity:1}}
 header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(204,220,231,0.8);box-shadow:0 1px 0 rgba(11,21,30,0.04)}
 .logo{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:-.02em;color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:.5rem}
@@ -218,6 +222,8 @@ body.night-mode .logo-dot{background:#7ecfff}
 body.night-mode .nav-btn{color:#a8c8e8}
 body.night-mode .nav-btn:hover{background:rgba(30,55,100,0.5);color:#e8f0ff}
 body.night-mode .nav-btn.active{background:rgba(30,55,100,0.6);color:#7ecfff}
+body.night-mode .node-user{background:#1e3a5f;color:#e8f4ff;box-shadow:0 4px 20px rgba(0,0,0,0.4)}
+body.night-mode .node-ai{background:rgba(255,255,255,0.92);border-color:rgba(180,210,240,0.4)}
 /* WEATHER BACKGROUND */
 #weather-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
 .bg-layer{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;transition:background 3s ease}
@@ -826,12 +832,12 @@ const WX = {
   current: null,
 
   THEMES: {
-    clear_day:   { bg: 'radial-gradient(ellipse at 50% 20%, #87ceeb 0%, #b8e4f9 45%, #dff0fb 100%)', clouds: 2, cloudOpacity: 0.7, rain: 0, stars: 0, sun: true,  moon: false, badge: '☀️' },
-    clear_night: { bg: 'radial-gradient(ellipse at 50% 20%, #0a0e2a 0%, #1a2456 45%, #2a3a7a 100%)', clouds: 1, cloudOpacity: 0.2, rain: 0, stars: 60, sun: false, moon: true,  badge: '🌙' },
-    cloudy_day:  { bg: 'radial-gradient(ellipse at 50% 30%, #a0c4d8 0%, #c5dce8 50%, #dce9f0 100%)', clouds: 6, cloudOpacity: 0.9, rain: 0, stars: 0, sun: false, moon: false, badge: '☁️' },
-    cloudy_night:{ bg: 'radial-gradient(ellipse at 50% 20%, #0d1220 0%, #1a2035 50%, #252e45 100%)', clouds: 5, cloudOpacity: 0.4, rain: 0, stars: 15, sun: false, moon: true,  badge: '🌑' },
+    clear_day:   { bg: 'radial-gradient(ellipse at 50% 20%, #87ceeb 0%, #b8e4f9 45%, #dff0fb 100%)', clouds: 8, cloudOpacity: 0.7, rain: 0, stars: 0, sun: true,  moon: false, badge: '☀️' },
+    clear_night: { bg: 'radial-gradient(ellipse at 50% 20%, #04070f 0%, #0a1230 50%, #101e4a 100%)', clouds: 5, cloudOpacity: 0.2, rain: 0, stars: 60, sun: false, moon: true,  badge: '🌙' },
+    cloudy_day:  { bg: 'radial-gradient(ellipse at 50% 30%, #a0c4d8 0%, #c5dce8 50%, #dce9f0 100%)', clouds: 12, cloudOpacity: 0.9, rain: 0, stars: 0, sun: false, moon: false, badge: '☁️' },
+    cloudy_night:{ bg: 'radial-gradient(ellipse at 50% 20%, #060810 0%, #0e1422 50%, #181f35 100%)', clouds: 10, cloudOpacity: 0.4, rain: 0, stars: 15, sun: false, moon: true,  badge: '🌑' },
     rain_day:    { bg: 'radial-gradient(ellipse at 50% 30%, #6a8fa8 0%, #8aafc5 50%, #b0cad8 100%)', clouds: 7, cloudOpacity: 0.95,rain: 80, stars: 0, sun: false, moon: false, badge: '🌧️' },
-    rain_night:  { bg: 'radial-gradient(ellipse at 50% 20%, #08111c 0%, #121e2c 50%, #1c2d40 100%)', clouds: 6, cloudOpacity: 0.5, rain: 80, stars: 0, sun: false, moon: false, badge: '🌧️' },
+    rain_night:  { bg: 'radial-gradient(ellipse at 50% 20%, #040a10 0%, #0a1520 50%, #121e2e 100%)', clouds: 6, cloudOpacity: 0.5, rain: 80, stars: 0, sun: false, moon: false, badge: '🌧️' },
     snow_day:    { bg: 'radial-gradient(ellipse at 50% 30%, #c8dce8 0%, #dce8f0 50%, #edf4f8 100%)', clouds: 5, cloudOpacity: 0.95,rain: 40, stars: 0, sun: false, moon: false, badge: '❄️', snow: true },
     fog_day:     { bg: 'radial-gradient(ellipse at 50% 50%, #b8c8d0 0%, #ccd8de 60%, #dde6ea 100%)', clouds: 8, cloudOpacity: 0.6, rain: 0, stars: 0, sun: false, moon: false, badge: '🌫️' },
     thunder_day: { bg: 'radial-gradient(ellipse at 50% 30%, #3d4a55 0%, #5a6a78 50%, #7a8a96 100%)', clouds: 8, cloudOpacity: 0.98,rain:120, stars: 0, sun: false, moon: false, badge: '⛈️' },
@@ -962,29 +968,70 @@ const WX = {
   },
 
   addCloud(bg, opacity, idx, total) {
-    const el = document.createElement('div');
-    el.className = 'weather-cloud';
-    const w = 80 + Math.random() * 160;
-    const h = w * 0.38;
-    const top = 5 + Math.random() * 65;
-    const dur = 40 + Math.random() * 60;
-    const delay = -(Math.random() * dur);
-    const fadeDel = idx * 0.3;
-    Object.assign(el.style, {
-      width: w+'px', height: h+'px',
-      top: top+'%',
-      background: 'rgba(255,255,255,'+opacity+')',
-      animationName: 'cloudFadeIn, floatCloud',
-      animationDuration: '1.5s, '+dur+'s',
-      animationDelay: fadeDel+'s, '+delay+'s',
-      animationTimingFunction: 'ease, linear',
-      animationIterationCount: '1, infinite',
-      animationFillMode: 'both, none',
-      opacity: 0
+    const DIRECTIONS = [
+      { anim: 'floatCloud',        startLeft: '110vw',  startTop: null },
+      { anim: 'floatCloudR',       startLeft: '-320px', startTop: null },
+      { anim: 'floatCloudDiagDown',startLeft: '110vw',  startTop: null },
+      { anim: 'floatCloudDiagUp',  startLeft: '110vw',  startTop: null },
+      { anim: 'floatCloudSlowR',   startLeft: '-320px', startTop: null },
+    ];
+    const dir = DIRECTIONS[idx % DIRECTIONS.length];
+
+    // Vary cloud sizes — mix small wispy and large puffy
+    const sizeClass = idx % 3; // 0=small, 1=medium, 2=large
+    const cw = sizeClass===0 ? 70+Math.random()*60 : sizeClass===1 ? 130+Math.random()*80 : 200+Math.random()*120;
+    const ch = cw * (0.45 + Math.random()*0.2);
+    const cvs = document.createElement('canvas');
+    cvs.width = Math.ceil(cw);
+    cvs.height = Math.ceil(ch);
+    const cx = cvs.getContext('2d');
+
+    const isNight = this.current && this.current.includes('night');
+    const baseColor = isNight ? `rgba(130,150,190,${opacity})` : `rgba(255,255,255,${opacity})`;
+    // Draw each puff individually so overlaps merge cleanly (no even-odd holes)
+    const puffs = [
+      {x: cw*(0.45+Math.random()*0.1),  y: ch*0.65, r: cw*(0.18+Math.random()*0.07)},
+      {x: cw*(0.25+Math.random()*0.1),  y: ch*0.72, r: cw*(0.13+Math.random()*0.06)},
+      {x: cw*(0.65+Math.random()*0.1),  y: ch*0.70, r: cw*(0.13+Math.random()*0.05)},
+      {x: cw*(0.38+Math.random()*0.08), y: ch*0.5,  r: cw*(0.16+Math.random()*0.06)},
+      {x: cw*(0.58+Math.random()*0.08), y: ch*0.48, r: cw*(0.15+Math.random()*0.05)},
+      {x: cw*(0.48+Math.random()*0.06), y: ch*0.34, r: cw*(0.12+Math.random()*0.05)},
+    ];
+    // Fill each circle separately — overlaps paint on top, no holes
+    cx.fillStyle = baseColor;
+    puffs.forEach(p => {
+      cx.beginPath();
+      cx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      cx.fill();
     });
-    el.style.setProperty('--cloud-opacity', opacity);
-    // psuedo elements via ::before ::after are handled by CSS class
-    bg.appendChild(el);
+    // Second pass: slightly larger, low opacity for soft edge blending
+    cx.globalAlpha = 0.18;
+    puffs.forEach(p => {
+      cx.beginPath();
+      cx.arc(p.x, p.y, p.r * 1.18, 0, Math.PI*2);
+      cx.fill();
+    });
+    cx.globalAlpha = 1;
+
+    const top = 3 + Math.random() * 68;
+    // speed varies by size — smaller clouds move faster
+    const dur = sizeClass===0 ? 28+Math.random()*20 : sizeClass===1 ? 45+Math.random()*30 : 65+Math.random()*40;
+    const delay = -(Math.random() * dur);
+    const fadeDel = idx * 0.35;
+
+    Object.assign(cvs.style, {
+      position: 'fixed',
+      top: top+'%',
+      left: '0',
+      width: cw+'px',
+      height: ch+'px',
+      opacity: 0,
+      animation: `cloudFadeIn 1.8s ease ${fadeDel}s forwards, ${dir.anim} ${dur}s linear ${delay}s infinite`,
+      pointerEvents: 'none',
+      filter: 'blur(0.6px)',
+      zIndex: '0',
+    });
+    bg.appendChild(cvs);
   },
 
   startPrecip(count, isSnow) {
