@@ -406,17 +406,29 @@ const STAGES=[
 ];
 
 window.addEventListener('load',()=>{
+  // Clear any corrupted session on load
+  try{
+    const raw=localStorage.getItem('wid_session');
+    if(raw){JSON.parse(raw);} // test parse — if it throws, we clear below
+  }catch(e){
+    localStorage.removeItem('wid_session');
+  }
+
+  // Dismiss loader
   setTimeout(()=>{
     const l=document.getElementById('page-loader');
     if(l){l.classList.add('fade-out');setTimeout(()=>l.style.display='none',500);}
   },800);
-  // drag-to-scroll
+
+  // drag-to-scroll — guard against null
   const track=document.getElementById('nodes-track-outer');
-  let isDown=false,startX,scrollLeft;
-  track.addEventListener('mousedown',e=>{isDown=true;track.classList.add('grabbing');startX=e.pageX-track.offsetLeft;scrollLeft=track.scrollLeft;});
-  track.addEventListener('mouseleave',()=>{isDown=false;track.classList.remove('grabbing');});
-  track.addEventListener('mouseup',()=>{isDown=false;track.classList.remove('grabbing');});
-  track.addEventListener('mousemove',e=>{if(!isDown)return;e.preventDefault();const x=e.pageX-track.offsetLeft;track.scrollLeft=scrollLeft-(x-startX)*1.2;});
+  if(track){
+    let isDown=false,startX,scrollLeft;
+    track.addEventListener('mousedown',e=>{isDown=true;track.classList.add('grabbing');startX=e.pageX-track.offsetLeft;scrollLeft=track.scrollLeft;});
+    track.addEventListener('mouseleave',()=>{isDown=false;track.classList.remove('grabbing');});
+    track.addEventListener('mouseup',()=>{isDown=false;track.classList.remove('grabbing');});
+    track.addEventListener('mousemove',e=>{if(!isDown)return;e.preventDefault();const x=e.pageX-track.offsetLeft;track.scrollLeft=scrollLeft-(x-startX)*1.2;});
+  }
 });
 
 function selectPath(p){
@@ -454,7 +466,6 @@ function startConvo(){
   const lw=document.getElementById('landing-wrap');if(lw)lw.style.display='none';
   const pair=addUserNode(text);
   addConnectorAndTyping(pair);
-  saveSession();
   sendToAPI(text);
 }
 
@@ -470,25 +481,15 @@ async function sendToAPI(promptText){
     // Step 1: just ask one follow-up question
     messages=[{
       role:'user',
-      content:`You are whatimado, a direct advisor. The user described themselves below. Reply with ONE short follow-up question only — 1 sentence, plain text, no formatting, no lists, no advice, no markdown.
-
-User: ${promptText}`
+      content:'You are whatimado, a direct advisor. The user described themselves below. Reply with ONE short follow-up question only - 1 sentence, plain text, no formatting, no lists, no advice, no markdown.\n\nUser: '+promptText
     }];
   } else {
     // Step 2: generate JSON ideas using full conversation as context
     // Build a clean summary of the conversation so far
-    const summary = convoHistory.map(m => (m.role==='user'?'User: ':'Advisor: ')+m.content).join('
-');
+    const summary = convoHistory.map(m => (m.role==='user'?'User: ':'Advisor: ')+m.content).join('\n');
     messages=[{
       role:'user',
-      content:`You are whatimado. Based on this conversation, generate exactly 3 business or career ideas tailored to this person.
-
-Conversation:
-${summary}
-
-Respond with ONLY a JSON array. No prose. No markdown. No code fences. Start your response with [ and end with ].
-
-Format: [{"title":"...","type":"...","tagline":"one sentence description","why":"one sentence on why it fits them"}]`
+      content:'You are whatimado. Based on this conversation, generate exactly 3 business or career ideas tailored to this person.\n\nConversation:\n'+summary+'\n\nRespond with ONLY a JSON array. No prose. No markdown. No code fences. Start your response with [ and end with ].\n\nFormat: [{"title":"...","type":"...","tagline":"one sentence description","why":"one sentence on why it fits them"}]'
     }];
   }
 
