@@ -14,16 +14,8 @@
 html,body{height:100%;font-family:'Manrope',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 body{min-height:100vh}
 .bg-layer{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 50% 30%,#b3e0f2 0%,#cce6f4 40%,#e6f0f5 75%,#f0f5f8 100%);pointer-events:none;overflow:hidden}
-.cloud{position:absolute;background:rgba(255,255,255,0.82);border-radius:100px;filter:blur(0.5px)}
-.cloud::before,.cloud::after{content:'';position:absolute;background:#fff;border-radius:50%}
-.cloud::before{width:50%;height:100%;top:-40%;left:15%}
-.cloud::after{width:35%;height:70%;top:-30%;right:15%}
-.cloud-1{width:140px;height:45px;top:15%;animation:floatCloud1 55s linear infinite;opacity:.9}
-.cloud-2{width:200px;height:60px;top:40%;animation:floatCloud2 80s linear infinite;opacity:.75}
-.cloud-3{width:90px;height:30px;top:65%;animation:floatCloud3 40s linear infinite;opacity:.8}
-@keyframes floatCloud1{0%{transform:translateX(20vw)}100%{transform:translateX(-250px)}}
-@keyframes floatCloud2{0%{transform:translateX(65vw)}100%{transform:translateX(-250px)}}
-@keyframes floatCloud3{0%{transform:translateX(10vw)}100%{transform:translateX(-250px)}}
+@keyframes floatCloud{0%{transform:translateX(110vw)}100%{transform:translateX(-320px)}}
+@keyframes cloudFadeIn{from{opacity:0}to{opacity:1}}
 header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(204,220,231,0.8);box-shadow:0 1px 0 rgba(11,21,30,0.04)}
 .logo{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:-.02em;color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:.5rem}
 .logo-dot{width:8px;height:8px;border-radius:50%;background:var(--aqua)}
@@ -77,10 +69,10 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .pill:hover{border-color:var(--aqua4);color:var(--aqua-text);background:var(--aqua3);box-shadow:none}
 #convo-thread{display:none;padding-top:2.5rem;padding-bottom:7rem}
 .bubble-chain{display:flex;flex-direction:column;align-items:center;position:relative}
-.chain-pair{display:flex;flex-direction:column;align-items:center;width:100%}
+.chain-pair{display:flex;flex-direction:column;align-items:center;width:100%;gap:12px;margin-bottom:8px}
 .chain-user{display:flex;justify-content:flex-end;width:100%}
 .node-user{max-width:72%;background:var(--ink);color:#fff;border-radius:var(--radius-md) 6px var(--radius-md) var(--radius-md);padding:.8rem 1.05rem;font-size:.875rem;font-weight:400;line-height:1.45;word-wrap:break-word;opacity:0;animation:nodeIn .25s ease forwards;box-shadow:var(--shadow-md)}
-.chain-connector{display:flex;flex-direction:column;align-items:center;padding:.2rem 0;min-height:36px}
+.chain-connector{display:flex;flex-direction:column;align-items:center;padding:.5rem 0;min-height:44px}
 .connector-line{width:1.5px;background:linear-gradient(to bottom,var(--connector),transparent);flex:1;min-height:20px}
 .connector-dot{width:6px;height:6px;border-radius:50%;background:var(--aqua4);flex-shrink:0}
 .chain-ai{display:flex;justify-content:flex-start;width:100%}
@@ -119,23 +111,22 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .node-connector-h{width:36px;height:1.5px;background:linear-gradient(to right,var(--aqua4),var(--line));flex-shrink:0}
 /* bubble: 200px, text clipped inside 70.7% inset (circle geometry) */
 .node-bubble{
-  width:200px;height:200px;border-radius:50%;
+  width:190px;height:190px;border-radius:50%;
   background:var(--surface);border:1.5px solid var(--line);
   box-shadow:var(--shadow-md);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   text-align:center;
-  /* safe inner padding = (1 - 1/√2)/2 * 200 ≈ 29px each side */
-  padding:0 30px;
+  padding:32px;
   cursor:pointer;transition:all .22s cubic-bezier(.4,0,.2,1);flex-shrink:0;
-  font-family:'Manrope',sans-serif;overflow:hidden;
+  font-family:'Manrope',sans-serif;overflow:hidden;box-sizing:border-box;
 }
 .node-bubble:hover{transform:translateY(-6px);border-color:var(--aqua);box-shadow:0 14px 40px rgba(0,163,163,0.2),var(--shadow-md)}
 .node-bubble.more-bubble{border-style:dashed;background:transparent;box-shadow:none;opacity:.6}
 .node-bubble.more-bubble:hover{background:var(--aqua3);opacity:1;border-color:var(--aqua4);box-shadow:none;transform:translateY(-4px)}
 .nb-icon{font-size:1rem;margin-bottom:.3rem;flex-shrink:0}
 .nb-type{font-size:.58rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--aqua-text);margin-bottom:.25rem;flex-shrink:0;width:100%}
-.nb-title{font-size:.82rem;font-weight:700;color:var(--ink);line-height:1.25;width:100%;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
-.nb-sub{font-size:.65rem;color:var(--mid);margin-top:.3rem;font-weight:400;line-height:1.3;width:100%;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
+.nb-title{font-size:.8rem;font-weight:700;color:var(--ink);line-height:1.2;width:100%;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.nb-sub{font-size:.62rem;color:var(--mid);margin-top:.2rem;font-weight:400;line-height:1.25;width:100%;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 
 /* JOURNEY */
 #journey-panel{display:none;padding-top:2rem;padding-bottom:7rem}
@@ -198,6 +189,54 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .help-fab:hover{background:var(--aqua2);transform:scale(1.08)}
 .help-fab svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
+
+
+/* NIGHT MODE TEXT */
+body.night-mode .hero-title{color:#e8f0ff}
+body.night-mode .hero-title em{color:#7ecfff}
+body.night-mode .hero-sub{color:#a8c8e8}
+body.night-mode .hero-chip{background:rgba(30,50,100,0.5);border-color:rgba(100,150,220,0.4)}
+body.night-mode .hero-chip-text{color:#7ecfff}
+body.night-mode .hero-chip-dot{background:#7ecfff}
+body.night-mode .path-label{color:#a8c8e8}
+body.night-mode .path-or{color:#6a90b8}
+body.night-mode .path-or::before,body.night-mode .path-or::after{background:rgba(100,140,180,0.3)}
+body.night-mode .prompt-hint{color:#6a90b8}
+body.night-mode .pill{background:rgba(20,35,65,0.6);border-color:rgba(100,150,220,0.3);color:#a8c8e8}
+body.night-mode .pill:hover{background:rgba(30,55,100,0.7);border-color:#7ecfff;color:#7ecfff}
+body.night-mode .section-gap hr{border-color:rgba(100,140,180,0.25)}
+body.night-mode .tagline{color:#6a90b8}
+body.night-mode .scroll-hint{color:rgba(160,200,230,0.6)}
+body.night-mode .panel-back{color:#a8c8e8}
+body.night-mode .jh-type{color:#7ecfff}
+body.night-mode .jh-title{color:#e8f0ff}
+body.night-mode .jh-sub{color:#a8c8e8}
+body.night-mode header{background:rgba(10,18,40,0.88);border-color:rgba(50,80,140,0.5)}
+body.night-mode .logo{color:#e8f0ff}
+body.night-mode .logo span{color:#6a90b8}
+body.night-mode .logo-dot{background:#7ecfff}
+body.night-mode .nav-btn{color:#a8c8e8}
+body.night-mode .nav-btn:hover{background:rgba(30,55,100,0.5);color:#e8f0ff}
+body.night-mode .nav-btn.active{background:rgba(30,55,100,0.6);color:#7ecfff}
+/* WEATHER BACKGROUND */
+#weather-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+.bg-layer{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;transition:background 3s ease}
+.weather-cloud{position:absolute;border-radius:100px;filter:blur(0.5px);animation:cloudFadeIn 2s ease forwards}
+.weather-cloud::before,.weather-cloud::after{content:'';position:absolute;border-radius:50%;}
+.weather-cloud::before{width:50%;height:150%;top:-50%;left:15%;background:inherit;}
+.weather-cloud::after{width:35%;height:120%;top:-35%;right:15%;background:inherit;}
+.weather-cloud::before,.weather-cloud::after{content:'';position:absolute;border-radius:50%}
+.weather-cloud::before{width:50%;height:100%;top:-40%;left:15%}
+.weather-cloud::after{width:35%;height:70%;top:-30%;right:15%}
+.rain-drop{position:absolute;width:1.5px;border-radius:2px;opacity:0;animation:rainFall linear infinite}
+@keyframes rainFall{0%{transform:translateY(-20px);opacity:0}10%{opacity:.6}90%{opacity:.5}100%{transform:translateY(110vh);opacity:0}}
+.star{position:absolute;border-radius:50%;background:#fff;animation:starTwinkle ease-in-out infinite}
+@keyframes starTwinkle{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+.sun-orb{position:absolute;border-radius:50%;filter:blur(2px);animation:sunPulse 6s ease-in-out infinite}
+@keyframes sunPulse{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.06);opacity:1}}
+.moon-orb{position:absolute;border-radius:50%;filter:blur(1px)}
+#weather-badge{position:fixed;bottom:1.75rem;left:1.75rem;z-index:600;font-size:.68rem;font-weight:600;color:var(--text3);background:rgba(255,255,255,0.7);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:100px;padding:.3rem .75rem;display:none;align-items:center;gap:.4rem;letter-spacing:.02em}
+#weather-badge.visible{display:flex}
 /* NAV extras */
 .nav-divider{width:1px;height:18px;background:var(--line);margin:0 .25rem}
 .nav-signup{background:var(--green);color:#fff!important;border-radius:var(--radius-sm);padding:.35rem .85rem}
@@ -250,11 +289,9 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
   <div class="loader-dots"><span></span><span></span><span></span></div>
 </div>
 
-<div class="bg-layer">
-  <div class="cloud cloud-1"></div>
-  <div class="cloud cloud-2"></div>
-  <div class="cloud cloud-3"></div>
-</div>
+<div class="bg-layer" id="bg-layer"></div>
+<canvas id="weather-canvas"></canvas>
+<div id="weather-badge"></div>
 
 <header>
   <div class="logo" onclick="resetAll()"><span class="logo-dot"></span>whatimado<span>.com</span></div>
@@ -389,6 +426,9 @@ const STAGES=[
 ];
 
 window.addEventListener('load',()=>{
+  // Init weather
+  WX.init();
+
   // Clear any corrupted session on load
   try{
     const raw=localStorage.getItem('wid_session');
@@ -540,7 +580,7 @@ function showNodeIdeas(ideas){
     if(i>0){const c=document.createElement('div');c.className='node-connector-h';rail.appendChild(c);}
     const btn=document.createElement('button');
     btn.className='node-bubble';
-    btn.innerHTML=`<div class="nb-icon">${ICONS[i%ICONS.length]}</div><div class="nb-type">${esc(idea.type||'Idea')}</div><div class="nb-title">${esc(idea.title)}</div><div class="nb-sub">${esc(idea.tagline||'')}</div>`;
+    btn.innerHTML=`<div class="nb-icon">${ICONS[i%ICONS.length]}</div><div class="nb-type">${esc(idea.type||'Idea')}</div><div class="nb-title">${esc(idea.title)}</div><div class="nb-sub">${esc((idea.tagline||'').substring(0,52))}</div>`;
     btn.onclick=()=>viewJourney(idea.title,idea.type);
     rail.appendChild(btn);
   });
@@ -779,6 +819,217 @@ function resolveTyping(text){
   const aiRow=document.getElementById('typing-ai');
   if(aiRow){const node=aiRow.querySelector('.node-ai');if(node)node.innerHTML=fmt(text);aiRow.removeAttribute('id');}
 }
+
+// ══ WEATHER BACKGROUND SYSTEM ══
+const WX = {
+  canvas: null, ctx: null, particles: [], animFrame: null,
+  current: null,
+
+  THEMES: {
+    clear_day:   { bg: 'radial-gradient(ellipse at 50% 20%, #87ceeb 0%, #b8e4f9 45%, #dff0fb 100%)', clouds: 2, cloudOpacity: 0.7, rain: 0, stars: 0, sun: true,  moon: false, badge: '☀️' },
+    clear_night: { bg: 'radial-gradient(ellipse at 50% 20%, #0a0e2a 0%, #1a2456 45%, #2a3a7a 100%)', clouds: 1, cloudOpacity: 0.2, rain: 0, stars: 60, sun: false, moon: true,  badge: '🌙' },
+    cloudy_day:  { bg: 'radial-gradient(ellipse at 50% 30%, #a0c4d8 0%, #c5dce8 50%, #dce9f0 100%)', clouds: 6, cloudOpacity: 0.9, rain: 0, stars: 0, sun: false, moon: false, badge: '☁️' },
+    cloudy_night:{ bg: 'radial-gradient(ellipse at 50% 20%, #0d1220 0%, #1a2035 50%, #252e45 100%)', clouds: 5, cloudOpacity: 0.4, rain: 0, stars: 15, sun: false, moon: true,  badge: '🌑' },
+    rain_day:    { bg: 'radial-gradient(ellipse at 50% 30%, #6a8fa8 0%, #8aafc5 50%, #b0cad8 100%)', clouds: 7, cloudOpacity: 0.95,rain: 80, stars: 0, sun: false, moon: false, badge: '🌧️' },
+    rain_night:  { bg: 'radial-gradient(ellipse at 50% 20%, #08111c 0%, #121e2c 50%, #1c2d40 100%)', clouds: 6, cloudOpacity: 0.5, rain: 80, stars: 0, sun: false, moon: false, badge: '🌧️' },
+    snow_day:    { bg: 'radial-gradient(ellipse at 50% 30%, #c8dce8 0%, #dce8f0 50%, #edf4f8 100%)', clouds: 5, cloudOpacity: 0.95,rain: 40, stars: 0, sun: false, moon: false, badge: '❄️', snow: true },
+    fog_day:     { bg: 'radial-gradient(ellipse at 50% 50%, #b8c8d0 0%, #ccd8de 60%, #dde6ea 100%)', clouds: 8, cloudOpacity: 0.6, rain: 0, stars: 0, sun: false, moon: false, badge: '🌫️' },
+    thunder_day: { bg: 'radial-gradient(ellipse at 50% 30%, #3d4a55 0%, #5a6a78 50%, #7a8a96 100%)', clouds: 8, cloudOpacity: 0.98,rain:120, stars: 0, sun: false, moon: false, badge: '⛈️' },
+  },
+
+  init() {
+    this.canvas = document.getElementById('weather-canvas');
+    this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
+    this.resize();
+    window.addEventListener('resize', () => this.resize());
+    this.fetchWeather();
+  },
+
+  resize() {
+    if (!this.canvas) return;
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  },
+
+  async fetchWeather() {
+    try {
+      const pos = await new Promise((res, rej) =>
+        navigator.geolocation.getCurrentPosition(res, rej, {timeout: 8000})
+      );
+      const {latitude: lat, longitude: lon} = pos.coords;
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=weather_code,temperature_2m,is_day&timezone=auto`;
+      const r = await fetch(url);
+      const d = await r.json();
+      const code = d.current.weather_code;
+      const isDay = d.current.is_day === 1;
+      const temp = Math.round(d.current.temperature_2m);
+      const theme = this.codeToTheme(code, isDay);
+      this.applyTheme(theme, temp);
+    } catch(e) {
+      // No geolocation or network — use time-of-day default
+      const hr = new Date().getHours();
+      const isDay = hr >= 6 && hr < 20;
+      this.applyTheme(isDay ? 'clear_day' : 'clear_night', null);
+    }
+  },
+
+  codeToTheme(code, isDay) {
+    const sfx = isDay ? '_day' : '_night';
+    if (code === 0)                         return 'clear'+sfx;
+    if (code <= 2)                          return 'cloudy'+sfx;
+    if (code === 3)                         return 'cloudy'+sfx;
+    if (code >= 45 && code <= 48)           return 'fog_day';
+    if (code >= 51 && code <= 67)           return 'rain'+sfx;
+    if (code >= 71 && code <= 77)           return 'snow_day';
+    if (code >= 80 && code <= 82)           return 'rain'+sfx;
+    if (code >= 95)                         return 'thunder_day';
+    return 'clear'+sfx;
+  },
+
+  applyTheme(themeKey, temp) {
+    // Toggle night mode class on body
+    const isNight = themeKey.includes('night');
+    document.body.classList.toggle('night-mode', isNight);
+    const t = this.THEMES[themeKey] || this.THEMES['clear_day'];
+    this.current = themeKey;
+
+    // Background gradient
+    const bg = document.getElementById('bg-layer');
+    if (bg) bg.style.background = t.bg;
+
+    // Badge
+    const badge = document.getElementById('weather-badge');
+    if (badge && temp !== null) {
+      badge.innerHTML = t.badge + ' ' + temp + '°';
+      badge.classList.add('visible');
+    }
+
+    // Clear old particles
+    this.particles = [];
+    if (this.animFrame) cancelAnimationFrame(this.animFrame);
+    if (bg) bg.innerHTML = '';
+
+    // Sun
+    if (t.sun) this.addSun(bg);
+    // Moon
+    if (t.moon) this.addMoon(bg);
+    // Stars
+    for (let i = 0; i < t.stars; i++) this.addStar(bg);
+    // Clouds
+    for (let i = 0; i < t.clouds; i++) this.addCloud(bg, t.cloudOpacity, i, t.clouds);
+    // Rain/snow
+    if (t.rain > 0) this.startPrecip(t.rain, t.snow);
+  },
+
+  addSun(bg) {
+    const el = document.createElement('div');
+    el.className = 'sun-orb';
+    const size = 90;
+    Object.assign(el.style, {
+      width: size+'px', height: size+'px',
+      top: '8%', right: '12%',
+      background: 'radial-gradient(circle, #fff9c4 0%, #ffe066 50%, #ffb300 100%)',
+      boxShadow: '0 0 60px 30px rgba(255,200,50,0.35)'
+    });
+    bg.appendChild(el);
+  },
+
+  addMoon(bg) {
+    const el = document.createElement('div');
+    el.className = 'moon-orb';
+    Object.assign(el.style, {
+      width: '60px', height: '60px',
+      top: '10%', right: '15%',
+      background: 'radial-gradient(circle at 35% 35%, #f0f4ff 0%, #c8d4e8 60%, #a0b0c8 100%)',
+      boxShadow: '0 0 30px 10px rgba(180,200,240,0.25)'
+    });
+    bg.appendChild(el);
+  },
+
+  addStar(bg) {
+    const el = document.createElement('div');
+    el.className = 'star';
+    const size = Math.random() * 2.5 + 1;
+    Object.assign(el.style, {
+      width: size+'px', height: size+'px',
+      top: (Math.random() * 70)+'%',
+      left: (Math.random() * 100)+'%',
+      animationDuration: (Math.random() * 3 + 2)+'s',
+      animationDelay: (Math.random() * 4)+'s',
+      opacity: Math.random() * 0.6 + 0.2
+    });
+    bg.appendChild(el);
+  },
+
+  addCloud(bg, opacity, idx, total) {
+    const el = document.createElement('div');
+    el.className = 'weather-cloud';
+    const w = 80 + Math.random() * 160;
+    const h = w * 0.38;
+    const top = 5 + Math.random() * 65;
+    const dur = 40 + Math.random() * 60;
+    const delay = -(Math.random() * dur);
+    const fadeDel = idx * 0.3;
+    Object.assign(el.style, {
+      width: w+'px', height: h+'px',
+      top: top+'%',
+      background: 'rgba(255,255,255,'+opacity+')',
+      animationName: 'cloudFadeIn, floatCloud',
+      animationDuration: '1.5s, '+dur+'s',
+      animationDelay: fadeDel+'s, '+delay+'s',
+      animationTimingFunction: 'ease, linear',
+      animationIterationCount: '1, infinite',
+      animationFillMode: 'both, none',
+      opacity: 0
+    });
+    el.style.setProperty('--cloud-opacity', opacity);
+    // psuedo elements via ::before ::after are handled by CSS class
+    bg.appendChild(el);
+  },
+
+  startPrecip(count, isSnow) {
+    if (!this.canvas || !this.ctx) return;
+    const W = this.canvas.width, H = this.canvas.height;
+    for (let i = 0; i < count; i++) {
+      this.particles.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        len: isSnow ? Math.random() * 4 + 3 : Math.random() * 14 + 8,
+        speed: isSnow ? Math.random() * 1.5 + 0.5 : Math.random() * 6 + 6,
+        opacity: Math.random() * 0.4 + 0.2,
+        drift: isSnow ? (Math.random() - 0.5) * 0.8 : 0,
+        snow: isSnow
+      });
+    }
+    this.animatePrecip();
+  },
+
+  animatePrecip() {
+    if (!this.ctx) return;
+    const W = this.canvas.width, H = this.canvas.height;
+    this.ctx.clearRect(0, 0, W, H);
+    this.particles.forEach(p => {
+      this.ctx.beginPath();
+      if (p.snow) {
+        this.ctx.arc(p.x, p.y, p.len/2, 0, Math.PI*2);
+        this.ctx.fillStyle = 'rgba(255,255,255,'+p.opacity+')';
+        this.ctx.fill();
+      } else {
+        this.ctx.moveTo(p.x, p.y);
+        this.ctx.lineTo(p.x - 1, p.y + p.len);
+        this.ctx.strokeStyle = 'rgba(180,210,230,'+p.opacity+')';
+        this.ctx.lineWidth = 1.2;
+        this.ctx.stroke();
+      }
+      p.y += p.speed;
+      p.x += p.drift;
+      if (p.y > H) { p.y = -p.len; p.x = Math.random() * W; }
+      if (p.x > W || p.x < 0) p.x = Math.random() * W;
+    });
+    this.animFrame = requestAnimationFrame(() => this.animatePrecip());
+  }
+};
+
 </script>
 </body>
 </html>
