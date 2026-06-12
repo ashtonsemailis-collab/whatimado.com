@@ -9,7 +9,7 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#e6f0f5;--surface:#ffffff;--surface2:#f1f6f9;--ink:#0b151e;--ink2:#1a2a36;--mid:#4a5d6e;--faint:#8fa3b5;--line:#ccdce7;--line2:#dbe6ee;--aqua:#00a3a3;--aqua2:#00c2c2;--aqua3:#e0f7f7;--aqua4:#99e6e6;--aqua-text:#007a7a;--text:#0b151e;--text2:#4a5d6e;--text3:#8fa3b5;--shadow-sm:0 2px 6px rgba(11,21,30,0.06),0 4px 16px rgba(11,21,30,0.04);--shadow-md:0 4px 12px rgba(11,21,30,0.08),0 12px 32px rgba(11,21,30,0.06);--shadow-lg:0 6px 20px rgba(11,21,30,0.1),0 20px 48px rgba(11,21,30,0.08);--radius-sm:10px;--radius-md:16px;--radius-lg:22px;--radius-xl:28px;--connector:#b0c8d8;
+  --bg:#e6f0f5;--surface:#ffffff;--surface2:#f1f6f9;--ink:#1c2b3a;--ink2:#243347;--mid:#4a6175;--faint:#8fa3b5;--line:#ccdce7;--line2:#dbe6ee;--aqua:#00a3a3;--aqua2:#00c2c2;--aqua3:#e0f7f7;--aqua4:#99e6e6;--aqua-text:#007a7a;--green:#4a7c59;--green2:#5c9e6e;--green3:#eaf4ec;--green4:#b8dcc0;--text:#1c2b3a;--text2:#3d566a;--text3:#7a96a8;--shadow-sm:0 2px 6px rgba(11,21,30,0.06),0 4px 16px rgba(11,21,30,0.04);--shadow-md:0 4px 12px rgba(11,21,30,0.08),0 12px 32px rgba(11,21,30,0.06);--shadow-lg:0 6px 20px rgba(11,21,30,0.1),0 20px 48px rgba(11,21,30,0.08);--radius-sm:10px;--radius-md:16px;--radius-lg:22px;--radius-xl:28px;--connector:#b0c8d8;
 }
 html,body{height:100%;font-family:'Manrope',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 body{min-height:100vh}
@@ -40,9 +40,9 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 #screen-main > *{position:relative;z-index:10}
 .hero,.path-chooser,.prompt-wrap,.pills,#convo-thread,#ideas-panel,#journey-panel{width:100%;max-width:480px;margin:0 auto;padding:0 1.5rem;position:relative;z-index:10;box-sizing:border-box}
 .hero{padding-top:1rem;padding-bottom:1rem;text-align:left}
-.hero-chip{display:inline-flex;align-items:center;gap:.4rem;background:var(--aqua3);border:1px solid var(--aqua4);border-radius:100px;padding:.28rem .85rem;margin-bottom:1rem;opacity:0;animation:fadeUp .5s ease .1s forwards}
-.hero-chip-dot{width:5px;height:5px;border-radius:50%;background:var(--aqua)}
-.hero-chip-text{font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--aqua-text)}
+.hero-chip{display:inline-flex;align-items:center;gap:.4rem;background:var(--green3);border:1px solid var(--green4);border-radius:100px;padding:.28rem .85rem;margin-bottom:1rem;opacity:0;animation:fadeUp .5s ease .1s forwards}
+.hero-chip-dot{width:5px;height:5px;border-radius:50%;background:var(--green)}
+.hero-chip-text{font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--green)}
 .hero-title{font-weight:800;font-size:clamp(1.9rem,5.5vw,2.75rem);letter-spacing:-.03em;color:var(--ink);line-height:1.12;margin-bottom:.75rem;opacity:0;animation:fadeUp .5s ease .2s forwards}
 .hero-title em{font-style:normal;color:var(--aqua-text)}
 .hero-sub{font-size:.95rem;color:var(--text2);font-weight:500;line-height:1.45;opacity:0;animation:fadeUp .5s ease .3s forwards;max-width:420px}
@@ -53,7 +53,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .path-btns{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.25rem;text-align:left}
 .path-btn{padding:1.1rem 1rem;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);color:var(--text);cursor:pointer;transition:all .18s;text-align:left;width:100%;font-family:'Manrope',sans-serif;display:flex;flex-direction:column;gap:.5rem;box-shadow:var(--shadow-sm)}
 .path-btn:hover{border-color:var(--aqua4);box-shadow:var(--shadow-md);transform:translateY(-1px)}
-.path-btn.selected{border-color:var(--aqua);background:var(--aqua3);box-shadow:0 0 0 3px rgba(0,163,163,0.12),var(--shadow-sm)}
+.path-btn.selected{border-color:var(--green);background:var(--green3);box-shadow:0 0 0 3px rgba(74,124,89,0.12),var(--shadow-sm)}
 .path-btn .pb-icon{width:32px;height:32px;border-radius:8px;background:var(--surface2);display:flex;align-items:center;justify-content:center;color:var(--mid);transition:all .18s}
 .path-btn:hover .pb-icon,.path-btn.selected .pb-icon{background:var(--aqua3);color:var(--aqua)}
 .path-btn .pb-icon svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -139,8 +139,8 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 
 /* JOURNEY */
 #journey-panel{display:none;padding-top:2rem;padding-bottom:7rem}
-.jh-back{font-size:.75rem;font-weight:600;color:var(--text2);background:none;border:none;cursor:pointer;transition:color .15s;margin-bottom:1rem;display:inline-flex;align-items:center;gap:.35rem;padding:.4rem 0}
-.jh-back:hover{color:var(--aqua-text)}
+.jh-back{font-size:.75rem;font-weight:600;color:var(--text2);background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:100px;cursor:pointer;transition:all .15s;margin-bottom:1.25rem;display:inline-flex;align-items:center;gap:.35rem;padding:.35rem .9rem .35rem .65rem;box-shadow:var(--shadow-sm)}
+.jh-back:hover{color:var(--green);border-color:var(--green4);background:var(--green3)}
 .jh-back svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .jh-type{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--aqua-text);margin-bottom:.35rem}
 .jh-title{font-weight:800;font-size:1.2rem;color:var(--ink);margin-bottom:.35rem}
@@ -200,8 +200,8 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 
 /* NAV extras */
 .nav-divider{width:1px;height:18px;background:var(--line);margin:0 .25rem}
-.nav-signup{background:var(--aqua);color:#fff!important;border-radius:var(--radius-sm);padding:.35rem .85rem}
-.nav-signup:hover{background:var(--aqua2)!important;color:#fff!important}
+.nav-signup{background:var(--green);color:#fff!important;border-radius:var(--radius-sm);padding:.35rem .85rem}
+.nav-signup:hover{background:var(--green2)!important;color:#fff!important}
 
 /* AUTH MODAL */
 .auth-modal-overlay{position:fixed;inset:0;z-index:2000;background:rgba(11,21,30,0.45);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:1.5rem}
@@ -216,8 +216,8 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .auth-label:first-of-type{margin-top:0}
 .auth-input{width:100%;padding:.65rem .875rem;font-family:'Manrope',sans-serif;font-size:.9rem;border:1.5px solid var(--line);border-radius:var(--radius-sm);outline:none;color:var(--ink);background:var(--surface2);transition:border-color .15s;box-sizing:border-box}
 .auth-input:focus{border-color:var(--aqua4)}
-.auth-submit{width:100%;margin-top:1.25rem;padding:.75rem;background:var(--ink);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Manrope',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .18s}
-.auth-submit:hover{background:var(--ink2)}
+.auth-submit{width:100%;margin-top:1.25rem;padding:.75rem;background:var(--green);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Manrope',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .18s}
+.auth-submit:hover{background:var(--green2)}
 .auth-footer{font-size:.78rem;color:var(--text3);text-align:center;margin-top:.875rem}
 .auth-footer span{color:var(--aqua-text);cursor:pointer;font-weight:600}
 .auth-footer span:hover{text-decoration:underline}
@@ -228,7 +228,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
 .momentum-label{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text2)}
 .momentum-pct{font-size:.88rem;font-weight:800;color:var(--aqua-text)}
 .momentum-track{height:8px;background:var(--surface2);border-radius:100px;overflow:hidden;border:1px solid var(--line2)}
-.momentum-fill{height:100%;width:0%;background:linear-gradient(to right,var(--aqua),var(--aqua2));border-radius:100px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+.momentum-fill{height:100%;width:0%;background:linear-gradient(to right,var(--aqua),var(--green2));border-radius:100px;transition:width .6s cubic-bezier(.4,0,.2,1)}
 .momentum-status{font-size:.75rem;color:var(--text3);margin-top:.5rem;font-weight:500}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes nodeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -273,28 +273,11 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
   <div id="hero-area" class="hero">
     <div class="hero-chip"><span class="hero-chip-dot"></span><span class="hero-chip-text">Start here</span></div>
     <h1 class="hero-title">So… <em>what you</em><br>gonna do?</h1>
-    <p class="hero-sub">Tell us where you're at. We'll help you figure out what's next — a new career, a business, or just a direction.</p>
-  </div>
-  <div id="divider-line" class="section-gap"><hr></div>
-  <div class="path-chooser" id="path-chooser">
-    <p class="path-label">I want to</p>
-    <div class="path-btns">
-      <button class="path-btn" id="btn-profession" onclick="selectPath('profession')">
-        <div class="pb-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div>
-        <div class="pb-title">Find a career</div>
-        <div class="pb-sub">Job or profession</div>
-      </button>
-      <button class="path-btn" id="btn-business" onclick="selectPath('business')">
-        <div class="pb-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
-        <div class="pb-title">Build a business</div>
-        <div class="pb-sub">Something I own</div>
-      </button>
-    </div>
-    <div class="path-or">or just describe your situation</div>
+    <p class="hero-sub">Tell us what's going on — your situation, skills, interests, or goals. We'll figure out the best path forward together.</p>
   </div>
   <div class="prompt-wrap" id="prompt-wrap">
     <div class="prompt-box">
-      <textarea class="prompt-ta" id="skills-input" placeholder="Tell us about yourself — skills, background, what you enjoy, what you need…" rows="3"></textarea>
+      <textarea class="prompt-ta" id="skills-input" placeholder="Tell us your situation — what you know, what you're good at, what you enjoy, or what you want. There's no wrong answer…" rows="3"></textarea>
       <div class="prompt-foot">
         <span class="prompt-hint" id="prompt-hint-text">Be honest. There's no wrong answer.</span>
         <button class="prompt-btn" onclick="startConvo()">Continue →</button>
@@ -450,9 +433,8 @@ function showScreen(n){
 function resetAll(){
   selectedPath=null;savedSkills='';convoHistory=[];currentStep=1;
   clearSession();
-  document.querySelectorAll('.path-btn').forEach(b=>b.classList.remove('selected'));
   document.getElementById('skills-input').value='';
-  document.getElementById('prompt-hint-text').textContent="Be honest. There's no wrong answer.";
+  document.getElementById('prompt-hint-text').textContent="Be honest. There\'s no wrong answer.";
   const lw=document.getElementById('landing-wrap');if(lw)lw.style.display='';
   document.getElementById('bubble-chain').innerHTML='';
   document.getElementById('nodes-rail').innerHTML='';
@@ -481,7 +463,7 @@ async function sendToAPI(promptText){
     // Step 1: just ask one follow-up question
     messages=[{
       role:'user',
-      content:'You are whatimado, a direct advisor. The user described themselves below. Reply with ONE short follow-up question only - 1 sentence, plain text, no formatting, no lists, no advice, no markdown.\n\nUser: '+promptText
+      content:'You are whatimado, a sharp and empathetic advisor. Your job is to uncover what this person can realistically do to move forward — including options they may not know exist. Ask ONE short clarifying question to better understand their situation, resources, or what direction they want. Plain text only, no formatting, no lists, 1-2 sentences max.\n\nUser said: '+promptText
     }];
   } else {
     // Step 2: generate JSON ideas using full conversation as context
@@ -489,7 +471,7 @@ async function sendToAPI(promptText){
     const summary = convoHistory.map(m => (m.role==='user'?'User: ':'Advisor: ')+m.content).join('\n');
     messages=[{
       role:'user',
-      content:'You are whatimado. Based on this conversation, generate exactly 3 business or career ideas tailored to this person.\n\nConversation:\n'+summary+'\n\nRespond with ONLY a JSON array. No prose. No markdown. No code fences. Start your response with [ and end with ].\n\nFormat: [{"title":"...","type":"...","tagline":"one sentence description","why":"one sentence on why it fits them"}]'
+      content:'You are whatimado. Based on this conversation, generate exactly 3 realistic ideas tailored to this person\'s actual situation, constraints, and hidden strengths. Consider what they may not know is possible. Include skill-building paths, zero-cost business ideas, gig work, and unconventional options if relevant.\n\nConversation:\n'+summary+'\n\nRespond with ONLY a JSON array. No prose. No markdown. No code fences. Start with [ and end with ].\n\nFormat: [{"title":"...","type":"...","tagline":"one sentence description","why":"one sentence why it fits their specific situation"}]'
     }];
   }
 
@@ -584,36 +566,79 @@ function viewJourney(title,type){
   document.getElementById('ideas-panel').style.display='none';
   document.getElementById('journey-panel').style.display='block';
   window.scrollTo({top:0,behavior:'smooth'});
-  document.getElementById('jh-type').textContent=type||(selectedPath==='business'?'Business Roadmap':'Career Blueprint');
+  document.getElementById('jh-type').textContent=type||'Roadmap';
   document.getElementById('jh-title').textContent=title;
-  document.getElementById('jh-sub').textContent='Follow these stages to get this off the ground.';
+  document.getElementById('jh-sub').textContent='Building your personalised roadmap\u2026';
   const list=document.getElementById('stages-list');
+  const mw=document.getElementById('momentum-wrap');
+  if(mw)mw.style.display='none';
+  list.innerHTML='<div style="padding:2rem 0;text-align:center;color:var(--text3);font-size:.85rem;display:flex;align-items:center;justify-content:center;gap:.5rem"><div class=\"typing-dots\"><span></span><span></span><span></span></div></div>';
+  const ctx=convoHistory.map(function(m){return (m.role==='user'?'User: ':'Advisor: ')+m.content;}).join('\n');
+  const prompt='You are whatimado. Generate a 4-stage roadmap for someone pursuing the idea: "'+title+'". Base the tasks on their real situation below. Make each task specific, actionable, and realistic for their constraints.\n\nUser context:\n'+ctx+'\n\nRespond with ONLY a JSON array of 4 stage objects. No prose. No markdown. No code fences. Start with [ and end with ].\nFormat: [{"label":"Stage Name","desc":"One sentence about this stage","tasks":["specific task 1","specific task 2","specific task 3"]}]';
+  fetch('/api/claude',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      model:'claude-sonnet-4-5',
+      max_tokens:1200,
+      messages:[{role:'user',content:prompt}]
+    })
+  })
+  .then(function(r){return r.json();})
+  .then(function(data){
+    var text=data.content.filter(function(b){return b.type==='text';}).map(function(b){return b.text;}).join('').trim();
+    var match=text.match(/\[[\s\S]*\]/);
+    if(!match)throw new Error('no json');
+    var stages=JSON.parse(match[0]);
+    document.getElementById('jh-sub').textContent='Follow these stages to get this off the ground.';
+    if(mw)mw.style.display='';
+    renderStages(stages);
+  })
+  .catch(function(){
+    document.getElementById('jh-sub').textContent='Follow these stages to get this off the ground.';
+    if(mw)mw.style.display='';
+    renderStages(STAGES);
+  });
+}
+
+function renderStages(stages){
+  var list=document.getElementById('stages-list');
   list.innerHTML='';
-  STAGES.forEach((s,idx)=>{
-    const card=document.createElement('div');
+  stages.forEach(function(s,idx){
+    var card=document.createElement('div');
     card.className='stage-card'+(idx===0?' open':'');
-    const taskRows=s.tasks.map((t,ti)=>{
-      const uid=`task-${idx}-${ti}`;
-      return `<div>
-        <div class="task-row">
-          <input type="checkbox" class="task-check" onclick="event.stopPropagation();updateMomentum()">
-          <span class="task-text">${t}</span>
-          <button class="task-expand-btn" id="btn-${uid}" onclick="toggleTaskDetail('${uid}',event)">Notes / Ask</button>
-        </div>
-        <div class="task-detail" id="${uid}">
-          <p class="task-notes-label">My Notes</p>
-          <textarea class="task-notes-ta" placeholder="Jot down your thoughts, progress, links…" onclick="event.stopPropagation()"></textarea>
-          <div class="task-ask-wrap">
-            <input class="task-ask-input" id="q-${uid}" placeholder="Ask AI about this task…" onclick="event.stopPropagation()" onkeydown="if(event.key==='Enter'){askTask('${uid}','${t.replace(/'/g,"\\'")}');event.preventDefault();}">
-            <button class="task-ask-btn" id="askbtn-${uid}" onclick="askTask('${uid}','${t.replace(/'/g,"\\'")}');event.stopPropagation()">Ask</button>
-          </div>
-          <div class="task-ai-answer" id="ans-${uid}"></div>
-        </div>
-      </div>`;
+    var taskRows=(s.tasks||[]).map(function(t,ti){
+      var uid='task-'+idx+'-'+ti;
+      var tSafe=t.replace(/'/g,'&#39;');
+      return '<div>'
+        +'<div class="task-row">'
+        +'<input type="checkbox" class="task-check" onclick="event.stopPropagation();updateMomentum()">'
+        +'<span class="task-text">'+esc(t)+'</span>'
+        +'<button class="task-expand-btn" id="btn-'+uid+'" onclick="toggleTaskDetail(\''+uid+'\',event)">Notes / Ask</button>'
+        +'</div>'
+        +'<div class="task-detail" id="'+uid+'">'
+        +'<p class="task-notes-label">My Notes</p>'
+        +'<textarea class="task-notes-ta" placeholder="Jot down your thoughts, progress, links\u2026" onclick="event.stopPropagation()"></textarea>'
+        +'<div class="task-ask-wrap">'
+        +'<input class="task-ask-input" id="q-'+uid+'" placeholder="Ask AI about this task\u2026" onclick="event.stopPropagation()">'
+        +'<button class="task-ask-btn" id="askbtn-'+uid+'" onclick="askTask(\''+uid+'\',\''+tSafe+'\');event.stopPropagation()">Ask</button>'
+        +'</div>'
+        +'<div class="task-ai-answer" id="ans-'+uid+'"></div>'
+        +'</div>'
+        +'</div>';
     }).join('');
-    card.innerHTML=`<div class="stage-head" onclick="this.parentElement.classList.toggle('open')"><div class="stage-num">${idx+1}</div><div class="stage-label">${s.label}</div><div class="stage-arrow">▶</div></div><div class="stage-body"><p class="stage-desc">${s.desc}</p><div class="tasks">${taskRows}</div></div>`;
+    card.innerHTML='<div class="stage-head" onclick="this.parentElement.classList.toggle(\'open\')">'
+      +'<div class="stage-num">'+(idx+1)+'</div>'
+      +'<div class="stage-label">'+esc(s.label)+'</div>'
+      +'<div class="stage-arrow">\u25b6</div>'
+      +'</div>'
+      +'<div class="stage-body">'
+      +'<p class="stage-desc">'+esc(s.desc)+'</p>'
+      +'<div class="tasks">'+taskRows+'</div>'
+      +'</div>';
     list.appendChild(card);
   });
+  updateMomentum();
 }
 function showIdeas(){
   document.getElementById('journey-panel').style.display='none';
