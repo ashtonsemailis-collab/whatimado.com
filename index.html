@@ -177,25 +177,29 @@ nav{display:flex;align-items:center;gap:.25rem}
 .roadmap-side{position:sticky;top:76px}
 
 /* PROGRESS MAP — vertical chain style */
-.progress-map{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:1.25rem;box-shadow:var(--shadow-md);min-height:200px}
-.progress-map-title{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mid);margin-bottom:1.25rem;display:flex;align-items:center;justify-content:space-between}
-.progress-map-pct{font-size:.82rem;font-weight:700;color:var(--purple2)}
+.progress-map{background:rgba(13,15,26,0.92);border:1px solid rgba(120,130,200,0.18);border-radius:var(--radius-lg);padding:1.25rem 1rem;box-shadow:var(--shadow-lg)}
+.progress-map-title{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mid);margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between}
+.progress-map-pct{font-size:.88rem;font-weight:800;color:var(--purple2)}
 .pm-chain{display:flex;flex-direction:column;gap:0}
-.pm-stage{display:flex;align-items:flex-start;gap:.875rem;position:relative;padding-bottom:1.25rem}
-.pm-stage:last-child{padding-bottom:0}
-.pm-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
-.pm-node{width:32px;height:32px;border-radius:50%;border:2px solid rgba(120,130,200,0.3);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:var(--mid);transition:all .4s ease;flex-shrink:0}
-.pm-node.active{border-color:var(--purple);color:var(--purple2);background:rgba(124,111,205,0.1);box-shadow:0 0 12px rgba(124,111,205,0.3)}
-.pm-node.done{background:linear-gradient(135deg,var(--purple),var(--teal));border-color:transparent;color:#fff;box-shadow:0 0 16px rgba(124,111,205,0.4)}
-.pm-line{width:2px;flex:1;min-height:20px;background:rgba(120,130,200,0.15);margin-top:3px;border-radius:2px;transition:background .4s ease}
+.pm-stage{display:flex;align-items:flex-start;gap:.75rem;position:relative}
+.pm-stage:last-child .pm-left{padding-bottom:0}
+.pm-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0;padding-bottom:0}
+.pm-node{width:34px;height:34px;border-radius:50%;border:2px solid rgba(120,130,200,0.25);background:rgba(22,25,41,0.9);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:rgba(120,140,180,0.5);transition:all .5s ease;flex-shrink:0;position:relative;z-index:1}
+.pm-node.active{border-color:var(--purple);border-width:2px;color:var(--purple2);background:rgba(124,111,205,0.08);box-shadow:0 0 14px rgba(124,111,205,0.35)}
+.pm-node.done{background:linear-gradient(135deg,var(--purple),var(--teal));border-color:transparent;color:#fff;box-shadow:0 0 18px rgba(124,111,205,0.5)}
+.pm-line{width:2px;flex:1;min-height:28px;background:rgba(120,130,200,0.12);border-radius:2px;transition:background .5s ease;margin:2px 0}
+.pm-line.active{background:rgba(124,111,205,0.35)}
 .pm-line.done{background:linear-gradient(to bottom,var(--purple),var(--teal))}
-.pm-right{flex:1;padding-top:.3rem}
-.pm-stage-name{font-size:.82rem;font-weight:700;color:var(--ink2);margin-bottom:.15rem;transition:color .3s}
-.pm-stage-name.active{color:var(--purple2)}
-.pm-stage-name.done{color:var(--ink)}
-.pm-stage-desc{font-size:.72rem;color:var(--faint);line-height:1.4}
-.pm-stage-tasks{font-size:.7rem;color:var(--mid);margin-top:.2rem}
-.pm-footer{margin-top:1rem;padding-top:.875rem;border-top:1px solid var(--line);display:flex;align-items:center;gap:.4rem;font-size:.78rem;font-weight:600}
+.pm-right{flex:1;padding:.35rem 0 1.1rem}
+.pm-stage:last-child .pm-right{padding-bottom:0}
+.pm-stage-name{font-size:.82rem;font-weight:700;color:rgba(140,160,200,0.5);margin-bottom:.2rem;transition:color .4s}
+.pm-stage-name.active{color:var(--ink2)}
+.pm-stage-name.done{color:var(--ink);font-weight:800}
+.pm-stage-desc{font-size:.7rem;color:rgba(120,140,180,0.4);line-height:1.4;transition:color .4s}
+.pm-stage-desc.active{color:var(--mid)}
+.pm-stage-desc.done{color:var(--mid)}
+.pm-stage-tasks{font-size:.68rem;color:var(--mid);margin-top:.2rem;font-weight:600}
+.pm-footer{margin-top:1rem;padding-top:.875rem;border-top:1px solid rgba(120,130,200,0.12);display:flex;align-items:center;gap:.4rem;font-size:.78rem;font-weight:600}
 .pm-footer-icon{font-size:.9rem}
 
 #progress-svg{width:100%;height:260px}
@@ -1239,12 +1243,12 @@ function initProgressMap(stages){
     var div=document.createElement('div');
     div.className='pm-stage';
     div.innerHTML='<div class="pm-left">'
-      +'<div class="pm-node" id="pmnode-'+si+'">'+( si+1)+'</div>'
+      +'<div class="pm-node" id="pmnode-'+si+'">'+(si+1)+'</div>'
       +(!isLast?'<div class="pm-line" id="pmline-'+si+'"></div>':'')
       +'</div>'
       +'<div class="pm-right">'
       +'<div class="pm-stage-name" id="pmname-'+si+'">'+esc(s.label||'Stage '+(si+1))+'</div>'
-      +'<div class="pm-stage-desc">'+esc(s.desc||'')+'</div>'
+      +'<div class="pm-stage-desc" id="pmdesc-'+si+'">'+esc(s.desc||'')+'</div>'
       +'<div class="pm-stage-tasks" id="pmtasks-'+si+'">0 / '+(s.tasks?s.tasks.length:0)+' tasks</div>'
       +'</div>';
     chain.appendChild(div);
@@ -1285,18 +1289,15 @@ function updateProgressMap(){
 
     var node=document.getElementById('pmnode-'+si);
     var name=document.getElementById('pmname-'+si);
+    var desc=document.getElementById('pmdesc-'+si);
     var line=document.getElementById('pmline-'+si);
     var tasksEl=document.getElementById('pmtasks-'+si);
+    var cls=allDone?' done':anyDone?' active':'';
 
-    if(node){
-      node.className='pm-node'+(allDone?' done':anyDone?' active':'');
-    }
-    if(name){
-      name.className='pm-stage-name'+(allDone?' done':anyDone?' active':'');
-    }
-    if(line){
-      line.className='pm-line'+(allDone?' done':'');
-    }
+    if(node)node.className='pm-node'+cls;
+    if(name)name.className='pm-stage-name'+cls;
+    if(desc)desc.className='pm-stage-desc'+cls;
+    if(line)line.className='pm-line'+(allDone?' done':anyDone?' active':'');
     if(tasksEl){
       tasksEl.textContent=stageDone+' / '+stageCount+' tasks';
     }
