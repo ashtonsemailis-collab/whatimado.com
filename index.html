@@ -1,1380 +1,187 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>whatimado.com</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#e6f0f5;--surface:#ffffff;--surface2:#f1f6f9;--ink:#1c2b3a;--ink2:#243347;--mid:#4a6175;--faint:#8fa3b5;--line:#ccdce7;--line2:#dbe6ee;--aqua:#00a3a3;--aqua2:#00c2c2;--aqua3:#e0f7f7;--aqua4:#99e6e6;--aqua-text:#007a7a;--green:#4a7c59;--green2:#5c9e6e;--green3:#eaf4ec;--green4:#b8dcc0;--text:#1c2b3a;--text2:#3d566a;--text3:#7a96a8;--shadow-sm:0 2px 6px rgba(11,21,30,0.06),0 4px 16px rgba(11,21,30,0.04);--shadow-md:0 4px 12px rgba(11,21,30,0.08),0 12px 32px rgba(11,21,30,0.06);--shadow-lg:0 6px 20px rgba(11,21,30,0.1),0 20px 48px rgba(11,21,30,0.08);--radius-sm:10px;--radius-md:16px;--radius-lg:22px;--radius-xl:28px;--connector:#b0c8d8;
-}
-html,body{height:100%;font-family:'Manrope',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
-body{min-height:100vh}
-.bg-layer{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 50% 30%,#b3e0f2 0%,#cce6f4 40%,#e6f0f5 75%,#f0f5f8 100%);pointer-events:none;overflow:hidden}
-@keyframes floatCloud{0%{transform:translateX(110vw)}100%{transform:translateX(-600px)}}
-@keyframes floatCloudR{0%{transform:translateX(-600px)}100%{transform:translateX(110vw)}}
-@keyframes floatCloudDiagDown{0%{transform:translate(110vw,-5vh)}100%{transform:translate(-600px,8vh)}}
-@keyframes floatCloudDiagUp{0%{transform:translate(110vw,8vh)}100%{transform:translate(-320px,-5vh)}}
-@keyframes floatCloudSlowR{0%{transform:translateX(-600px)}100%{transform:translateX(110vw)}}
-@keyframes cloudFadeIn{from{opacity:0}to{opacity:1}}
-header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(204,220,231,0.8);box-shadow:0 1px 0 rgba(11,21,30,0.04)}
-.logo{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:-.02em;color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:.35rem}
-.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--aqua)}
-.logo span{color:var(--mid);font-weight:400;margin-left:-2px}
-.tagline{font-size:.72rem;font-weight:600;letter-spacing:.04em;color:var(--mid);text-transform:uppercase}
-.nav{display:flex;gap:.25rem;align-items:center}
-.nav-btn{font-family:'Manrope',sans-serif;font-size:.82rem;font-weight:600;color:var(--text2);background:none;border:none;cursor:pointer;transition:color .15s;padding:.35rem .75rem;border-radius:var(--radius-sm)}
-.nav-btn:hover{color:var(--ink);background:var(--surface2)}
-.nav-btn.active{color:var(--aqua-text);background:var(--aqua3)}
-.screen{position:relative;z-index:10;display:none;min-height:100vh}
-.screen.active{display:block}
-#screen-main{display:flex;flex-direction:column;justify-content:center;min-height:100vh}
-#landing-wrap{width:100%;padding-top:56px;padding-bottom:56px;}
-#screen-main > *{position:relative;z-index:10}
-.hero,.path-chooser,.prompt-wrap,.pills,#convo-thread,#ideas-panel,#journey-panel{width:100%;max-width:480px;margin:0 auto;padding:0 1.5rem;position:relative;z-index:10;box-sizing:border-box}
-.hero{padding-top:1rem;padding-bottom:1rem;text-align:left}
-.hero-chip{display:inline-flex;align-items:center;gap:.4rem;background:var(--green3);border:1px solid var(--green4);border-radius:100px;padding:.28rem .85rem;margin-bottom:1rem;opacity:0;animation:fadeUp .5s ease .1s forwards}
-.hero-chip-dot{width:5px;height:5px;border-radius:50%;background:var(--green)}
-.hero-chip-text{font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--green)}
-.hero-title{font-weight:800;font-size:clamp(1.9rem,5.5vw,2.75rem);letter-spacing:-.03em;color:var(--ink);line-height:1.12;margin-bottom:.75rem;opacity:0;animation:fadeUp .5s ease .2s forwards}
-.hero-title em{font-style:normal;color:var(--aqua-text)}
-.hero-sub{font-size:.95rem;color:var(--text2);font-weight:500;line-height:1.45;opacity:0;animation:fadeUp .5s ease .3s forwards;max-width:420px}
-.section-gap{width:100%;max-width:480px;margin:1.25rem auto 0;padding:0 1.5rem;box-sizing:border-box;opacity:0;animation:fadeUp .5s ease .38s forwards}
-.section-gap hr{border:none;border-top:1px solid var(--line);margin-bottom:1.25rem}
-.path-chooser{opacity:0;animation:fadeUp .5s ease .44s forwards}
-.path-label{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text2);margin-bottom:.75rem}
-.path-btns{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.25rem;text-align:left}
-.path-btn{padding:1.1rem 1rem;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);color:var(--text);cursor:pointer;transition:all .18s;text-align:left;width:100%;font-family:'Manrope',sans-serif;display:flex;flex-direction:column;gap:.5rem;box-shadow:var(--shadow-sm)}
-.path-btn:hover{border-color:var(--aqua4);box-shadow:var(--shadow-md);transform:translateY(-1px)}
-.path-btn.selected{border-color:var(--green);background:var(--green3);box-shadow:0 0 0 3px rgba(74,124,89,0.12),var(--shadow-sm)}
-.path-btn .pb-icon{width:32px;height:32px;border-radius:8px;background:var(--surface2);display:flex;align-items:center;justify-content:center;color:var(--mid);transition:all .18s}
-.path-btn:hover .pb-icon,.path-btn.selected .pb-icon{background:var(--aqua3);color:var(--aqua)}
-.path-btn .pb-icon svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.path-btn .pb-title{font-weight:700;font-size:.88rem;color:var(--ink)}
-.path-btn.selected .pb-title{color:var(--aqua-text)}
-.path-btn .pb-sub{font-size:.78rem;color:var(--mid);font-weight:400}
-.path-or{font-size:.72rem;font-weight:600;letter-spacing:.04em;color:var(--mid);margin-bottom:1.25rem;display:flex;align-items:center;gap:.875rem;text-transform:uppercase}
-.path-or::before,.path-or::after{content:'';flex:1;height:1px;background:var(--line2)}
-.prompt-wrap{padding-bottom:1rem;opacity:0;animation:fadeUp .5s ease .5s forwards}
-.prompt-box{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md);transition:border-color .18s,box-shadow .18s}
-.prompt-box:focus-within{border-color:var(--aqua4);box-shadow:0 0 0 3px rgba(0,163,163,0.1),var(--shadow-md)}
-.prompt-ta{width:100%;padding:1rem 1.1rem;font-family:'Manrope',sans-serif;font-size:.9rem;font-weight:400;border:none;outline:none;background:transparent;color:var(--ink);resize:none;min-height:84px;line-height:1.4}
-.prompt-ta::placeholder{color:var(--mid)}
-.prompt-foot{display:flex;justify-content:space-between;align-items:center;padding:.6rem .75rem .6rem 1.1rem;border-top:1px solid var(--line2)}
-.prompt-hint{font-size:.72rem;font-weight:600;color:var(--mid)}
-.prompt-btn{padding:.52rem 1.2rem;background:var(--ink);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Manrope',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .18s}
-.prompt-btn:hover{background:var(--ink2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(11,21,30,0.2)}
-.prompt-btn:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
-.pills{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.65rem;opacity:0;animation:fadeUp .5s ease .55s forwards;justify-content:center}
-.pill{font-size:.72rem;font-weight:600;padding:.3rem .8rem;border:1.5px solid var(--line);border-radius:100px;color:var(--text2);background:var(--surface);cursor:pointer;transition:all .15s;box-shadow:var(--shadow-sm)}
-.pill:hover{border-color:var(--aqua4);color:var(--aqua-text);background:var(--aqua3);box-shadow:none}
-#convo-thread{display:none;padding-top:2.5rem;padding-bottom:7rem}
-.bubble-chain{display:flex;flex-direction:column;align-items:center;position:relative}
-.chain-pair{display:flex;flex-direction:column;align-items:center;width:100%;gap:12px;margin-bottom:8px}
-.chain-user{display:flex;justify-content:flex-end;width:100%}
-.node-user{max-width:72%;background:var(--ink);color:#fff;border-radius:var(--radius-md) 6px var(--radius-md) var(--radius-md);padding:.8rem 1.05rem;font-size:.875rem;font-weight:400;line-height:1.45;word-wrap:break-word;opacity:0;animation:nodeIn .25s ease forwards;box-shadow:var(--shadow-md)}
-.chain-connector{display:flex;flex-direction:column;align-items:center;padding:.5rem 0;min-height:44px}
-.connector-line{width:1.5px;background:linear-gradient(to bottom,var(--connector),transparent);flex:1;min-height:20px}
-.connector-dot{width:6px;height:6px;border-radius:50%;background:var(--aqua4);flex-shrink:0}
-.chain-ai{display:flex;justify-content:flex-start;width:100%}
-.node-ai-wrap{display:flex;flex-direction:column;align-items:flex-start;max-width:72%}
-.node-ai-label{font-size:.68rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--aqua-text);margin-bottom:.35rem;display:flex;align-items:center;gap:.35rem}
-.node-ai-pulse{width:6px;height:6px;border-radius:50%;background:var(--aqua);animation:pulseDot 2.4s ease infinite}
-@keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
-.node-ai{background:var(--surface);border:1.5px solid var(--line);border-radius:6px var(--radius-md) var(--radius-md) var(--radius-md);padding:.8rem 1.05rem;font-size:.875rem;font-weight:400;line-height:1.45;color:var(--ink);word-wrap:break-word;opacity:0;animation:nodeIn .25s ease forwards;box-shadow:var(--shadow-md);width:100%}
-.node-ai strong{font-weight:700;color:var(--ink)}
-.typing-dots{display:flex;align-items:center;gap:5px;padding:.1rem 0}
-.typing-dots span{width:5px;height:5px;background:var(--aqua4);border-radius:50%;animation:typingDot 1.3s ease-in-out infinite}
-.typing-dots span:nth-child(2){animation-delay:.2s}
-.typing-dots span:nth-child(3){animation-delay:.4s}
-@keyframes typingDot{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
-.chain-reply{width:100%;margin-top:12px}
-.node-reply{width:100%;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-sm)}
-.node-reply:focus-within{border-color:var(--aqua4);box-shadow:0 0 0 3px rgba(0,163,163,0.1),var(--shadow-sm)}
-.reply-ta{width:100%;padding:.65rem .95rem;font-family:'Manrope',sans-serif;font-size:.84rem;font-weight:400;border:none;outline:none;background:transparent;color:var(--ink);resize:none;min-height:56px;line-height:1.45}
-.reply-foot{display:flex;justify-content:flex-end;padding:.28rem .4rem;border-top:1px solid var(--line2)}
-.reply-send{padding:.32rem .875rem;background:var(--aqua);color:#fff;border:none;border-radius:8px;font-family:'Manrope',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .18s}
-.reply-send:hover{background:var(--aqua2);box-shadow:0 3px 10px rgba(0,163,163,0.35)}
-
-/* ── HORIZONTAL NODE SCROLL ── */
-#ideas-panel{display:none;padding-top:2rem;padding-bottom:7rem}
-.panel-back{font-size:.75rem;font-weight:600;color:var(--text2);background:none;border:none;cursor:pointer;padding:.4rem 0;transition:color .15s;margin-bottom:1.5rem;display:inline-flex;align-items:center;gap:.35rem}
-.panel-back:hover{color:var(--aqua-text)}
-.panel-back svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.scroll-hint{font-size:.7rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text3);display:none;align-items:center;gap:.35rem;margin-bottom:1rem;animation:hintPulse 2s ease infinite}@media(max-width:700px){.scroll-hint{display:flex}}
-.scroll-hint svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-@keyframes hintPulse{0%,100%{opacity:.4;transform:translateX(0)}50%{opacity:1;transform:translateX(4px)}}
-.nodes-track-outer{width:100vw;position:relative;left:50%;transform:translateX(-50%);overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:2rem 0 3rem;cursor:grab;user-select:none}
-.nodes-track-outer::-webkit-scrollbar{display:none}
-.nodes-track-outer.grabbing{cursor:grabbing}
-/* centre rail when it fits; scroll when it doesn't */
-.nodes-rail{display:flex;align-items:center;gap:0;min-width:max-content;margin:0 auto;padding:0 3rem;justify-content:center}
-.node-connector-h{width:36px;height:1.5px;background:linear-gradient(to right,var(--aqua4),var(--line));flex-shrink:0}
-/* bubble: 200px, text clipped inside 70.7% inset (circle geometry) */
-.node-bubble{
-  width:190px;height:190px;border-radius:50%;
-  background:var(--surface);border:1.5px solid var(--line);
-  box-shadow:var(--shadow-md);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;
-  padding:28px;
-  cursor:pointer;transition:all .22s cubic-bezier(.4,0,.2,1);flex-shrink:0;
-  font-family:'Manrope',sans-serif;overflow:hidden;box-sizing:border-box;
-}
-.node-bubble:hover{transform:translateY(-6px);border-color:var(--aqua);box-shadow:0 14px 40px rgba(0,163,163,0.2),var(--shadow-md)}
-.node-bubble.more-bubble{border-style:dashed;background:transparent;box-shadow:none;opacity:.6}
-.node-bubble.more-bubble:hover{background:var(--aqua3);opacity:1;border-color:var(--aqua4);box-shadow:none;transform:translateY(-4px)}
-.nb-icon{font-size:1rem;margin-bottom:.3rem;flex-shrink:0}
-.nb-type{font-size:.58rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--aqua-text);margin-bottom:.25rem;flex-shrink:0;width:100%}
-.nb-title{font-size:.8rem;font-weight:700;color:var(--ink);line-height:1.2;width:100%;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.nb-sub{font-size:.62rem;color:var(--mid);margin-top:.2rem;font-weight:400;line-height:1.25;width:100%;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-
-/* JOURNEY */
-#journey-panel{display:none;padding-top:2rem;padding-bottom:7rem}
-.jh-back{font-size:.75rem;font-weight:600;color:var(--text2);background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:100px;cursor:pointer;transition:all .15s;margin-bottom:1.25rem;display:inline-flex;align-items:center;gap:.35rem;padding:.35rem .9rem .35rem .65rem;box-shadow:var(--shadow-sm)}
-.jh-back:hover{color:var(--green);border-color:var(--green4);background:var(--green3)}
-.jh-back svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.jh-type{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--aqua-text);margin-bottom:.35rem}
-.jh-title{font-weight:800;font-size:1.2rem;color:var(--ink);margin-bottom:.35rem}
-.jh-sub{font-size:.875rem;color:var(--text2);font-weight:400;line-height:1.45;margin-bottom:2rem}
-.stages{display:flex;flex-direction:column;gap:.75rem}
-.stage-card{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);overflow:hidden;transition:all .18s;box-shadow:var(--shadow-sm)}
-.stage-card.open{border-color:var(--aqua)!important;box-shadow:var(--shadow-md)}
-.stage-head{display:flex;align-items:center;gap:.875rem;padding:.95rem 1.1rem;cursor:pointer}
-.stage-num{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:var(--text3);flex-shrink:0;transition:all .18s}
-.stage-card.done .stage-num{background:linear-gradient(135deg,#00a3a3,#00c2c2);border-color:transparent;color:#fff}
-.stage-label{font-weight:600;font-size:.9rem;color:var(--ink);flex:1}
-.stage-arrow{font-size:.65rem;color:var(--text3);transition:transform .2s}
-.stage-card.open .stage-arrow{transform:rotate(90deg)}
-.stage-body{display:none;padding:0 1.1rem 1rem;border-top:1px solid var(--line2)}
-.task-row{position:relative;display:flex;align-items:flex-start;gap:.5rem}
-.task-expand-btn{background:none;border:none;cursor:pointer;font-size:.62rem;font-weight:700;color:var(--text3);padding:.15rem .45rem;border-radius:6px;transition:all .15s;flex-shrink:0;margin-top:2px;line-height:1.4}
-.task-expand-btn:hover,.task-expand-btn.active{background:var(--aqua3);color:var(--aqua-text)}
-.task-detail{display:block;margin-top:.65rem;margin-left:1.6rem;border-left:2px solid var(--aqua4);padding-left:.75rem}
-.task-detail.open{display:block}
-/* Auto-expanding textareas */
-.task-notes-ta,.task-ask-input-ta{
-  width:100%;padding:.45rem .7rem;font-family:'Manrope',sans-serif;font-size:.78rem;
-  border:1.5px solid var(--line);border-radius:var(--radius-sm);
-  background:var(--surface2);color:var(--ink);resize:none;outline:none;
-  line-height:1.45;transition:border-color .15s,height .2s;
-  overflow:hidden;min-height:36px;box-sizing:border-box;
-}
-.task-notes-ta:focus,.task-ask-input-ta:focus{border-color:var(--aqua4);background:var(--surface)}
-.task-ask-input-ta{border-color:var(--green4);background:rgba(234,244,236,0.5)}
-.task-ask-input-ta:focus{border-color:var(--green);background:var(--surface)}
-.task-ask-send{margin-top:.35rem;padding:.32rem .875rem;background:var(--green);color:#fff;border:none;border-radius:8px;font-family:'Manrope',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer;transition:all .18s}
-.task-ask-send:hover{background:var(--green2)}
-.task-section-label{font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:.3rem;margin-top:.5rem}
-.task-notes-label{font-size:.63rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text3);margin-bottom:.3rem}
-.task-notes-ta{width:100%;padding:.5rem .7rem;font-family:'Manrope',sans-serif;font-size:.8rem;border:1.5px solid var(--line);border-radius:var(--radius-sm);background:var(--surface2);color:var(--ink);resize:none;outline:none;min-height:56px;line-height:1.45;transition:border-color .15s;box-sizing:border-box}
-.task-notes-ta:focus{border-color:var(--aqua4)}
-.task-ask-wrap{display:flex;gap:.4rem;margin-top:.5rem}
-.task-ask-input{flex:1;padding:.45rem .75rem;font-family:'Manrope',sans-serif;font-size:.8rem;border:1.5px solid var(--line);border-radius:var(--radius-sm);background:var(--surface);color:var(--ink);outline:none;transition:border-color .15s}
-.task-ask-input:focus{border-color:var(--aqua4)}
-.task-ask-btn{padding:.45rem .85rem;background:var(--aqua);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Manrope',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer;transition:all .18s;white-space:nowrap}
-.task-ask-btn:hover{background:var(--aqua2)}
-.task-ask-btn:disabled{opacity:.4;cursor:not-allowed}
-.task-ai-answer{margin-top:.5rem;font-size:.8rem;color:var(--text2);line-height:1.5;background:var(--aqua3);border-radius:var(--radius-sm);padding:.6rem .75rem;display:none}
-.task-ai-answer.visible{display:block}
-.task-ai-answer strong{color:var(--ink)}
-.stage-card.open .stage-body{display:block}
-.stage-desc{font-size:.84rem;color:var(--text2);line-height:1.45;margin-top:.65rem;margin-bottom:.875rem}
-.tasks{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.875rem}
-.task-row{display:flex;gap:.6rem;align-items:flex-start}
-.task-check{width:16px;height:16px;border-radius:5px;border:1.5px solid var(--line);background:transparent;cursor:pointer;flex-shrink:0;margin-top:3px;appearance:none;-webkit-appearance:none;transition:all .18s}
-.task-check:checked{background:linear-gradient(135deg,#00a3a3,#00c2c2);border-color:transparent}
-.task-text{font-size:.86rem;color:var(--text2);font-weight:400;line-height:1.45}
-
-/* STORE */
-#screen-store{padding-top:5rem}
-.store-inner{max-width:540px;margin:0 auto;padding:4rem 2rem;text-align:left}
-.store-eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--aqua-text);margin-bottom:.75rem;display:flex;align-items:center;gap:.4rem}
-.store-eyebrow::before{content:'';width:16px;height:2px;background:var(--aqua);border-radius:2px}
-.store-title{font-weight:800;font-size:clamp(1.75rem,5vw,2.4rem);letter-spacing:-.03em;color:var(--ink);margin-bottom:2.5rem;line-height:1.12}
-.store-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.875rem;margin-bottom:2rem}
-.store-card{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-lg);padding:1.25rem;cursor:pointer;transition:all .18s;box-shadow:var(--shadow-sm)}
-.store-card:hover{border-color:var(--aqua4);box-shadow:var(--shadow-md);transform:translateY(-2px)}
-.store-img{width:100%;aspect-ratio:1;background:var(--surface2);display:flex;align-items:center;justify-content:center;margin-bottom:.875rem;border-radius:var(--radius-md);color:var(--faint)}
-.store-img svg{width:30px;height:30px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.store-name{font-weight:600;font-size:.9rem;color:var(--ink);margin-bottom:.15rem}
-.store-price{font-size:.84rem;font-weight:400;color:var(--text2)}
-.store-soon{font-size:.72rem;font-weight:700;letter-spacing:.04em;color:var(--mid);margin-top:.75rem;text-transform:uppercase}
-.help-fab{position:fixed;bottom:1.75rem;right:1.75rem;z-index:700;width:46px;height:46px;border-radius:50%;background:var(--aqua);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,163,163,0.4);transition:all .18s}
-.help-fab:hover{background:var(--aqua2);transform:scale(1.08)}
-.help-fab svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
-
-
-/* NIGHT MODE TEXT */
-body.night-mode .hero-title{color:#e8f0ff}
-body.night-mode .hero-title em{color:#7ecfff}
-body.night-mode .hero-sub{color:#a8c8e8}
-body.night-mode .hero-chip{background:rgba(30,50,100,0.5);border-color:rgba(100,150,220,0.4)}
-body.night-mode .hero-chip-text{color:#7ecfff}
-body.night-mode .hero-chip-dot{background:#7ecfff}
-body.night-mode .path-label{color:#a8c8e8}
-body.night-mode .path-or{color:#6a90b8}
-body.night-mode .path-or::before,body.night-mode .path-or::after{background:rgba(100,140,180,0.3)}
-body.night-mode .prompt-hint{color:#6a90b8}
-body.night-mode .pill{background:rgba(20,35,65,0.6);border-color:rgba(100,150,220,0.3);color:#a8c8e8}
-body.night-mode .pill:hover{background:rgba(30,55,100,0.7);border-color:#7ecfff;color:#7ecfff}
-body.night-mode .section-gap hr{border-color:rgba(100,140,180,0.25)}
-body.night-mode .tagline{color:#6a90b8}
-body.night-mode .scroll-hint{color:rgba(160,200,230,0.6)}
-body.night-mode .panel-back{color:#a8c8e8}
-body.night-mode .jh-type{color:#7ecfff}
-body.night-mode .jh-title{color:#e8f0ff}
-body.night-mode .jh-sub{color:#a8c8e8}
-body.night-mode header{background:rgba(10,18,40,0.88);border-color:rgba(50,80,140,0.5)}
-body.night-mode .logo{color:#e8f0ff}
-body.night-mode .logo span{color:#6a90b8}
-body.night-mode .logo-dot{background:#7ecfff}
-body.night-mode .nav-btn{color:#a8c8e8}
-body.night-mode .nav-btn:hover{background:rgba(30,55,100,0.5);color:#e8f0ff}
-body.night-mode .nav-btn.active{background:rgba(30,55,100,0.6);color:#7ecfff}
-body.night-mode .node-user{background:#1e3a5f;color:#e8f4ff;box-shadow:0 4px 20px rgba(0,0,0,0.4)}
-body.night-mode .node-ai{background:rgba(255,255,255,0.92);border-color:rgba(180,210,240,0.4)}
-/* WEATHER BACKGROUND */
-#weather-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
-.bg-layer{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;transition:background 3s ease}
-.weather-cloud{position:absolute;border-radius:100px;filter:blur(0.5px);animation:cloudFadeIn 2s ease forwards}
-.weather-cloud::before,.weather-cloud::after{content:'';position:absolute;border-radius:50%;}
-.weather-cloud::before{width:50%;height:150%;top:-50%;left:15%;background:inherit;}
-.weather-cloud::after{width:35%;height:120%;top:-35%;right:15%;background:inherit;}
-.weather-cloud::before,.weather-cloud::after{content:'';position:absolute;border-radius:50%}
-.weather-cloud::before{width:50%;height:100%;top:-40%;left:15%}
-.weather-cloud::after{width:35%;height:70%;top:-30%;right:15%}
-.rain-drop{position:absolute;width:1.5px;border-radius:2px;opacity:0;animation:rainFall linear infinite}
-@keyframes rainFall{0%{transform:translateY(-20px);opacity:0}10%{opacity:.6}90%{opacity:.5}100%{transform:translateY(110vh);opacity:0}}
-.star{position:absolute;border-radius:50%;background:#fff;animation:starTwinkle ease-in-out infinite}
-@keyframes starTwinkle{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
-.sun-orb{position:absolute;border-radius:50%;filter:blur(2px);animation:sunPulse 6s ease-in-out infinite}
-@keyframes sunPulse{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.06);opacity:1}}
-.moon-orb{position:absolute;border-radius:50%;filter:blur(1px)}
-#weather-badge{position:fixed;bottom:1.75rem;left:1.75rem;z-index:600;font-size:.68rem;font-weight:600;color:var(--text3);background:rgba(255,255,255,0.7);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:100px;padding:.3rem .75rem;display:none;align-items:center;gap:.4rem;letter-spacing:.02em}
-#weather-badge.visible{display:flex}
-/* NAV extras */
-.nav-divider{width:1px;height:18px;background:var(--line);margin:0 .25rem}
-.nav-signup{background:var(--green);color:#fff!important;border-radius:var(--radius-sm);padding:.35rem .85rem}
-.nav-signup:hover{background:var(--green2)!important;color:#fff!important}
-
-
-/* SOCIAL AUTH BUTTONS */
-.social-btns{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.75rem}
-.social-btn{display:flex;align-items:center;gap:.75rem;width:100%;padding:.65rem 1rem;background:var(--surface2);border:1.5px solid var(--line);border-radius:var(--radius-sm);font-family:'Manrope',sans-serif;font-size:.84rem;font-weight:600;color:var(--ink);cursor:pointer;transition:all .18s;text-align:left}
-.social-btn:hover{border-color:var(--aqua4);background:var(--surface);box-shadow:var(--shadow-sm)}
-.auth-or{display:flex;align-items:center;gap:.75rem;margin:.75rem 0;font-size:.72rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.05em}
-.auth-or::before,.auth-or::after{content:'';flex:1;height:1px;background:var(--line)}
-.auth-forgot-row{display:flex;justify-content:space-between;margin-top:.5rem;margin-bottom:.25rem}
-.auth-forgot-row span{font-size:.75rem;color:var(--aqua-text);cursor:pointer;font-weight:600}
-.auth-forgot-row span:hover{text-decoration:underline}
-.forgot-box{margin-top:.5rem;padding:.75rem;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--line)}
-/* AUTH MODAL */
-.auth-modal-overlay{position:fixed;inset:0;z-index:2000;background:rgba(11,21,30,0.45);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:1.5rem}
-.auth-modal-overlay.open{display:flex}
-.auth-modal{background:var(--surface);border-radius:var(--radius-xl);padding:2rem;width:100%;max-width:360px;position:relative;box-shadow:var(--shadow-lg);animation:fadeUp .25s ease}
-.auth-close{position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1rem;color:var(--text3);cursor:pointer;line-height:1;padding:.25rem}
-.auth-close:hover{color:var(--ink)}
-.auth-tabs{display:flex;gap:.5rem;margin-bottom:1.5rem;background:var(--surface2);border-radius:var(--radius-sm);padding:.25rem}
-.auth-tab{flex:1;padding:.5rem;border:none;background:none;font-family:'Manrope',sans-serif;font-size:.84rem;font-weight:600;color:var(--text2);cursor:pointer;border-radius:8px;transition:all .18s}
-.auth-tab.active{background:var(--surface);color:var(--ink);box-shadow:var(--shadow-sm)}
-.auth-label{font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text3);margin-bottom:.35rem;margin-top:.875rem}
-.auth-label:first-of-type{margin-top:0}
-.auth-input{width:100%;padding:.65rem .875rem;font-family:'Manrope',sans-serif;font-size:.9rem;border:1.5px solid var(--line);border-radius:var(--radius-sm);outline:none;color:var(--ink);background:var(--surface2);transition:border-color .15s;box-sizing:border-box}
-.auth-input:focus{border-color:var(--aqua4)}
-.auth-submit{width:100%;margin-top:1.25rem;padding:.75rem;background:var(--green);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Manrope',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .18s}
-.auth-submit:hover{background:var(--green2)}
-.auth-footer{font-size:.78rem;color:var(--text3);text-align:center;margin-top:.875rem}
-.auth-footer span{color:var(--aqua-text);cursor:pointer;font-weight:600}
-.auth-footer span:hover{text-decoration:underline}
-
-/* MOMENTUM METER */
-.momentum-wrap{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-md);padding:1rem 1.1rem;margin-bottom:1.25rem;box-shadow:var(--shadow-sm)}
-.momentum-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}
-.momentum-label{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text2)}
-.momentum-pct{font-size:.88rem;font-weight:800;color:var(--aqua-text)}
-.momentum-track{height:8px;background:var(--surface2);border-radius:100px;overflow:hidden;border:1px solid var(--line2)}
-.momentum-fill{height:100%;width:0%;background:linear-gradient(to right,var(--aqua),var(--green2));border-radius:100px;transition:width .6s cubic-bezier(.4,0,.2,1)}
-.momentum-status{font-size:.75rem;color:var(--text3);margin-top:.5rem;font-weight:500}
-
-/* BUBBLE ENTRANCE ANIMATION */
-@keyframes bubbleIn{
-  0%{opacity:0;transform:translateY(20px) scale(0.85)}
-  60%{transform:translateY(-4px) scale(1.03)}
-  100%{opacity:1;transform:translateY(0) scale(1)}
-}
-.node-bubble.anim-in{
-  animation:bubbleIn .45s cubic-bezier(.34,1.56,.64,1) both;
-}
-
-/* ── MAGICAL RAINBOW GLOW ── */
-@property --glow-angle {
-  syntax: '<angle>';
-  inherits: false;
-  initial-value: 0deg;
-}
-@keyframes glowSpin { to { --glow-angle: 360deg; } }
-
-.magic-glow {
-  position: relative;
-  z-index: 0;
-}
-.magic-glow::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  background: conic-gradient(
-    from var(--glow-angle),
-    #ff6ec7, #ff9a3c, #ffe44d, #7dffb3, #4dc9ff, #c084fc, #ff6ec7
-  );
-  z-index: -1;
-  animation: glowSpin 4s linear infinite;
-  filter: blur(2px);
-  opacity: 0.75;
-}
-.magic-glow::after {
-  content: '';
-  position: absolute;
-  inset: 1.5px;
-  border-radius: inherit;
-  background: inherit;
-  z-index: -1;
-}
-/* Bubbles need special handling due to circular shape */
-.node-bubble.magic-glow::after { background: var(--surface); }
-.node-bubble.more-bubble.magic-glow::after { background: rgba(10,18,50,0.85); border-radius:50%; }
-.prompt-box.magic-glow::after { background: var(--surface); border-radius: var(--radius-lg); }
-.stage-card.magic-glow::after { background: var(--surface); border-radius: var(--radius-md); }
-.path-btn.magic-glow::after { background: var(--surface); border-radius: var(--radius-md); }
-.auth-modal.magic-glow::after { background: var(--surface); border-radius: var(--radius-xl); }
-.idea-tile.magic-glow::after { background: var(--surface); border-radius: var(--radius-md); }
-.momentum-wrap.magic-glow::after { background: var(--surface); border-radius: var(--radius-md); }
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-@keyframes nodeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-#page-loader{position:fixed;inset:0;z-index:9000;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.25rem;transition:opacity .4s ease}
-#page-loader.fade-out{opacity:0;pointer-events:none}
-.loader-logo{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.25rem;color:var(--ink);letter-spacing:-.02em;display:flex;align-items:center;gap:.45rem}
-.loader-logo-dot{width:8px;height:8px;border-radius:50%;background:var(--aqua)}
-.loader-dots{display:flex;gap:.45rem}
-.loader-dots span{width:5px;height:5px;background:var(--aqua4);border-radius:50%;animation:typingDot 1.3s ease-in-out infinite}
-.loader-dots span:nth-child(2){animation-delay:.2s}
-.loader-dots span:nth-child(3){animation-delay:.4s}
-@media(max-width:600px){header{padding:.75rem 1rem}.tagline{display:none}.nav-divider{display:none}.node-user,.node-ai-wrap,.node-reply{max-width:88%;width:88%}.node-bubble{width:172px;height:172px;padding:0 26px}}
-</style>
-</head>
-<body>
-
-<div id="page-loader">
-  <div class="loader-logo"><span class="loader-logo-dot"></span>whatimado</div>
-  <div class="loader-dots"><span></span><span></span><span></span></div>
-</div>
-
-<div class="bg-layer" id="bg-layer"></div>
-<canvas id="weather-canvas"></canvas>
-<div id="weather-badge"></div>
-
-<header>
-  <div class="logo" onclick="resetAll()"><span class="logo-dot"></span>whatimado<span style="font-weight:400;color:var(--mid)">.com</span></div>
-  <div class="tagline">Casual name. Serious business.</div>
-  <nav class="nav">
-    <button class="nav-btn active" id="nav-home-btn" onclick="resetAll()">Home</button>
-    <button class="nav-btn" onclick="showScreen('store')">Shop</button>
-    <div class="nav-divider"></div>
-    <button class="nav-btn" id="nav-signin-btn" onclick="showAuthModal('signin')">Sign in</button>
-    <button class="nav-btn nav-signup" id="nav-signup-btn" onclick="showAuthModal('signup')">Sign up</button>
-  </nav>
-</header>
-
-<div id="screen-main" class="screen active">
-  <div id="landing-wrap">
-  <div id="hero-area" class="hero">
-    <div class="hero-chip"><span class="hero-chip-dot"></span><span class="hero-chip-text">Start here</span></div>
-    <h1 class="hero-title">So… <em>what you</em><br>gonna do?</h1>
-    <p class="hero-sub">Tell us what's going on — your situation, skills, interests, or goals. We'll figure out the best path forward together.</p>
-  </div>
-  <div class="prompt-wrap" id="prompt-wrap">
-    <div class="prompt-box magic-glow">
-      <textarea class="prompt-ta" id="skills-input" placeholder="Tell us your situation — what you know, what you're good at, what you enjoy, or what you want. There's no wrong answer…" rows="3" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();startConvo();}"></textarea>
-      <div class="prompt-foot">
-        <span class="prompt-hint" id="prompt-hint-text">Be honest. There's no wrong answer.</span>
-        <button class="prompt-btn" onclick="startConvo()">Continue →</button>
-      </div>
-    </div>
-  </div>
-  <div class="pills" id="pills-wrap">
-    <button class="pill" onclick="fillPrompt('I love working with my hands and fixing things')">hands-on</button>
-    <button class="pill" onclick="fillPrompt('I am good with technology and computers')">tech</button>
-    <button class="pill" onclick="fillPrompt('I enjoy helping and talking to people')">people</button>
-    <button class="pill" onclick="fillPrompt('I am creative and artistic')">creative</button>
-    <button class="pill" onclick="fillPrompt('I have no money but I have time and hustle')">starting from zero</button>
-  </div>
-  </div><!-- /landing-wrap -->
-  <div id="convo-thread">
-    <div class="bubble-chain" id="bubble-chain"></div>
-  </div>
-  <div id="ideas-panel">
-    <button class="panel-back" onclick="resetAll()">
-      <svg viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg>
-      Start over
-    </button>
-    <div class="scroll-hint">
-      <svg viewBox="0 0 24 24"><polyline points="9,6 15,12 9,18"/></svg>
-      Swipe to explore
-    </div>
-    <div class="nodes-track-outer" id="nodes-track-outer">
-      <div class="nodes-rail" id="nodes-rail"></div>
-    </div>
-  </div>
-  <div id="journey-panel">
-    <button class="jh-back" onclick="showIdeas()">
-      <svg viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg>
-      Back to options
-    </button>
-    <div class="jh-type" id="jh-type"></div>
-    <div class="jh-title" id="jh-title"></div>
-    <div class="jh-sub" id="jh-sub"></div>
-    <!-- Momentum Meter -->
-    <div class="momentum-wrap magic-glow" id="momentum-wrap">
-      <div class="momentum-header">
-        <span class="momentum-label">Momentum</span>
-        <span class="momentum-pct" id="momentum-pct">0%</span>
-      </div>
-      <div class="momentum-track">
-        <div class="momentum-fill" id="momentum-fill"></div>
-      </div>
-      <div class="momentum-status" id="momentum-status">Check off tasks to build momentum</div>
-    </div>
-    <div class="stages" id="stages-list"></div>
-  </div>
-</div>
-
-<div id="screen-store" class="screen">
-  <div class="store-inner">
-    <p class="store-eyebrow">whatimado.com</p>
-    <h2 class="store-title">Rep the move.</h2>
-    <div class="store-grid">
-      <div class="store-card magic-glow"><div class="store-img"><svg viewBox="0 0 24 24"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg></div><div class="store-name">Classic Tee</div><div class="store-price">$32</div></div>
-      <div class="store-card magic-glow"><div class="store-img"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div><div class="store-name">Snapback</div><div class="store-price">$28</div></div>
-      <div class="store-card magic-glow"><div class="store-img"><svg viewBox="0 0 24 24"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg></div><div class="store-name">Hoodie</div><div class="store-price">$58</div></div>
-      <div class="store-card magic-glow"><div class="store-img"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div><div class="store-name">Tote Bag</div><div class="store-price">$22</div></div>
-    </div>
-    <p class="store-soon">Shop launching soon.</p>
-  </div>
-</div>
-
-<!-- AUTH MODAL -->
-<div id="auth-modal" class="auth-modal-overlay" onclick="closeAuthModal(event)">
-  <div class="auth-modal">
-    <button class="auth-close" onclick="closeAuthModal()">✕</button>
-    <div class="auth-tabs">
-      <button class="auth-tab active" id="tab-signin" onclick="switchAuthTab('signin')">Sign in</button>
-      <button class="auth-tab" id="tab-signup" onclick="switchAuthTab('signup')">Sign up</button>
-    </div>
-    <div id="auth-signin">
-      <div class="social-btns">
-        <button class="social-btn" onclick="signInWithGoogle()"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg> Continue with Google</button>
-        <button class="social-btn" onclick="signInWithApple()"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg> Continue with Apple</button>
-        <button class="social-btn" onclick="signInWithFacebook()"><svg viewBox="0 0 24 24" width="18" height="18" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg> Continue with Facebook</button>
-      </div>
-      <div class="auth-or"><span>or</span></div>
-      <p class="auth-label">Email</p>
-      <input class="auth-input" type="email" id="signin-email" placeholder="you@email.com">
-      <p class="auth-label">Password</p>
-      <input class="auth-input" type="password" id="signin-pass" placeholder="••••••••">
-      <div class="auth-forgot-row">
-        <span onclick="showForgot('password')">Forgot password?</span>
-        <span onclick="showForgot('username')">Forgot username?</span>
-      </div>
-      <div id="forgot-box" class="forgot-box" style="display:none">
-        <p class="auth-label" id="forgot-label">Enter your email to reset</p>
-        <input class="auth-input" id="forgot-email" type="email" placeholder="you@email.com">
-        <button class="auth-submit" style="margin-top:.75rem" onclick="doPasswordReset()">Send reset link</button>
-      </div>
-      <div id="auth-message" style="display:none;font-size:.8rem;margin:.5rem 0;padding:.5rem .75rem;border-radius:8px;background:var(--surface2)"></div>
-      <button class="auth-submit" onclick="doSignIn()">Sign in</button>
-      <p class="auth-footer">Don't have an account? <span onclick="switchAuthTab('signup')">Sign up</span></p>
-    </div>
-    <div id="auth-signup" style="display:none">
-      <div class="social-btns">
-        <button class="social-btn" onclick="signInWithGoogle()"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg> Continue with Google</button>
-        <button class="social-btn" onclick="signInWithApple()"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg> Continue with Apple</button>
-        <button class="social-btn" onclick="signInWithFacebook()"><svg viewBox="0 0 24 24" width="18" height="18" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg> Continue with Facebook</button>
-      </div>
-      <div class="auth-or"><span>or</span></div>
-      <p class="auth-label">Your name</p>
-      <input class="auth-input" id="signup-name-input" type="text" placeholder="First name">
-      <p class="auth-label">Email</p>
-      <input class="auth-input" id="signup-email" type="email" placeholder="you@email.com">
-      <p class="auth-label">Password</p>
-      <input class="auth-input" id="signup-pass" type="password" placeholder="Create a password">
-      <button class="auth-submit" onclick="doSignUp()">Create account</button>
-      <p class="auth-footer">Already have an account? <span onclick="switchAuthTab('signin')">Sign in</span></p>
-    </div>
-  </div>
-</div>
-
-<button class="help-fab" onclick="resetAll()" title="Start over">
-  <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-</button>
-
-<script>
-let selectedPath=null,savedSkills='',convoHistory=[],currentStep=1;
-const ICONS=['✦','◈','⬡','✴','⊕'];
-const STAGES=[
-  {label:'First Win',desc:'Get your first result — proof this works.',tasks:["Complete one paying transaction or get first interview callback","Tell 5 people what you're doing","Spend 30 minutes per day on this — no exceptions"]},
-  {label:'Getting Established',desc:'Build consistency and a small reputation.',tasks:['Get 3 repeat clients or 3 interviews','Set up a simple online presence','Track your income or progress weekly']},
-  {label:'Sustainable Income',desc:'Make this your primary income stream.',tasks:['Hit your monthly income goal for 3 months straight','Automate or streamline at least one process','Set aside savings for the first time']},
-  {label:'Scale Up',desc:'Grow beyond just yourself.',tasks:['Bring in help or delegate one task','Set a 12-month growth goal','Invest back into your business or skills']}
-];
-
-window.addEventListener('load',()=>{
-  // Init weather
-  WX.init();
-  // Init Supabase auth
-  initAuth();
-
-  // Clear any corrupted session on load
-  try{
-    const raw=localStorage.getItem('wid_session');
-    if(raw){JSON.parse(raw);} // test parse — if it throws, we clear below
-  }catch(e){
-    localStorage.removeItem('wid_session');
-  }
-
-  // Dismiss loader
-  setTimeout(()=>{
-    const l=document.getElementById('page-loader');
-    if(l){l.classList.add('fade-out');setTimeout(()=>l.style.display='none',500);}
-  },800);
-
-  // drag-to-scroll — guard against null
-  const track=document.getElementById('nodes-track-outer');
-  if(track){
-    let isDown=false,startX,scrollLeft;
-    track.addEventListener('mousedown',e=>{isDown=true;track.classList.add('grabbing');startX=e.pageX-track.offsetLeft;scrollLeft=track.scrollLeft;});
-    track.addEventListener('mouseleave',()=>{isDown=false;track.classList.remove('grabbing');});
-    track.addEventListener('mouseup',()=>{isDown=false;track.classList.remove('grabbing');});
-    track.addEventListener('mousemove',e=>{if(!isDown)return;e.preventDefault();const x=e.pageX-track.offsetLeft;track.scrollLeft=scrollLeft-(x-startX)*1.2;});
-  }
-});
-
-function selectPath(p){
-  selectedPath=p;
-  document.querySelectorAll('.path-btn').forEach(b=>b.classList.remove('selected'));
-  document.getElementById('btn-'+p).classList.add('selected');
-  const hint=document.getElementById('prompt-hint-text'),input=document.getElementById('skills-input');
-  if(p==='profession'){hint.textContent='e.g. healthcare, tech, trades…';input.placeholder='e.g. I have 2 years of customer service, I enjoy organizing things...';}
-  else{hint.textContent='e.g. I want to earn $3k/month…';input.placeholder='e.g. I can cook, I have $200 to start, I want to work from home...';}
-  input.focus();
-}
-function fillPrompt(t){document.getElementById('skills-input').value=t;document.getElementById('skills-input').focus();}
-function showScreen(n){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('screen-'+n).classList.add('active');
-  document.getElementById('nav-home-btn').classList.toggle('active',n==='main');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-function resetAll(){
-  selectedPath=null;savedSkills='';convoHistory=[];currentStep=1;userName='';
-  clearSession();
-  document.getElementById('skills-input').value='';
-  document.getElementById('prompt-hint-text').textContent="Be honest. There\'s no wrong answer.";
-  const lw=document.getElementById('landing-wrap');if(lw)lw.style.display='';
-  document.getElementById('bubble-chain').innerHTML='';
-  document.getElementById('nodes-rail').innerHTML='';
-  ['convo-thread','ideas-panel','journey-panel'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
-  showScreen('main');
-}
-function startConvo(){
-  const text=document.getElementById('skills-input').value.trim();
-  if(!text)return;
-  savedSkills=text;
-  const lw=document.getElementById('landing-wrap');if(lw)lw.style.display='none';
-  const pair=addUserNode(text);
-  addConnectorAndTyping(pair);
-  sendToAPI(text);
-}
-
-let userName='';
-
-async function sendToAPI(promptText){
-  convoHistory.push({role:'user',content:promptText});
-
-  // STEP 1: clarifying question
-  if(currentStep===1){
-    try{
-      const res=await fetch('/api/claude',{
-        method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:300,messages:[{
-          role:'user',
-          content:'You are whatimado, a sharp and empathetic advisor. Based on what the user shared, ask ONE short question that helps uncover: their skills, talents, knowledge, hobbies, or work experience AND whether they want to work for someone else (employee), go to school to learn something new, or build their own business. Weave both naturally into one conversational question. Plain text only, no formatting, no lists, 2 sentences max.\n\nUser: '+promptText
-        }]})
-      });
-      const data=await res.json();
-      const text=data.content.filter(function(b){return b.type==='text';}).map(function(b){return b.text;}).join('').trim();
-      convoHistory.push({role:'assistant',content:text});
-      resolveTyping(text);
-      appendReplyInput();
-      currentStep=2;
-      saveSession();
-    }catch(err){
-      resolveTyping('Connection issue — try again in a moment.');
-      appendReplyInput();
-    }
-    return;
-  }
-
-  // STEP 2: ask for name (no API call needed)
-  if(currentStep===2){
-    var nameQ='May I ask your name?';
-    convoHistory.push({role:'assistant',content:nameQ});
-    resolveTyping(nameQ);
-    appendReplyInput();
-    currentStep=3;
-    saveSession();
-    return;
-  }
-
-  // STEP 3: user gave name, generate ideas
-  userName=promptText.trim().split(/\s+/)[0];
-  var summary=convoHistory.map(function(m){return (m.role==='user'?'User: ':'Advisor: ')+m.content;}).join('\n');
-  try{
-    const res=await fetch('/api/claude',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:800,messages:[{
-        role:'user',
-        content:'You are whatimado. Generate exactly 3 realistic ideas for this person based on their situation, constraints, and hidden strengths. Include skill-building paths, zero-cost ideas, gig work, and unconventional options.\n\nConversation:\n'+summary+'\n\nRespond with ONLY a raw JSON array. No prose. No markdown. No code fences. Start with [ and end with ].\nFormat: [{"title":"...","type":"...","tagline":"one sentence","why":"one sentence why it fits them"}]'
-      }]})
-    });
-    const data=await res.json();
-    const text=data.content.filter(function(b){return b.type==='text';}).map(function(b){return b.text;}).join('').trim();
-    convoHistory.push({role:'assistant',content:text});
-    const match=text.match(/\[[\s\S]*\]/);
-    if(!match)throw new Error('no json');
-    const ideas=JSON.parse(match[0]);
-    const greeting=userName?'Here are your paths, '+userName+'. Swipe through and tap one to get your full roadmap.':'Here are your paths. Swipe through and tap one to get the full roadmap.';
-    resolveTyping(greeting);
-    setTimeout(function(){showNodeIdeas(ideas);},900);
-  }catch(err){
-    console.error('sendToAPI error:',err);
-    resolveTyping('Connection issue — try again in a moment.');
-    appendReplyInput();
-  }
-}
-function appendReplyInput(){
-  const chain=document.getElementById('bubble-chain');
-  document.querySelector('.chain-reply')?.remove();
-  const div=document.createElement('div');
-  div.className='chain-reply';
-  div.innerHTML=`<div class="node-reply"><textarea class="reply-ta" id="active-reply-ta" placeholder="Type your response… (Enter to send, Shift+Enter for new line)" rows="2" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();submitReply();}"></textarea><div class="reply-foot"><button class="reply-send" onclick="submitReply()">Send</button></div></div>`;
-  chain.appendChild(div);
-  scrollBottom();
-  document.getElementById('active-reply-ta')?.focus();
-}
-function submitReply(){
-  const input=document.getElementById('active-reply-ta');
-  const text=input?input.value.trim():'';
-  if(!text)return;
-  document.querySelector('.chain-reply')?.remove();
-  const pair=addUserNode(text);
-  addConnectorAndTyping(pair);
-  sendToAPI(text);
-}
-
-function showNodeIdeas(ideas){
-  document.getElementById('convo-thread').style.display='none';
-  document.getElementById('ideas-panel').style.display='block';
-  window.scrollTo({top:0,behavior:'smooth'});
-  const rail=document.getElementById('nodes-rail');
-  rail.innerHTML='';
-  ideas.forEach((idea,i)=>{
-    if(i>0){const c=document.createElement('div');c.className='node-connector-h';rail.appendChild(c);}
-    const btn=document.createElement('button');
-    btn.className='node-bubble magic-glow';
-    var t=idea.title||'', tp=idea.type||'Idea', tg=idea.tagline||'';
-    var trimTitle=t.length>26?t.substring(0,24)+'…':t;
-    var trimType=tp.length>22?tp.substring(0,20)+'…':tp;
-    var trimTag=tg.substring(0,46);
-    btn.innerHTML='<div class="nb-icon">'+ICONS[i%ICONS.length]+'</div><div class="nb-type">'+esc(trimType)+'</div><div class="nb-title">'+esc(trimTitle)+'</div><div class="nb-sub">'+esc(trimTag)+'</div>';
-    btn.onclick=()=>viewJourney(idea.title,idea.type);
-    const delay = i * 0.12;
-    btn.style.animationDelay = delay + 's';
-    btn.classList.add('anim-in');
-    rail.appendChild(btn);
-  });
-  const c=document.createElement('div');c.className='node-connector-h';rail.appendChild(c);
-  const more=document.createElement('button');
-  more.className='node-bubble more-bubble magic-glow';
-  more.innerHTML=`<div class="nb-icon">+</div><div class="nb-title">More</div><div class="nb-sub">Generate more ideas</div>`;
-  more.onclick=()=>generateMore();
-  rail.appendChild(more);
-  document.getElementById('nodes-track-outer').scrollLeft=0;
-}
-
-function generateMore(){
-  document.getElementById('ideas-panel').style.display='none';
-  document.getElementById('convo-thread').style.display='block';
-  const pair=addUserNode('Show me more ideas');
-  addConnectorAndTyping(pair);
-  currentStep=2;
-  sendToAPI('Give me 3 completely different ideas from the ones you already suggested.');
-}
-
-function viewJourney(title,type){
-  document.getElementById('ideas-panel').style.display='none';
-  document.getElementById('journey-panel').style.display='block';
-  window.scrollTo({top:0,behavior:'smooth'});
-  document.getElementById('jh-type').textContent=type||'Roadmap';
-  document.getElementById('jh-title').textContent=title;
-  document.getElementById('jh-sub').textContent='Building your personalised roadmap\u2026';
-  const list=document.getElementById('stages-list');
-  const mw=document.getElementById('momentum-wrap');
-  if(mw)mw.style.display='none';
-  list.innerHTML='<div style="padding:2rem 0;text-align:center;color:var(--text3);font-size:.85rem;display:flex;align-items:center;justify-content:center;gap:.5rem"><div class=\"typing-dots\"><span></span><span></span><span></span></div></div>';
-  const ctx=convoHistory.map(function(m){return (m.role==='user'?'User: ':'Advisor: ')+m.content;}).join('\n');
-  const prompt='You are whatimado. Generate a 4-stage roadmap for someone pursuing the idea: "'+title+'". Base the tasks on their real situation below. Make each task specific, actionable, and realistic for their constraints.\n\nUser context:\n'+ctx+'\n\nRespond with ONLY a JSON array of 4 stage objects. No prose. No markdown. No code fences. Start with [ and end with ].\nFormat: [{"label":"Stage Name","desc":"One sentence about this stage","tasks":["specific task 1","specific task 2","specific task 3"]}]';
-  fetch('/api/claude',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      model:'claude-sonnet-4-5',
-      max_tokens:1200,
-      messages:[{role:'user',content:prompt}]
-    })
-  })
-  .then(function(r){return r.json();})
-  .then(function(data){
-    var text=data.content.filter(function(b){return b.type==='text';}).map(function(b){return b.text;}).join('').trim();
-    var match=text.match(/\[[\s\S]*\]/);
-    if(!match)throw new Error('no json');
-    var stages=JSON.parse(match[0]);
-    document.getElementById('jh-sub').textContent='Follow these stages to get this off the ground.';
-    if(mw)mw.style.display='';
-    renderStages(stages);
-  })
-  .catch(function(){
-    document.getElementById('jh-sub').textContent='Follow these stages to get this off the ground.';
-    if(mw)mw.style.display='';
-    renderStages(STAGES);
-  });
-}
-
-function renderStages(stages){
-  var list=document.getElementById('stages-list');
-  list.innerHTML='';
-  stages.forEach(function(s,idx){
-    var card=document.createElement('div');
-    card.className='stage-card magic-glow'+(idx===0?' open':'');
-    var taskRows=(s.tasks||[]).map(function(t,ti){
-      var uid='task-'+idx+'-'+ti;
-      var tSafe=t.replace(/'/g,'&#39;');
-      return '<div>'
-        +'<div class="task-row">'
-        +'<input type="checkbox" class="task-check" onclick="event.stopPropagation();updateMomentum()">'
-        +'<span class="task-text">'+esc(t)+'</span>'
-        +'<button class="task-expand-btn" id="btn-'+uid+'" onclick="toggleTaskDetail(\''+uid+'\',event)">Notes / Ask</button>'
-        +'</div>'
-        +'<div class="task-detail" id="'+uid+'">'
-        +'<p class="task-notes-label">My Notes</p>'
-        +'<textarea class="task-notes-ta" placeholder="Jot down your thoughts, progress, links\u2026" onclick="event.stopPropagation()"></textarea>'
-        +'<div class="task-ask-wrap">'
-        +'<input class="task-ask-input" id="q-'+uid+'" placeholder="Ask AI about this task\u2026" onclick="event.stopPropagation()">'
-        +'<button class="task-ask-btn" id="askbtn-'+uid+'" onclick="askTask(\''+uid+'\',\''+tSafe+'\');event.stopPropagation()">Ask</button>'
-        +'</div>'
-        +'<div class="task-ai-answer" id="ans-'+uid+'"></div>'
-        +'</div>'
-        +'</div>';
-    }).join('');
-    card.innerHTML='<div class="stage-head" onclick="this.parentElement.classList.toggle(\'open\')">'
-      +'<div class="stage-num">'+(idx+1)+'</div>'
-      +'<div class="stage-label">'+esc(s.label)+'</div>'
-      +'<div class="stage-arrow">\u25b6</div>'
-      +'</div>'
-      +'<div class="stage-body">'
-      +'<p class="stage-desc">'+esc(s.desc)+'</p>'
-      +'<div class="tasks">'+taskRows+'</div>'
-      +'</div>';
-    list.appendChild(card);
-  });
-  updateMomentum();
-}
-function showIdeas(){
-  document.getElementById('journey-panel').style.display='none';
-  document.getElementById('ideas-panel').style.display='block';
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function autoExpand(el){
-  el.style.height='auto';
-  el.style.height=el.scrollHeight+'px';
-}
-function toggleTaskDetail(uid,e){
-  e.stopPropagation();
-  const panel=document.getElementById(uid);
-  const btn=document.getElementById('btn-'+uid);
-  const isOpen=panel.classList.contains('open');
-  panel.classList.toggle('open',!isOpen);
-  btn.classList.toggle('active',!isOpen);
-}
-async function askTask(uid,taskText){
-  const input=document.getElementById('q-'+uid);
-  const btn=document.getElementById('askbtn-'+uid);
-  const ansEl=document.getElementById('ans-'+uid);
-  const question=input?input.value.trim():'';
-  if(!question)return;
-  btn.disabled=true;
-  btn.textContent='...';
-  ansEl.classList.add('visible');
-  ansEl.innerHTML='<em style="color:var(--text3)">Thinking…</em>';
-  const ideaTitle=document.getElementById('jh-title')?document.getElementById('jh-title').textContent:'';
-  try{
-    const res=await fetch('/api/claude',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-5',
-        max_tokens:400,
-        messages:[{
-          role:'user',
-          content:'You are whatimado, a direct business and career advisor. Answer the user\'s question about their specific task in 2-4 sentences. No markdown. No bullet points. Plain text only.\n\nIdea they are pursuing: '+ideaTitle+'\nTask: '+taskText+'\nUser question: '+question
-        }]
-      })
-    });
-    const data=await res.json();
-    const text=data.content.filter(b=>b.type==='text').map(b=>b.text).join('');
-    ansEl.innerHTML=fmt(text);
-  }catch(err){
-    ansEl.innerHTML='Could not connect. Try again.';
-  }
-  btn.disabled=false;
-  btn.textContent='Ask';
-  if(input)input.value='';
-}
-
-// ── AUTH MODAL ──
-
-function showForgot(type){
-  const box=document.getElementById('forgot-box');
-  const label=document.getElementById('forgot-label');
-  if(!box)return;
-  const isVisible=box.style.display!=='none';
-  if(isVisible && box.dataset.type===type){box.style.display='none';return;}
-  box.style.display='block';
-  box.dataset.type=type;
-  if(label)label.textContent=type==='password'?'Enter your email to reset your password':'Enter your email to recover your username';
-}
-function showAuthModal(tab){
-  const m=document.getElementById('auth-modal');
-  m.classList.add('open');
-  switchAuthTab(tab);
-}
-function closeAuthModal(e){
-  if(e&&e.target!==document.getElementById('auth-modal'))return;
-  document.getElementById('auth-modal').classList.remove('open');
-}
-function switchAuthTab(tab){
-  document.getElementById('auth-signin').style.display=tab==='signin'?'block':'none';
-  document.getElementById('auth-signup').style.display=tab==='signup'?'block':'none';
-  document.getElementById('tab-signin').classList.toggle('active',tab==='signin');
-  document.getElementById('tab-signup').classList.toggle('active',tab==='signup');
-}
-
-// ── SESSION PERSISTENCE (localStorage) ──
-function saveSession(){
-  try{
-    localStorage.setItem('wid_session',JSON.stringify({
-      selectedPath,savedSkills,convoHistory,currentStep,
-      ts:Date.now()
-    }));
-  }catch(e){}
-}
-function loadSession(){
-  try{
-    const raw=localStorage.getItem('wid_session');
-    if(!raw)return false;
-    const s=JSON.parse(raw);
-    // expire after 24h
-    if(Date.now()-s.ts>86400000){localStorage.removeItem('wid_session');return false;}
-    return s;
-  }catch(e){return false;}
-}
-function clearSession(){
-  try{localStorage.removeItem('wid_session');}catch(e){}
-}
-
-// ── MOMENTUM METER ──
-function updateMomentum(){
-  const checks=document.querySelectorAll('.task-check');
-  if(!checks.length)return;
-  const done=[...checks].filter(c=>c.checked).length;
-  const pct=Math.round((done/checks.length)*100);
-  const fill=document.getElementById('momentum-fill');
-  const pctEl=document.getElementById('momentum-pct');
-  const status=document.getElementById('momentum-status');
-  if(fill)fill.style.width=pct+'%';
-  if(pctEl)pctEl.textContent=pct+'%';
-  if(status){
-    if(pct===0)status.textContent='Check off tasks to build momentum';
-    else if(pct<25)status.textContent="You've started — keep going!";
-    else if(pct<50)status.textContent='Good progress. Stay consistent.';
-    else if(pct<75)status.textContent="You're more than halfway there!";
-    else if(pct<100)status.textContent='Almost done. Finish strong.';
-    else status.textContent='🎉 Stage complete! Move to the next one.';
-  }
-  saveSession();
-}
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function fmt(t){return t.replace(/^#{1,3}\s+/gm,'').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'$1').replace(/^[-•]\s+/gm,'').replace(/\n{2,}/g,'<br><br>').replace(/\n/g,'<br>');}
-function scrollBottom(){setTimeout(()=>{const c=document.getElementById('bubble-chain');if(c&&c.lastElementChild)c.lastElementChild.scrollIntoView({behavior:'smooth',block:'end'});},130);}
-function showThread(){document.getElementById('convo-thread').style.display='block';}
-function addUserNode(text){
-  showThread();
-  const chain=document.getElementById('bubble-chain');
-  const pair=document.createElement('div');
-  pair.className='chain-pair';
-  pair.innerHTML=`<div class="chain-user"><div class="node-user">${esc(text)}</div></div>`;
-  chain.appendChild(pair);
-  scrollBottom();
-  return pair;
-}
-function addConnectorAndTyping(pair){
-  const conn=document.createElement('div');
-  conn.className='chain-connector';
-  conn.innerHTML=`<div class="connector-dot"></div><div class="connector-line"></div><div class="connector-dot"></div>`;
-  pair.appendChild(conn);
-  const aiRow=document.createElement('div');
-  aiRow.className='chain-ai';
-  aiRow.id='typing-ai';
-  aiRow.innerHTML=`<div class="node-ai-wrap"><div class="node-ai-label"><span class="node-ai-pulse"></span>whatimado</div><div class="node-ai"><div class="typing-dots"><span></span><span></span><span></span></div></div></div>`;
-  pair.appendChild(aiRow);
-  scrollBottom();
-}
-function resolveTyping(text){
-  const aiRow=document.getElementById('typing-ai');
-  if(aiRow){const node=aiRow.querySelector('.node-ai');if(node)node.innerHTML=fmt(text);aiRow.removeAttribute('id');}
-}
-
-// ══ WEATHER BACKGROUND SYSTEM ══
-const WX = {
-  canvas: null, ctx: null, particles: [], animFrame: null,
-  current: null,
-
-  THEMES: {
-    dawn:      { bg: 'linear-gradient(to bottom, #1a1040 0%, #6b3fa0 25%, #e8826e 55%, #f9c784 80%, #fde9c0 100%)', clouds: 6, cloudOpacity: 0.75, rain: 0, stars: 5,  sun: false, moon: false, badge: '🌅' },
-    morning:   { bg: 'radial-gradient(ellipse at 50% 10%, #5bc8f5 0%, #87d7f7 35%, #c5eaf8 70%, #e8f6fb 100%)',     clouds: 5, cloudOpacity: 0.8,  rain: 0, stars: 0,  sun: true,  moon: false, badge: '🌤️' },
-    midday:    { bg: 'radial-gradient(ellipse at 50% 0%,  #1e90e8 0%, #42aaee 40%, #7dcaf5 75%, #c5e8f8 100%)',    clouds: 4, cloudOpacity: 0.75, rain: 0, stars: 0,  sun: true,  moon: false, badge: '☀️' },
-    afternoon: { bg: 'linear-gradient(to bottom, #3aa8e8 0%, #6dc4ef 35%, #f0c97a 75%, #f5dfa0 100%)',             clouds: 5, cloudOpacity: 0.8,  rain: 0, stars: 0,  sun: true,  moon: false, badge: '🌇' },
-    dusk:      { bg: 'linear-gradient(to bottom, #0d0820 0%, #3d1f6e 20%, #c0405a 50%, #f08060 75%, #f5c090 100%)',clouds: 4, cloudOpacity: 0.6,  rain: 0, stars: 8,  sun: false, moon: false, badge: '🌆' },
-    night:     { bg: 'radial-gradient(ellipse at 50% 20%, #04070f 0%, #0a1230 50%, #101e4a 100%)',                  clouds: 5, cloudOpacity: 0.25, rain: 0, stars: 60, sun: false, moon: true,  badge: '🌙' },
-    clear_day:   { bg: 'radial-gradient(ellipse at 50% 20%, #87ceeb 0%, #b8e4f9 45%, #dff0fb 100%)', clouds: 8, cloudOpacity: 0.7, rain: 0, stars: 0, sun: true,  moon: false, badge: '☀️' },
-    clear_night: { bg: 'radial-gradient(ellipse at 50% 20%, #04070f 0%, #0a1230 50%, #101e4a 100%)', clouds: 5, cloudOpacity: 0.2, rain: 0, stars: 60, sun: false, moon: true,  badge: '🌙' },
-    cloudy_day:  { bg: 'radial-gradient(ellipse at 50% 30%, #a0c4d8 0%, #c5dce8 50%, #dce9f0 100%)', clouds: 12, cloudOpacity: 0.9, rain: 0, stars: 0, sun: false, moon: false, badge: '☁️' },
-    cloudy_night:{ bg: 'radial-gradient(ellipse at 50% 20%, #060810 0%, #0e1422 50%, #181f35 100%)', clouds: 10, cloudOpacity: 0.4, rain: 0, stars: 15, sun: false, moon: true,  badge: '🌑' },
-    rain_day:    { bg: 'radial-gradient(ellipse at 50% 30%, #6a8fa8 0%, #8aafc5 50%, #b0cad8 100%)', clouds: 7, cloudOpacity: 0.95,rain: 80, stars: 0, sun: false, moon: false, badge: '🌧️' },
-    rain_night:  { bg: 'radial-gradient(ellipse at 50% 20%, #040a10 0%, #0a1520 50%, #121e2e 100%)', clouds: 6, cloudOpacity: 0.5, rain: 80, stars: 0, sun: false, moon: false, badge: '🌧️' },
-    snow_day:    { bg: 'radial-gradient(ellipse at 50% 30%, #c8dce8 0%, #dce8f0 50%, #edf4f8 100%)', clouds: 5, cloudOpacity: 0.95,rain: 40, stars: 0, sun: false, moon: false, badge: '❄️', snow: true },
-    fog_day:     { bg: 'radial-gradient(ellipse at 50% 50%, #b8c8d0 0%, #ccd8de 60%, #dde6ea 100%)', clouds: 8, cloudOpacity: 0.6, rain: 0, stars: 0, sun: false, moon: false, badge: '🌫️' },
-    thunder_day: { bg: 'radial-gradient(ellipse at 50% 30%, #3d4a55 0%, #5a6a78 50%, #7a8a96 100%)', clouds: 8, cloudOpacity: 0.98,rain:120, stars: 0, sun: false, moon: false, badge: '⛈️' },
-  },
-
-  init() {
-    this.canvas = document.getElementById('weather-canvas');
-    this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
-    this.resize();
-    window.addEventListener('resize', () => this.resize());
-    this.fetchWeather();
-  },
-
-  resize() {
-    if (!this.canvas) return;
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
-  },
-
-  getTimeTheme() {
-    const hr = new Date().getHours();
-    if (hr >= 5  && hr < 7)  return 'dawn';
-    if (hr >= 7  && hr < 11) return 'morning';
-    if (hr >= 11 && hr < 14) return 'midday';
-    if (hr >= 14 && hr < 18) return 'afternoon';
-    if (hr >= 18 && hr < 20) return 'dusk';
-    return 'night';
-  },
-
-  async fetchWeather() {
-    // Always apply time-of-day theme immediately — no permissions needed
-    const timePeriod = this.getTimeTheme();
-    this.applyTheme(timePeriod, null);
-
-    // Then try to layer real weather on top if geolocation is available
-    try {
-      const pos = await new Promise((res, rej) =>
-        navigator.geolocation.getCurrentPosition(res, rej, {timeout: 6000})
-      );
-      const {latitude: lat, longitude: lon} = pos.coords;
-      const url = 'https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&current=weather_code,temperature_2m&timezone=auto';
-      const r = await fetch(url);
-      const d = await r.json();
-      const code = d.current.weather_code;
-      const isDay = (timePeriod !== 'night' && timePeriod !== 'dusk');
-      const tempC = Math.round(d.current.temperature_2m);
-      // Convert to Fahrenheit
-      const tempF = Math.round(tempC * 9/5 + 32);
-      const theme = this.codeToTheme(code, isDay);
-      this.applyTheme(theme, tempF, true);
-    } catch(e) {
-      // No geolocation — time-of-day theme already applied, nothing more to do
-    }
-  },
-
-  codeToTheme(code, isDay) {
-    const sfx = isDay ? '_day' : '_night';
-    if (code === 0)                         return 'clear'+sfx;
-    if (code <= 2)                          return 'cloudy'+sfx;
-    if (code === 3)                         return 'cloudy'+sfx;
-    if (code >= 45 && code <= 48)           return 'fog_day';
-    if (code >= 51 && code <= 67)           return 'rain'+sfx;
-    if (code >= 71 && code <= 77)           return 'snow_day';
-    if (code >= 80 && code <= 82)           return 'rain'+sfx;
-    if (code >= 95)                         return 'thunder_day';
-    return 'clear'+sfx;
-  },
-
-  applyTheme(themeKey, temp, isWeatherOverlay) {
-    // Toggle night mode class on body
-    const isNight = themeKey.includes('night');
-    document.body.classList.toggle('night-mode', isNight);
-    const t = this.THEMES[themeKey] || this.THEMES['clear_day'];
-    this.current = themeKey;
-
-    // Background gradient
-    const bg = document.getElementById('bg-layer');
-    if (bg) bg.style.background = t.bg;
-
-    // Badge — only show temp if we have real weather data
-    const badge = document.getElementById('weather-badge');
-    if (badge) {
-      if (temp !== null) {
-        badge.innerHTML = t.badge + ' ' + temp + '°F';
-        badge.classList.add('visible');
-      } else if (!isWeatherOverlay) {
-        badge.innerHTML = t.badge;
-        badge.classList.add('visible');
-      }
-    }
-
-    // Clear old particles
-    this.particles = [];
-    if (this.animFrame) cancelAnimationFrame(this.animFrame);
-    if (bg) bg.innerHTML = '';
-
-    // Sun
-    if (t.sun) this.addSun(bg);
-    // Moon
-    if (t.moon) this.addMoon(bg);
-    // Stars
-    for (let i = 0; i < t.stars; i++) this.addStar(bg);
-    // Clouds
-    for (let i = 0; i < t.clouds; i++) this.addCloud(bg, t.cloudOpacity, i, t.clouds);
-    // Rain/snow
-    if (t.rain > 0) this.startPrecip(t.rain, t.snow);
-  },
-
-  addSun(bg) {
-    const el = document.createElement('div');
-    el.className = 'sun-orb';
-    const size = 90;
-    Object.assign(el.style, {
-      width: size+'px', height: size+'px',
-      top: '8%', right: '12%',
-      background: 'radial-gradient(circle, #fff9c4 0%, #ffe066 50%, #ffb300 100%)',
-      boxShadow: '0 0 60px 30px rgba(255,200,50,0.35)'
-    });
-    bg.appendChild(el);
-  },
-
-  addMoon(bg) {
-    const el = document.createElement('div');
-    el.className = 'moon-orb';
-    Object.assign(el.style, {
-      width: '60px', height: '60px',
-      top: '10%', right: '15%',
-      background: 'radial-gradient(circle at 35% 35%, #f0f4ff 0%, #c8d4e8 60%, #a0b0c8 100%)',
-      boxShadow: '0 0 30px 10px rgba(180,200,240,0.25)'
-    });
-    bg.appendChild(el);
-  },
-
-  addStar(bg) {
-    const el = document.createElement('div');
-    el.className = 'star';
-    const size = Math.random() * 2.5 + 1;
-    Object.assign(el.style, {
-      width: size+'px', height: size+'px',
-      top: (Math.random() * 70)+'%',
-      left: (Math.random() * 100)+'%',
-      animationDuration: (Math.random() * 3 + 2)+'s',
-      animationDelay: (Math.random() * 4)+'s',
-      opacity: Math.random() * 0.6 + 0.2
-    });
-    bg.appendChild(el);
-  },
-
-  addCloud(bg, opacity, idx, total) {
-    const DIRECTIONS = [
-      { anim: 'floatCloud',        startLeft: '110vw',  startTop: null },
-      { anim: 'floatCloudR',       startLeft: '-320px', startTop: null },
-      { anim: 'floatCloudDiagDown',startLeft: '110vw',  startTop: null },
-      { anim: 'floatCloudDiagUp',  startLeft: '110vw',  startTop: null },
-      { anim: 'floatCloudSlowR',   startLeft: '-320px', startTop: null },
-    ];
-    const dir = DIRECTIONS[idx % DIRECTIONS.length];
-
-    // Vary cloud sizes — mix small wispy and large puffy
-    const sizeClass = idx % 3; // 0=small, 1=medium, 2=large
-    const cw = sizeClass===0 ? 70+Math.random()*60 : sizeClass===1 ? 130+Math.random()*80 : 200+Math.random()*120;
-    const ch = cw * (0.45 + Math.random()*0.2);
-    const cvs = document.createElement('canvas');
-    cvs.width = Math.ceil(cw);
-    cvs.height = Math.ceil(ch);
-    const cx = cvs.getContext('2d');
-
-    const isNight = this.current && this.current.includes('night');
-    const baseColor = isNight ? `rgba(130,150,190,${opacity})` : `rgba(255,255,255,${opacity})`;
-    // Cloud: draw fully opaque on offscreen, then composite at desired opacity
-    var isNightCloud = this.current && this.current.includes('night');
-    var solidColor = isNightCloud ? '#8090b8' : '#ffffff';
-
-    var off2 = document.createElement('canvas');
-    off2.width = Math.ceil(cw); off2.height = Math.ceil(ch);
-    var ox2 = off2.getContext('2d');
-    // FULLY OPAQUE — no rgba transparency so overlaps are truly solid
-    ox2.fillStyle = solidColor;
-
-    // Wide pill base
-    var bx=cw*0.05, by=ch*0.60, bw=cw*0.90, bh=ch*0.32, br=bh/2;
-    ox2.beginPath();
-    ox2.moveTo(bx+br, by);
-    ox2.lineTo(bx+bw-br, by);
-    ox2.arcTo(bx+bw, by, bx+bw, by+br, br);
-    ox2.lineTo(bx+bw, by+bh-br);
-    ox2.arcTo(bx+bw, by+bh, bx+bw-br, by+bh, br);
-    ox2.lineTo(bx+br, by+bh);
-    ox2.arcTo(bx, by+bh, bx, by+bh-br, br);
-    ox2.lineTo(bx, by+br);
-    ox2.arcTo(bx, by, bx+br, by, br);
-    ox2.closePath();
-    ox2.fill();
-
-    // Puff bumps as full circles — all solid, overlaps merge
-    [{x:cw*0.22,y:ch*0.60,r:cw*0.13},
-     {x:cw*0.40,y:ch*0.52,r:cw*0.17},
-     {x:cw*0.59,y:ch*0.54,r:cw*0.15},
-     {x:cw*0.77,y:ch*0.59,r:cw*0.11}
-    ].forEach(function(b){
-      ox2.beginPath();
-      ox2.arc(b.x, b.y, b.r, 0, Math.PI*2);
-      ox2.fill();
-    });
-
-    // Stamp offscreen onto main canvas at the desired opacity
-    cx.globalAlpha = opacity;
-    cx.drawImage(off2, 0, 0);
-    cx.globalAlpha = 1;
-
-    const top = 3 + Math.random() * 68;
-    // speed varies by size — smaller clouds move faster
-    const dur = sizeClass===0 ? 28+Math.random()*20 : sizeClass===1 ? 45+Math.random()*30 : 65+Math.random()*40;
-    const delay = -(Math.random() * dur);
-    const fadeDel = idx * 0.35;
-
-    Object.assign(cvs.style, {
-      position: 'fixed',
-      top: top+'%',
-      left: '0',
-      width: cw+'px',
-      height: ch+'px',
-      opacity: 0,
-      animation: `cloudFadeIn 1.8s ease ${fadeDel}s forwards, ${dir.anim} ${dur}s linear ${delay}s infinite`,
-      pointerEvents: 'none',
-      filter: 'none',
-      zIndex: '0',
-    });
-    bg.appendChild(cvs);
-  },
-
-  startPrecip(count, isSnow) {
-    if (!this.canvas || !this.ctx) return;
-    const W = this.canvas.width, H = this.canvas.height;
-    for (let i = 0; i < count; i++) {
-      this.particles.push({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        len: isSnow ? Math.random() * 4 + 3 : Math.random() * 14 + 8,
-        speed: isSnow ? Math.random() * 1.5 + 0.5 : Math.random() * 6 + 6,
-        opacity: Math.random() * 0.4 + 0.2,
-        drift: isSnow ? (Math.random() - 0.5) * 0.8 : 0,
-        snow: isSnow
-      });
-    }
-    this.animatePrecip();
-  },
-
-  animatePrecip() {
-    if (!this.ctx) return;
-    const W = this.canvas.width, H = this.canvas.height;
-    this.ctx.clearRect(0, 0, W, H);
-    this.particles.forEach(p => {
-      this.ctx.beginPath();
-      if (p.snow) {
-        this.ctx.arc(p.x, p.y, p.len/2, 0, Math.PI*2);
-        this.ctx.fillStyle = 'rgba(255,255,255,'+p.opacity+')';
-        this.ctx.fill();
-      } else {
-        this.ctx.moveTo(p.x, p.y);
-        this.ctx.lineTo(p.x - 1, p.y + p.len);
-        this.ctx.strokeStyle = 'rgba(180,210,230,'+p.opacity+')';
-        this.ctx.lineWidth = 1.2;
-        this.ctx.stroke();
-      }
-      p.y += p.speed;
-      p.x += p.drift;
-      if (p.y > H) { p.y = -p.len; p.x = Math.random() * W; }
-      if (p.x > W || p.x < 0) p.x = Math.random() * W;
-    });
-    this.animFrame = requestAnimationFrame(() => this.animatePrecip());
-  }
-};
-
-
-// ══ SUPABASE AUTH ══
-const SUPA_URL = 'https://acgjcnhcjgtpoztntcyb.supabase.co';
-const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFjZ2pjbmhjamd0cG96dG50Y3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzMDU1MTgsImV4cCI6MjA5Njg4MTUxOH0.gEJfMFWjmsLTw2aKbjQhYDlPl_zvpjfxP8QskAN6ghQ';
-const supa = supabase.createClient(SUPA_URL, SUPA_KEY);
-
-// Track current user
-let currentUser = null;
-
-// On load, check session
-async function initAuth() {
-  const { data: { session } } = await supa.auth.getSession();
-  if (session) setUser(session.user);
-  supa.auth.onAuthStateChange((_event, session) => {
-    setUser(session ? session.user : null);
-  });
-}
-
-function setUser(user) {
-  currentUser = user;
-  const nav = document.querySelector('.nav');
-  if (!nav) return;
-  if (user) {
-    // Show user email + sign out
-    const email = user.email || 'Account';
-    const displayName = email.split('@')[0];
-    document.getElementById('nav-signin-btn') && (document.getElementById('nav-signin-btn').style.display = 'none');
-    document.getElementById('nav-signup-btn') && (document.getElementById('nav-signup-btn').style.display = 'none');
-    const existing = document.getElementById('nav-user-area');
-    if (!existing) {
-      const userArea = document.createElement('div');
-      userArea.id = 'nav-user-area';
-      userArea.style.cssText = 'display:flex;align-items:center;gap:.5rem';
-      userArea.innerHTML = `<span style="font-size:.78rem;font-weight:600;color:var(--text2)">${displayName}</span><button class="nav-btn" onclick="signOut()" style="font-size:.78rem">Sign out</button>`;
-      nav.appendChild(userArea);
-    }
-  } else {
-    const area = document.getElementById('nav-user-area');
-    if (area) area.remove();
-    document.getElementById('nav-signin-btn') && (document.getElementById('nav-signin-btn').style.display = '');
-    document.getElementById('nav-signup-btn') && (document.getElementById('nav-signup-btn').style.display = '');
-  }
-}
-
-async function signOut() {
-  await supa.auth.signOut();
-  setUser(null);
-}
-
-// ── EMAIL SIGN IN ──
-async function doSignIn() {
-  const email = document.getElementById('signin-email')?.value?.trim();
-  const pass = document.getElementById('signin-pass')?.value;
-  if (!email || !pass) return showAuthError('Please enter your email and password.');
-  const btn = document.querySelector('#auth-signin .auth-submit');
-  if (btn) { btn.textContent = 'Signing in…'; btn.disabled = true; }
-  const { data, error } = await supa.auth.signInWithPassword({ email, password: pass });
-  if (btn) { btn.textContent = 'Sign in'; btn.disabled = false; }
-  if (error) return showAuthError(error.message);
-  closeAuthModal();
-}
-
-// ── EMAIL SIGN UP ──
-async function doSignUp() {
-  const name = document.getElementById('signup-name-input')?.value?.trim();
-  const email = document.getElementById('signup-email')?.value?.trim();
-  const pass = document.getElementById('signup-pass')?.value;
-  if (!email || !pass) return showAuthError('Please fill in all fields.');
-  const btn = document.querySelector('#auth-signup .auth-submit');
-  if (btn) { btn.textContent = 'Creating account…'; btn.disabled = true; }
-  const { data, error } = await supa.auth.signUp({
-    email, password: pass,
-    options: { data: { full_name: name } }
-  });
-  if (btn) { btn.textContent = 'Create account'; btn.disabled = false; }
-  if (error) return showAuthError(error.message);
-  showAuthMessage('Check your email to confirm your account!');
-}
-
-// ── PASSWORD RESET ──
-async function doPasswordReset() {
-  const email = document.getElementById('forgot-email')?.value?.trim();
-  if (!email) return showAuthError('Please enter your email.');
-  const { error } = await supa.auth.resetPasswordForEmail(email, {
-    redirectTo: window.location.origin
-  });
-  if (error) return showAuthError(error.message);
-  showAuthMessage('Password reset email sent!');
-}
-
-// ── GOOGLE OAUTH ──
-async function signInWithGoogle() {
-  await supa.auth.signInWithOAuth({
-    provider: 'google',
-    options: { redirectTo: window.location.origin }
-  });
-}
-
-// ── APPLE OAUTH ──
-async function signInWithApple() {
-  await supa.auth.signInWithOAuth({
-    provider: 'apple',
-    options: { redirectTo: window.location.origin }
-  });
-}
-
-// ── FACEBOOK OAUTH ──
-async function signInWithFacebook() {
-  await supa.auth.signInWithOAuth({
-    provider: 'facebook',
-    options: { redirectTo: window.location.origin }
-  });
-}
-
-function showAuthError(msg) {
-  const el = document.getElementById('auth-message');
-  if (el) { el.textContent = msg; el.style.color = '#e53e3e'; el.style.display = 'block'; }
-}
-function showAuthMessage(msg) {
-  const el = document.getElementById('auth-message');
-  if (el) { el.textContent = msg; el.style.color = 'var(--green)'; el.style.display = 'block'; }
-}
-
-</script>
-</body>
-</html>
+Visual Studio Code 1.124
+
+Show release notes after an update
+
+Follow us on LinkedIn, X, Bluesky | View online
+
+Release date: June 10, 2026
+
+Update 1.124.1: The update addresses these issues.
+
+Update 1.124.2: The update addresses these issues.
+
+Welcome to the 1.124 release of Visual Studio Code. This release makes it faster to work across agent sessions and gives agents more autonomy to finish your tasks.
+
+Autopilot: Autopilot, enabled by default, is now smarter to determine when a task is truly done.
+
+Background sessions: Quickly send a request in the background and keep composing the next session.
+
+Session navigation: Search, jump, and step through agent sessions with the keyboard.
+
+Browser history: Revisit and search pages you've already opened in the integrated browser.
+
+Happy Coding!
+
+VS Code is rolling out gradually to all users. Use Check for Updates in VS Code to get the latest version immediately.
+
+To try new features as soon as possible, download the nightly Insiders build, which includes the latest updates as soon as they are available.
+
+In this update
+Agents Window
+Autopilot
+Editor Experience
+Enterprise
+Deprecated features and settings
+Thank you
+Agents window (Preview)
+The Agents window is a dedicated companion window optimized for exploring, iterating on, and reviewing agent sessions across projects and machines. This release focuses on making it faster to move between sessions and on preserving your context across reloads.
+
+Background send for new sessions
+Previously, starting a new session meant waiting for it to load before you could compose the next one. You can now send a request in the background instead: press ⌥Enter (or hold Alt and select Send) in the new session view.
+
+The view resets immediately and keeps its state, such as the selected model and context, clearing only the query text, so you can keep queuing up requests. Each started session appears in the sessions list once it commits.
+
+Sending a prompt with Enter still navigates into the new session as before.
+
+Navigate between sessions
+When you work across many agent sessions, being able to find and switch between them quickly matters. This release adds several keyboard-driven ways to move through your sessions, from a searchable picker to back and forward navigation and direct jumps by position.
+
+Sessions picker: Press ⌃R (⌘R on macOS) to open a Quick Pick that lists your sessions in two groups, recently opened and other sessions, with the active session pre-selected. Search across both the session title and its folder, then:
+
+Press Enter to open the selected session.
+Press unassigned to open it to the side.
+Press unassigned to open it in the background while keeping the picker open.
+Screenshot showing the sessions picker Quick Pick with sessions grouped into recently opened and other sessions.
+
+Go back and forward: Press ⌃Tab to go back and ⌃⇧Tab to go forward through the sessions you have visited, in most-recently-visited order.
+
+Previous and Next session: The Go to Previous Session and Go to Next Session commands step through the visible sessions list in display order, respecting grouping, filtering, and collapsed sections, and clamp at the list edges. Use ⌥↑ / ⌥↓ (or ⌃PageUp / ⌃PageDown; ⌥⌘← / ⌥⌘→ on macOS).
+
+
+Focus a session by position: Press ⌃1 through ⌃9 (⌘1 to ⌘9 on macOS) to focus the Nth visible session in the grid, left to right.
+
+
+Restore sessions on reload
+Reloading or reopening the Agents window no longer loses your layout. The previously visible sessions and their state are restored automatically, so you land back where you left off. This includes:
+
+The visible sessions grid: which sessions were open, their left-to-right order, the active session, and any sticky or pinned sessions.
+Per-session layout, including auxiliary bar visibility, the active view container, and the editors open in each session.
+Sessions list state, including the pinned and read status of each session.
+Close all sessions
+Similar to editor's Close All... commands, you can now close all your sessions in one step with the new Close All Sessions command. This is especially useful when you have many sessions open and want to quickly switch to a new session without having to close each session individually.
+
+Use the keyboard shortcut ⌃K ⌃W (⌘K ⌘W on macOS) while a session has focus, or access the command from the Command Palette.
+
+Single-file diff in the Changes view (Preview)
+Setting: sessions.changes.openSingleFileDiff
+
+By default, selecting a file in the Changes view opens the multi-file diff editor. To open only the changes for that file, you had to press Alt and select the file (Open Changes).
+
+To always open a focused single-file diff editor when you select a file in the Changes view, enable sessions.changes.openSingleFileDiff. This lets you concentrate on one change at a time without the distraction of other files in the multi-file diff. When the setting is enabled, the redundant Open Changes inline action is hidden.
+
+Widen the editor with the side bar chevron
+When you open a file inside the Agents window, a chevron toggle now appears in the editor title bar, to the right of the tabs. Select it to collapse the secondary side bar (auxiliary bar) and widen the editor, and select it again to bring the side bar back. The chevron direction reflects the current side bar visibility.
+
+
+Autopilot (Preview)
+Autopilot is one of the chat permission levels that allows agents to take initiative and act autonomously, without needing explicit user approval for each action.
+
+Autopilot is enabled by default
+Settings:   chat.permissions.default ,   chat.tools.global.autoApprove
+
+Autopilot is now enabled by default in VS Code. Organizations can still control the visibility and usage of Autopilot via the   chat.tools.global.autoApprove setting.
+
+You can configure your default permission level for new chats with   chat.permissions.default . Change the current permission level at any time in the chat input box.
+
+Advanced Autopilot
+Setting:   chat.autopilot.advanced.enabled
+
+Knowing when an agent has truly finished a task is hard. Stop too early and the work is incomplete, loop too long and you waste time and tokens. Advanced Autopilot changes how Autopilot (Preview) decides when to keep iterating and when to finish, so you get more complete results without manually monitoring the loop.
+
+Instead of relying on fixed rules, a small utility model reads a transcript of the chat and decides whether the task is done. The objective that Autopilot works towards is surfaced in a tooltip above the chat, so you can always see what it is trying to accomplish. To keep things bounded, Autopilot loops a maximum of three times before it stops.
+
+Set   chat.autopilot.advanced.enabled to true to try this out.
+
+Editor Experience
+Create folder when opening folder from simple file dialog
+When you are opening a folder from the simple file dialog (  files.simpleDialog.enable ), you can now create a new folder directly from the dialog by typing the name of the folder you want to create and pressing Enter or selecting OK.
+
+Integrated Browser
+History
+Setting:   workbench.browser.maxHistoryEntries
+
+The integrated browser now retains the history of visited pages. History items are surfaced as suggestions when typing in the URL bar, and can be managed using ⌘H from within a browser tab. The maximum number of history items to remember can be adjusted via   workbench.browser.maxHistoryEntries .
+
+Screenshot showing the URL bar in the integrated browser, with an input of "Wiki" showing several Wikipedia pages from history.
+
+Improved toolbar customizability
+Previously, Add Element to Chat and Toggle Developer Tools were the only actions that could be made persistently visible in the right side of the browser toolbar.
+
+Now, all actions that appear within the overflow menu can also be surfaced persistently by right-clicking on the toolbar area to the right of the URL input:
+
+Screenshot showing the context menu allowing the user to toggle visible menu items.
+
+Faster agentic text entry
+Previously, typing text and pressing Enter required two separate tool calls. Now, the typeInPage tool supports a submit parameter to allow agents to type text and press Enter in one tool call.
+
+This reduces round-trips for common text-entry scenarios.
+
+Screenshot showing a tool call where the agent typed text into a page and pressed enter.
+
+Enterprise
+Enterprise-managed Copilot plugin policies (Experimental)
+VS Code now reads policy from the same configuration file that already drives enterprise plugin standards for Copilot CLI, so a single policy definition applies to both clients. In the future, VS Code and the CLI will align further on policy management from this shared source.
+
+Enterprise admins can now centrally control which chat plugins and plugin marketplaces are available to developers, instead of asking each developer to configure them locally.
+
+Introduced in 1.123, three new policy-backed settings can be configured through the Copilot enterprise settings file or via existing MDM solutions:
+
+  chat.plugins.enabledPlugins : an allowlist of plugin IDs that the organization explicitly enables or disables.
+chat.plugins.extraMarketplaces: additional plugin marketplaces the organization wants to make available.
+  chat.plugins.strictMarketplaces : when enabled, only marketplaces supplied by policy are trusted.
+Plugins that are blocked by policy remain visible but appear disabled. Marketplaces that are managed by policy are tagged as such in the marketplace picker.
+
+Deprecated features and settings
+None
+
+Thank you
+Contributions to our issue tracking:
+
+@gjsjohnmurray (John Murray)
+@RedCMD (RedCMD)
+@IllusionMH (Andrii Dieiev)
+@albertosantini (Alberto Santini)
+Contributions to vscode:
+
+@1Burhanuddin (Burhanuddin Mundrawala): fix: correct typo occured -> occurred in parcelWatcher.ts comment PR #319721
+@ajasad25 (Asad Meeran): Fix issue reporter "Preview on GitHub" opening repo root instead of the new-issue form PR #319577
+@gjsjohnmurray (John Murray)
+Improve messages about restart / reload after extension update (fix #297278) PR #307353
+Reinstate symbol icon colors in quickpicks (fix #299650) PR #299753
+@guomaggie: Switch from Copilot Proxy to CAPI PR #318443
+@ishaq2321 (Muhammad Ishaq Khan)
+debug: Log errors when loading stored breakpoints/watch expressions (#319805) PR #319806
+editor: Cache getComputedStyle result in shadowCaretRangeFromPoint (#319803) PR #319804
+@KirtiRamchandani (Kirtikumar Anandrao Ramchandani): fix: surface missing Git LFS git errors PR #319973
+@maruthang (Maruthan G): fix(explorer): guard file-explorer scroll handler against transient tree-map desync (#188365) PR #310833
+@mohanrajvenkatesan23-04 (Mohanraj Venkatesan): html-language-features: include JSDoc summary and tags in <script> hover PR #312585
+@mohityadav8 (Mohit Yadav): fix(docs): correct grammar and typo issues in documentation PR #317718
+@mutl3y: fix(terminal): catch ENOPRO in getCwdResource when file:// provider absent in VS Code web PR #317780
+@sgoedecke (Sean Goedecke): Fix auto mode fallback for empty model providers PR #316174
+@SimonSiefke (Simon Siefke)
+fix: process leaks in extensionHostConnection PR #319223
+fix: memory leak in pane composite bar PR #282589
+fix: memory leak in pty host service PR #287025
+@tbogoodnews (Taylor Blair): Fix BYOK response success turn telemetry PR #319637
+@vivekjm (Vivek JM): Disable Copy Breadcrumbs Path without symbols PR #318042
+@yogeshwaran-c (Yogeshwaran C): Remove disabled toggle from the tab order PR #319693
+Contributions to vscode-extension-samples:
+
+@fhwvtqdc2q-svg (Lloouujjiinn): Replace deprecated typescript.tsc.autoDetect setting PR #1287
+Contributions to vscode-pull-request-github:
+
+@Malix-Labs (Malix - Alix Brunet): feat: contributes.yamlValidation PR #8761
+We really appreciate people trying our new features as soon as they are ready, so check back here often and learn what's new.
+
+If you'd like to read release notes for previous VS Code versions, go to Updates on code.visualstudio.com.
+
