@@ -275,6 +275,16 @@ body.night-mode .node-ai{background:rgba(255,255,255,0.92);border-color:rgba(180
 .momentum-track{height:8px;background:var(--surface2);border-radius:100px;overflow:hidden;border:1px solid var(--line2)}
 .momentum-fill{height:100%;width:0%;background:linear-gradient(to right,var(--aqua),var(--green2));border-radius:100px;transition:width .6s cubic-bezier(.4,0,.2,1)}
 .momentum-status{font-size:.75rem;color:var(--text3);margin-top:.5rem;font-weight:500}
+
+/* BUBBLE ENTRANCE ANIMATION */
+@keyframes bubbleIn{
+  0%{opacity:0;transform:translateY(20px) scale(0.85)}
+  60%{transform:translateY(-4px) scale(1.03)}
+  100%{opacity:1;transform:translateY(0) scale(1)}
+}
+.node-bubble.anim-in{
+  animation:bubbleIn .45s cubic-bezier(.34,1.56,.64,1) both;
+}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes nodeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 #page-loader{position:fixed;inset:0;z-index:9000;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.25rem;transition:opacity .4s ease}
@@ -477,7 +487,7 @@ function showScreen(n){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function resetAll(){
-  selectedPath=null;savedSkills='';convoHistory=[];currentStep=1;
+  selectedPath=null;savedSkills='';convoHistory=[];currentStep=1;userName='';
   clearSession();
   document.getElementById('skills-input').value='';
   document.getElementById('prompt-hint-text').textContent="Be honest. There\'s no wrong answer.";
@@ -497,65 +507,72 @@ function startConvo(){
   sendToAPI(text);
 }
 
-async function sendToAPI(promptText){
-  const isFirst=currentStep===1;
+let userName='';
 
-  // Always track the real conversation
+async function sendToAPI(promptText){
   convoHistory.push({role:'user',content:promptText});
 
-  // Build the messages array sent to the API
-  let messages;
-  if(isFirst){
-    // Step 1: just ask one follow-up question
-    messages=[{
-      role:'user',
-      content:'You are whatimado, a sharp and empathetic advisor. Your job is to uncover what this person can realistically do to move forward — including options they may not know exist. Ask ONE short clarifying question to better understand their situation, resources, or what direction they want. Plain text only, no formatting, no lists, 1-2 sentences max.\n\nUser said: '+promptText
-    }];
-  } else {
-    // Step 2: generate JSON ideas using full conversation as context
-    // Build a clean summary of the conversation so far
-    const summary = convoHistory.map(m => (m.role==='user'?'User: ':'Advisor: ')+m.content).join('\n');
-    messages=[{
-      role:'user',
-      content:'You are whatimado. Based on this conversation, generate exactly 3 realistic ideas tailored to this person\'s actual situation, constraints, and hidden strengths. Consider what they may not know is possible. Include skill-building paths, zero-cost business ideas, gig work, and unconventional options if relevant.\n\nConversation:\n'+summary+'\n\nRespond with ONLY a JSON array. No prose. No markdown. No code fences. Start with [ and end with ].\n\nFormat: [{"title":"...","type":"...","tagline":"one sentence description","why":"one sentence why it fits their specific situation"}]'
-    }];
-  }
-
-  try{
-    const res=await fetch('/api/claude',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-5',
-        max_tokens:800,
-        messages
-      })
-    });
-    if(!res.ok)throw new Error('API '+res.status);
-    const data=await res.json();
-    const text=data.content.filter(b=>b.type==='text').map(b=>b.text).join('').trim();
-    convoHistory.push({role:'assistant',content:text});
-
-    if(isFirst){
+  // STEP 1: clarifying question
+  if(currentStep===1){
+    try{
+      const res=await fetch('/api/claude',{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:300,messages:[{
+          role:'user',
+          content:'You are whatimado. Ask ONE short clarifying question about this person to better understand their situation. 1-2 sentences, plain text only, no formatting, no lists.\n\nUser: '+promptText
+        }]})
+      });
+      const data=await res.json();
+      const text=data.content.filter(function(b){return b.type==='text';}).map(function(b){return b.text;}).join('').trim();
+      convoHistory.push({role:'assistant',content:text});
       resolveTyping(text);
       appendReplyInput();
       currentStep=2;
       saveSession();
-    }else{
-      // Robustly extract JSON array even if model adds surrounding text
-      const match=text.match(/\[[\s\S]*\]/);
-      if(!match) throw new Error('No JSON array found in response');
-      const ideas=JSON.parse(match[0]);
-      resolveTyping('Here are your paths. Swipe through and tap one to get the full roadmap.');
-      setTimeout(()=>showNodeIdeas(ideas),900);
+    }catch(err){
+      resolveTyping('Connection issue — try again in a moment.');
+      appendReplyInput();
     }
+    return;
+  }
+
+  // STEP 2: ask for name (no API call needed)
+  if(currentStep===2){
+    var nameQ='May I ask your name?';
+    convoHistory.push({role:'assistant',content:nameQ});
+    resolveTyping(nameQ);
+    appendReplyInput();
+    currentStep=3;
+    saveSession();
+    return;
+  }
+
+  // STEP 3: user gave name, generate ideas
+  userName=promptText.trim().split(/\s+/)[0];
+  var summary=convoHistory.map(function(m){return (m.role==='user'?'User: ':'Advisor: ')+m.content;}).join('\n');
+  try{
+    const res=await fetch('/api/claude',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:800,messages:[{
+        role:'user',
+        content:'You are whatimado. Generate exactly 3 realistic ideas for this person based on their situation, constraints, and hidden strengths. Include skill-building paths, zero-cost ideas, gig work, and unconventional options.\n\nConversation:\n'+summary+'\n\nRespond with ONLY a raw JSON array. No prose. No markdown. No code fences. Start with [ and end with ].\nFormat: [{"title":"...","type":"...","tagline":"one sentence","why":"one sentence why it fits them"}]'
+      }]})
+    });
+    const data=await res.json();
+    const text=data.content.filter(function(b){return b.type==='text';}).map(function(b){return b.text;}).join('').trim();
+    convoHistory.push({role:'assistant',content:text});
+    const match=text.match(/\[[\s\S]*\]/);
+    if(!match)throw new Error('no json');
+    const ideas=JSON.parse(match[0]);
+    const greeting=userName?'Here are your paths, '+userName+'. Swipe through and tap one to get your full roadmap.':'Here are your paths. Swipe through and tap one to get the full roadmap.';
+    resolveTyping(greeting);
+    setTimeout(function(){showNodeIdeas(ideas);},900);
   }catch(err){
     console.error('sendToAPI error:',err);
     resolveTyping('Connection issue — try again in a moment.');
     appendReplyInput();
   }
 }
-
 function appendReplyInput(){
   const chain=document.getElementById('bubble-chain');
   document.querySelector('.chain-reply')?.remove();
@@ -588,6 +605,9 @@ function showNodeIdeas(ideas){
     btn.className='node-bubble';
     btn.innerHTML=`<div class="nb-icon">${ICONS[i%ICONS.length]}</div><div class="nb-type">${esc(idea.type||'Idea')}</div><div class="nb-title">${esc(idea.title)}</div><div class="nb-sub">${esc((idea.tagline||'').substring(0,52))}</div>`;
     btn.onclick=()=>viewJourney(idea.title,idea.type);
+    const delay = i * 0.12;
+    btn.style.animationDelay = delay + 's';
+    btn.classList.add('anim-in');
     rail.appendChild(btn);
   });
   const c=document.createElement('div');c.className='node-connector-h';rail.appendChild(c);
@@ -832,6 +852,12 @@ const WX = {
   current: null,
 
   THEMES: {
+    dawn:      { bg: 'linear-gradient(to bottom, #1a1040 0%, #6b3fa0 25%, #e8826e 55%, #f9c784 80%, #fde9c0 100%)', clouds: 6, cloudOpacity: 0.75, rain: 0, stars: 5,  sun: false, moon: false, badge: '🌅' },
+    morning:   { bg: 'radial-gradient(ellipse at 50% 10%, #5bc8f5 0%, #87d7f7 35%, #c5eaf8 70%, #e8f6fb 100%)',     clouds: 5, cloudOpacity: 0.8,  rain: 0, stars: 0,  sun: true,  moon: false, badge: '🌤️' },
+    midday:    { bg: 'radial-gradient(ellipse at 50% 0%,  #1e90e8 0%, #42aaee 40%, #7dcaf5 75%, #c5e8f8 100%)',    clouds: 4, cloudOpacity: 0.75, rain: 0, stars: 0,  sun: true,  moon: false, badge: '☀️' },
+    afternoon: { bg: 'linear-gradient(to bottom, #3aa8e8 0%, #6dc4ef 35%, #f0c97a 75%, #f5dfa0 100%)',             clouds: 5, cloudOpacity: 0.8,  rain: 0, stars: 0,  sun: true,  moon: false, badge: '🌇' },
+    dusk:      { bg: 'linear-gradient(to bottom, #0d0820 0%, #3d1f6e 20%, #c0405a 50%, #f08060 75%, #f5c090 100%)',clouds: 4, cloudOpacity: 0.6,  rain: 0, stars: 8,  sun: false, moon: false, badge: '🌆' },
+    night:     { bg: 'radial-gradient(ellipse at 50% 20%, #04070f 0%, #0a1230 50%, #101e4a 100%)',                  clouds: 5, cloudOpacity: 0.25, rain: 0, stars: 60, sun: false, moon: true,  badge: '🌙' },
     clear_day:   { bg: 'radial-gradient(ellipse at 50% 20%, #87ceeb 0%, #b8e4f9 45%, #dff0fb 100%)', clouds: 8, cloudOpacity: 0.7, rain: 0, stars: 0, sun: true,  moon: false, badge: '☀️' },
     clear_night: { bg: 'radial-gradient(ellipse at 50% 20%, #04070f 0%, #0a1230 50%, #101e4a 100%)', clouds: 5, cloudOpacity: 0.2, rain: 0, stars: 60, sun: false, moon: true,  badge: '🌙' },
     cloudy_day:  { bg: 'radial-gradient(ellipse at 50% 30%, #a0c4d8 0%, #c5dce8 50%, #dce9f0 100%)', clouds: 12, cloudOpacity: 0.9, rain: 0, stars: 0, sun: false, moon: false, badge: '☁️' },
@@ -857,25 +883,39 @@ const WX = {
     this.canvas.height = window.innerHeight;
   },
 
+  getTimeTheme() {
+    const hr = new Date().getHours();
+    if (hr >= 5  && hr < 7)  return 'dawn';
+    if (hr >= 7  && hr < 11) return 'morning';
+    if (hr >= 11 && hr < 14) return 'midday';
+    if (hr >= 14 && hr < 18) return 'afternoon';
+    if (hr >= 18 && hr < 20) return 'dusk';
+    return 'night';
+  },
+
   async fetchWeather() {
+    // Always apply time-of-day theme immediately — no permissions needed
+    const timePeriod = this.getTimeTheme();
+    this.applyTheme(timePeriod, null);
+
+    // Then try to layer real weather on top if geolocation is available
     try {
       const pos = await new Promise((res, rej) =>
-        navigator.geolocation.getCurrentPosition(res, rej, {timeout: 8000})
+        navigator.geolocation.getCurrentPosition(res, rej, {timeout: 6000})
       );
       const {latitude: lat, longitude: lon} = pos.coords;
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=weather_code,temperature_2m,is_day&timezone=auto`;
+      const url = 'https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&current=weather_code,temperature_2m&timezone=auto';
       const r = await fetch(url);
       const d = await r.json();
       const code = d.current.weather_code;
-      const isDay = d.current.is_day === 1;
-      const temp = Math.round(d.current.temperature_2m);
+      const isDay = (timePeriod !== 'night' && timePeriod !== 'dusk');
+      const tempC = Math.round(d.current.temperature_2m);
+      // Convert to Fahrenheit
+      const tempF = Math.round(tempC * 9/5 + 32);
       const theme = this.codeToTheme(code, isDay);
-      this.applyTheme(theme, temp);
+      this.applyTheme(theme, tempF, true);
     } catch(e) {
-      // No geolocation or network — use time-of-day default
-      const hr = new Date().getHours();
-      const isDay = hr >= 6 && hr < 20;
-      this.applyTheme(isDay ? 'clear_day' : 'clear_night', null);
+      // No geolocation — time-of-day theme already applied, nothing more to do
     }
   },
 
@@ -892,7 +932,7 @@ const WX = {
     return 'clear'+sfx;
   },
 
-  applyTheme(themeKey, temp) {
+  applyTheme(themeKey, temp, isWeatherOverlay) {
     // Toggle night mode class on body
     const isNight = themeKey.includes('night');
     document.body.classList.toggle('night-mode', isNight);
@@ -903,11 +943,16 @@ const WX = {
     const bg = document.getElementById('bg-layer');
     if (bg) bg.style.background = t.bg;
 
-    // Badge
+    // Badge — only show temp if we have real weather data
     const badge = document.getElementById('weather-badge');
-    if (badge && temp !== null) {
-      badge.innerHTML = t.badge + ' ' + temp + '°';
-      badge.classList.add('visible');
+    if (badge) {
+      if (temp !== null) {
+        badge.innerHTML = t.badge + ' ' + temp + '°F';
+        badge.classList.add('visible');
+      } else if (!isWeatherOverlay) {
+        badge.innerHTML = t.badge;
+        badge.classList.add('visible');
+      }
     }
 
     // Clear old particles
