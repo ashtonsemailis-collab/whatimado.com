@@ -88,11 +88,12 @@ nav{display:flex;align-items:center;gap:.25rem}
 .nav-user{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--mid)}
 
 /* MAIN SCREENS */
-.screen{position:relative;z-index:10;display:none;min-height:100vh;padding-top:56px}
+.screen{position:relative;z-index:10;display:none!important;min-height:100vh;padding-top:56px}
+.screen.active{display:block!important}
 .screen.active{display:block}
 
 /* LANDING */
-#screen-main{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding-top:56px}
+#screen-main.active{display:flex!important;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding-top:56px}
 .hero-wrap{max-width:520px;width:100%;padding:1.25rem 2rem 1.5rem;position:relative;z-index:10;text-align:left}
 .hero-chip{display:inline-flex;align-items:center;gap:.4rem;background:rgba(144,212,255,0.12);border:1.5px solid rgba(144,212,255,0.4);border-radius:100px;padding:.35rem .95rem;margin-bottom:1rem;animation:fadeUp .5s ease .1s both;box-shadow:0 0 12px rgba(144,212,255,0.15)}
 .hero-chip-dot{width:6px;height:6px;border-radius:50%;background:#90d4ff;box-shadow:0 0 8px rgba(144,212,255,0.8)}
@@ -117,7 +118,7 @@ nav{display:flex;align-items:center;gap:.25rem}
 .pill:hover{border-color:rgba(26,106,191,0.6);color:#fff;background:rgba(26,106,191,0.8)}
 
 /* CONVO THREAD */
-#screen-convo{padding-top:56px;display:flex;flex-direction:column;min-height:100vh}
+#screen-convo.active{display:flex!important;flex-direction:column;min-height:100vh;padding-top:56px}
 .convo-wrap{max-width:600px;width:100%;margin:0 auto;padding:1.5rem 1.5rem 0;flex:1;display:flex;flex-direction:column;justify-content:flex-end}
 .bubble-pair{display:flex;flex-direction:column;gap:.75rem;margin-bottom:.75rem}
 #bubble-chain{padding-bottom:120px}
