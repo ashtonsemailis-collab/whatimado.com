@@ -595,6 +595,39 @@
       margin-top: 1.25rem;
     }
 
+    .more-ideas-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 1.5rem;
+      padding-bottom: .5rem;
+    }
+
+    .more-ideas-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .45rem;
+      min-height: 42px;
+      border: 1px solid rgba(124, 111, 205, .45);
+      border-radius: 10px;
+      padding: .65rem 1.35rem;
+      color: #fff;
+      background: var(--purple);
+      font-size: .83rem;
+      font-weight: 700;
+      transition: .16s ease;
+    }
+
+    .more-ideas-btn:hover:not(:disabled) {
+      background: var(--purple-2);
+      transform: translateY(-1px);
+    }
+
+    .more-ideas-btn:disabled {
+      opacity: .65;
+      cursor: wait;
+    }
+
     .opp-card,
     .stage-card,
     .momentum-card,
@@ -1275,6 +1308,10 @@
         </div>
 
         <div class="opp-grid" id="opp-grid"></div>
+
+        <div class="more-ideas-wrap">
+          <button class="more-ideas-btn" id="more-ideas-btn" type="button">Show me more paths</button>
+        </div>
       </div>
     </section>
 
@@ -1512,6 +1549,55 @@
       }
     }
 
+    function getConversationSummary() {
+      return state.history.map((entry) => `${entry.role === "user" ? "User" : "Advisor"}: ${entry.content}`).join("\n");
+    }
+
+    function buildIdeasPrompt(summary, count, excludeTitles = []) {
+      const excludeBlock = excludeTitles.length
+        ? `\n\nDO NOT repeat or closely resemble these ideas already shown:\n${excludeTitles.map((title) => `- ${title}`).join("\n")}\n\nGenerate exactly ${count} completely NEW and different ideas that are SPECIFIC to this person`
+        : `\n\nGenerate exactly ${count} ideas that are SPECIFIC to this person`;
+
+      return (
+        "You are whatimado, a practical possibility advisor. Read this entire conversation carefully.\n\nConversation:\n" +
+        summary +
+        excludeBlock +
+        " — reference their actual skills, interests, constraints, and situation by name. Do NOT suggest generic paths like \"start a business\" or \"learn to code\" unless you tie them directly to what they said.\n\nEach idea should be something they could realistically start given their stated resources. Include a mix when appropriate: zero-cost options, skill-building paths, gig/local work, or unconventional paths — but only if they fit THIS person.\n\nBAD: \"Freelance web developer\" (too generic)\nGOOD: \"Weekend furniture refinishing side gig — you mentioned loving hands-on work and having a garage; start by fixing one thrift-store piece and listing it on Facebook Marketplace\"\n\nRespond only with a raw JSON array: [{\"title\":\"...\",\"type\":\"...\",\"tagline\":\"one specific sentence\",\"why\":\"one sentence referencing what THEY said\",\"cost\":\"e.g. $0\",\"timeline\":\"e.g. 2-4 weeks\",\"income\":\"e.g. $500-1500/mo\"}]"
+      );
+    }
+
+    async function fetchMoreIdeas() {
+      const button = $("#more-ideas-btn");
+      if (!button || button.disabled) return;
+
+      button.disabled = true;
+      const label = button.textContent;
+      button.textContent = "Finding more paths...";
+
+      const summary = getConversationSummary();
+      const existingTitles = state.ideas.map((idea) => idea.title);
+      const response = await callAdvisor(buildIdeasPrompt(summary, 3, existingTitles), 900);
+      const seen = new Set(existingTitles.map((title) => title.toLowerCase()));
+      const newIdeas = extractJsonArray(response, []).filter(
+        (idea) => idea.title && !seen.has(idea.title.toLowerCase())
+      );
+
+      if (!newIdeas.length) {
+        button.textContent = "Couldn't find new paths — try again";
+        setTimeout(() => {
+          button.textContent = label;
+          button.disabled = false;
+        }, 2200);
+        return;
+      }
+
+      state.ideas = [...state.ideas, ...newIdeas];
+      buildOpportunityMap(state.ideas);
+      button.textContent = label;
+      button.disabled = false;
+      setTimeout(() => $("#opp-grid")?.lastElementChild?.scrollIntoView({ behavior: "smooth", block: "nearest" }), 120);
+    }
+
     async function startFlow() {
       const text = $("#main-input").value.trim();
       if (!text) return;
@@ -1547,13 +1633,8 @@
       }
 
       showReplyBox(false);
-      const summary = state.history.map((entry) => `${entry.role === "user" ? "User" : "Advisor"}: ${entry.content}`).join("\n");
-      const response = await callAdvisor(
-        'You are whatimado, a practical possibility advisor. Read this entire conversation carefully.\n\nConversation:\n' +
-          summary +
-          '\n\nGenerate exactly 3 ideas that are SPECIFIC to this person — reference their actual skills, interests, constraints, and situation by name. Do NOT suggest generic paths like "start a business" or "learn to code" unless you tie them directly to what they said.\n\nEach idea should be something they could realistically start given their stated resources. Include a mix when appropriate: zero-cost options, skill-building paths, gig/local work, or unconventional paths — but only if they fit THIS person.\n\nBAD: "Freelance web developer" (too generic)\nGOOD: "Weekend furniture refinishing side gig — you mentioned loving hands-on work and having a garage; start by fixing one thrift-store piece and listing it on Facebook Marketplace"\n\nRespond only with a raw JSON array: [{"title":"...","type":"...","tagline":"one specific sentence","why":"one sentence referencing what THEY said","cost":"e.g. $0","timeline":"e.g. 2-4 weeks","income":"e.g. $500-1500/mo"}]',
-        900
-      );
+      const summary = getConversationSummary();
+      const response = await callAdvisor(buildIdeasPrompt(summary, 3), 900);
 
       state.ideas = extractJsonArray(response, fallbackIdeas);
       resolveTyping("Here are your paths. Tap any opportunity to see your full roadmap.");
@@ -1770,6 +1851,11 @@
       $("#bubble-chain").innerHTML = "";
       $("#nav-map-btn").hidden = true;
       $("#nav-roadmap-btn").hidden = true;
+      const moreBtn = $("#more-ideas-btn");
+      if (moreBtn) {
+        moreBtn.disabled = false;
+        moreBtn.textContent = "Show me more paths";
+      }
       showReplyBox(false);
       showScreen("main");
     }
@@ -1927,6 +2013,7 @@
       });
 
       $("#reset-btn").addEventListener("click", resetAll);
+      $("#more-ideas-btn").addEventListener("click", fetchMoreIdeas);
       $("#auth-close-btn").addEventListener("click", closeAuth);
       $("#auth-overlay").addEventListener("click", (event) => {
         if (event.target.id === "auth-overlay") closeAuth();
