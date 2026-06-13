@@ -170,8 +170,29 @@ nav{display:flex;align-items:center;gap:.25rem}
 .roadmap-layout{display:grid;grid-template-columns:1fr 280px;gap:1.5rem;max-width:1000px;margin:0 auto;padding:2rem 1.5rem 6rem;align-items:start}
 .roadmap-main{min-width:0}
 .roadmap-side{position:sticky;top:76px}
-.progress-map{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:1.25rem;box-shadow:var(--shadow-md)}
-.progress-map-title{font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--mid);margin-bottom:1rem}
+
+/* PROGRESS MAP — vertical chain style */
+.progress-map{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:1.25rem;box-shadow:var(--shadow-md);min-height:200px}
+.progress-map-title{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mid);margin-bottom:1.25rem;display:flex;align-items:center;justify-content:space-between}
+.progress-map-pct{font-size:.82rem;font-weight:700;color:var(--purple2)}
+.pm-chain{display:flex;flex-direction:column;gap:0}
+.pm-stage{display:flex;align-items:flex-start;gap:.875rem;position:relative;padding-bottom:1.25rem}
+.pm-stage:last-child{padding-bottom:0}
+.pm-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.pm-node{width:32px;height:32px;border-radius:50%;border:2px solid rgba(120,130,200,0.3);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:var(--mid);transition:all .4s ease;flex-shrink:0}
+.pm-node.active{border-color:var(--purple);color:var(--purple2);background:rgba(124,111,205,0.1);box-shadow:0 0 12px rgba(124,111,205,0.3)}
+.pm-node.done{background:linear-gradient(135deg,var(--purple),var(--teal));border-color:transparent;color:#fff;box-shadow:0 0 16px rgba(124,111,205,0.4)}
+.pm-line{width:2px;flex:1;min-height:20px;background:rgba(120,130,200,0.15);margin-top:3px;border-radius:2px;transition:background .4s ease}
+.pm-line.done{background:linear-gradient(to bottom,var(--purple),var(--teal))}
+.pm-right{flex:1;padding-top:.3rem}
+.pm-stage-name{font-size:.82rem;font-weight:700;color:var(--ink2);margin-bottom:.15rem;transition:color .3s}
+.pm-stage-name.active{color:var(--purple2)}
+.pm-stage-name.done{color:var(--ink)}
+.pm-stage-desc{font-size:.72rem;color:var(--faint);line-height:1.4}
+.pm-stage-tasks{font-size:.7rem;color:var(--mid);margin-top:.2rem}
+.pm-footer{margin-top:1rem;padding-top:.875rem;border-top:1px solid var(--line);display:flex;align-items:center;gap:.4rem;font-size:.78rem;font-weight:600}
+.pm-footer-icon{font-size:.9rem}
+
 #progress-svg{width:100%;height:260px}
 @media(max-width:768px){.roadmap-layout{grid-template-columns:1fr}.roadmap-side{display:none}}
 .roadmap-wrap{max-width:680px;margin:0 auto;padding:2rem 1.5rem 6rem}
@@ -286,6 +307,12 @@ nav{display:flex;align-items:center;gap:.25rem}
 .map-title{color:#e8f2ff}
 .map-sub{color:#a8c4e8}
 .progress-map-title{color:#7aa8d8}
+
+/* ROADMAP LOADING SPINNER */
+.roadmap-spinner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;padding:3rem 0}
+.spinner-ring{width:48px;height:48px;border:3px solid rgba(124,111,205,0.15);border-top-color:var(--purple);border-radius:50%;animation:spinRing 0.8s linear infinite}
+@keyframes spinRing{to{transform:rotate(360deg)}}
+.spinner-text{font-size:.82rem;color:var(--mid);font-weight:500;letter-spacing:.02em}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 @keyframes nodeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
@@ -389,17 +416,13 @@ nav{display:flex;align-items:center;gap:.25rem}
       </div>
       <button class="map-back" onclick="resetAll()">Start over</button>
     </div>
-    <!-- SVG network map -->
-    <div class="map-svg-wrap">
-      <svg id="opportunity-svg" viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
+    <!-- SVG network map with split panel -->
+    <div class="map-svg-wrap" style="display:grid;grid-template-columns:1fr 1px 240px;min-height:420px">
+      <svg id="opportunity-svg" viewBox="0 0 560 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:420px">
         <defs>
           <radialGradient id="userGrad" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stop-color="#9b8fe0"/>
             <stop offset="100%" stop-color="#7c6fcd"/>
-          </radialGradient>
-          <radialGradient id="oppGrad" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#e8797f"/>
-            <stop offset="100%" stop-color="#e06c75"/>
           </radialGradient>
           <filter id="glow">
             <feGaussianBlur stdDeviation="3" result="blur"/>
@@ -409,6 +432,8 @@ nav{display:flex;align-items:center;gap:.25rem}
         <g id="svg-connections"></g>
         <g id="svg-nodes"></g>
       </svg>
+      <div style="background:rgba(120,130,200,0.12);width:1px;align-self:stretch"></div>
+      <div id="opp-labels-panel" style="padding:1.25rem;display:flex;flex-direction:column;gap:.875rem;justify-content:center;overflow-y:auto"></div>
     </div>
     <div class="opp-grid" id="opp-grid"></div>
   </div>
@@ -452,14 +477,9 @@ nav{display:flex;align-items:center;gap:.25rem}
   </div>
   <div class="roadmap-side">
     <div class="progress-map">
-      <div class="progress-map-title">Progress Map</div>
-      <svg id="progress-svg" viewBox="0 0 240 260" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="pglow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#7c6fcd" stop-opacity=".8"/><stop offset="100%" stop-color="#7c6fcd" stop-opacity="0"/></radialGradient>
-        </defs>
-        <g id="pnodes"></g>
-        <g id="plines"></g>
-      </svg>
+      <div class="progress-map-title">Progress Map <span class="progress-map-pct" id="pm-pct">0%</span></div>
+      <div class="pm-chain" id="pm-chain"></div>
+      <div class="pm-footer" id="pm-footer" style="display:none"><span class="pm-footer-icon">✦</span><span id="pm-footer-text" style="color:var(--purple2)">Keep going!</span></div>
     </div>
   </div>
   </div>
@@ -694,7 +714,7 @@ function submitReply(){
   addTyping();
   sendToAPI(text);
 }
-function scrollBottom(){setTimeout(()=>{const c=document.getElementById('bubble-chain');if(c&&c.lastElementChild)c.lastElementChild.scrollIntoView({behavior:'smooth',block:'end'});},120);}
+function scrollBottom(){setTimeout(()=>{window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});const c=document.getElementById('bubble-chain');if(c&&c.lastElementChild)c.lastElementChild.scrollIntoView({behavior:'smooth',block:'nearest'});},150);}
 
 // ── OPPORTUNITY MAP ──
 const OPP_COLORS=['#e06c75','#4ecdc4','#f7c948','#52c47a','#9b8fe0'];
@@ -704,7 +724,7 @@ function buildOpportunityMap(ideas){
   const conns=document.getElementById('svg-connections');
   nodes.innerHTML='';conns.innerHTML='';
 
-  const cx=400,cy=210,userR=40,oppR=32;
+  const cx=280,cy=210,userR=40,oppR=32;
 
   // User center node
   const userG=document.createElementNS('http://www.w3.org/2000/svg','g');
@@ -720,8 +740,8 @@ function buildOpportunityMap(ideas){
   nodes.appendChild(userG);
 
   // Opportunity nodes
-  const angles=[-110,-50,10,60,115];
-  const dist=175;
+  const angles=[-100,-35,30,95,160];
+  const dist=160;
   ideas.forEach(function(idea,i){
     var angle=(angles[i]||i*72-90)*(Math.PI/180);
     var nx=cx+Math.cos(angle)*dist;
@@ -780,6 +800,26 @@ function buildOpportunityMap(ideas){
     nodes.appendChild(g);
   });
 
+  // Fill labels panel
+  const labelsPanel=document.getElementById('opp-labels-panel');
+  if(labelsPanel){
+    labelsPanel.innerHTML='';
+    ideas.forEach(function(idea,i){
+      var color=OPP_COLORS[i%OPP_COLORS.length];
+      var item=document.createElement('div');
+      item.style.cssText='cursor:pointer;padding:.6rem .75rem;border-radius:10px;border:1px solid '+color.replace(')',',0.25)').replace('rgb','rgba')+';transition:all .18s;';
+      item.innerHTML='<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.25rem">'
+        +'<div style="width:20px;height:20px;border-radius:50%;border:1.5px solid '+color+';display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:'+color+'">'+(i+1)+'</div>'
+        +'<div style="font-size:.78rem;font-weight:700;color:#c8deff">'+esc(idea.title)+'</div>'
+        +'</div>'
+        +'<div style="font-size:.7rem;color:rgba(168,196,232,0.75);line-height:1.4">'+esc(idea.type||'')+'</div>';
+      item.onmouseenter=function(){item.style.background='rgba(124,111,205,0.08)';}
+      item.onmouseleave=function(){item.style.background='';}
+      item.onclick=function(){viewJourney(idea.title,idea.type,i);}
+      labelsPanel.appendChild(item);
+    });
+  }
+
   // Opportunity cards
   const grid=document.getElementById('opp-grid');
   grid.innerHTML='';
@@ -820,7 +860,7 @@ function viewJourney(title,type,idx){
   document.getElementById('rm-title').textContent=title;
   document.getElementById('rm-sub').textContent='Building your personalised roadmap…';
   document.getElementById('momentum-card').style.display='none';
-  document.getElementById('stages-list').innerHTML='<div style="padding:2rem;text-align:center;color:var(--mid);display:flex;align-items:center;justify-content:center;gap:.5rem"><div class="typing-dots"><span></span><span></span><span></span></div></div>';
+  document.getElementById('stages-list').innerHTML='<div class="roadmap-spinner"><div class="spinner-ring"></div><div class="spinner-text">Building your personalised roadmap…</div></div>';
   const ctx=convoHistory.map(m=>(m.role==='user'?'User: ':'Advisor: ')+m.content).join('\n');
   fetch('/api/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:1200,messages:[{role:'user',content:'You are whatimado. Generate a 4-stage roadmap for someone pursuing "'+title+'". Make every task specific and realistic for their actual situation.\n\nUser context:\n'+ctx+'\n\nRespond ONLY with a raw JSON array. No prose. No markdown. Start with [ end with ].\n[{"label":"Stage Name","desc":"one sentence","tasks":["task1","task2","task3"]}]'}]})})
   .then(r=>r.json())
@@ -1195,126 +1235,112 @@ function runLoader(){
 }
 
 
-// ── NODE PROGRESS MAP ──
-var progressNodes=[];
-var progressTasks=[];
+// ── PROGRESS MAP ──
+var pmStages=[];
 
 function initProgressMap(stages){
-  const svg=document.getElementById('progress-svg');
-  if(!svg)return;
-  const pnodes=document.getElementById('pnodes');
-  const plines=document.getElementById('plines');
-  if(!pnodes||!plines)return;
-  pnodes.innerHTML='';plines.innerHTML='';
-  progressNodes=[];progressTasks=[];
-
-  const STAGE_COLORS=['#7c6fcd','#4ecdc4','#f7c948','#52c47a'];
-  const cx=120;
-  const stagePositions=[
-    {x:120,y:30},{x:190,y:95},{x:120,y:160},{x:50,y:225}
-  ];
+  pmStages=stages;
+  var chain=document.getElementById('pm-chain');
+  var footer=document.getElementById('pm-footer');
+  if(!chain)return;
+  chain.innerHTML='';
+  if(footer)footer.style.display='none';
 
   stages.forEach(function(s,si){
-    var pos=stagePositions[si]||{x:120,y:30+si*65};
-    var color=STAGE_COLORS[si%STAGE_COLORS.length];
-
-    // Line from prev stage
-    if(si>0){
-      var prev=stagePositions[si-1]||{x:120,y:30+(si-1)*65};
-      var line=document.createElementNS('http://www.w3.org/2000/svg','line');
-      line.setAttribute('x1',prev.x);line.setAttribute('y1',prev.y);
-      line.setAttribute('x2',pos.x);line.setAttribute('y2',pos.y);
-      line.setAttribute('stroke','rgba(120,130,200,0.2)');line.setAttribute('stroke-width','1.5');
-      line.setAttribute('stroke-dasharray','4 4');
-      line.setAttribute('id','pline-'+si);
-      plines.appendChild(line);
-    }
-
-    // Stage node
-    var g=document.createElementNS('http://www.w3.org/2000/svg','g');
-    var circle=document.createElementNS('http://www.w3.org/2000/svg','circle');
-    circle.setAttribute('cx',pos.x);circle.setAttribute('cy',pos.y);circle.setAttribute('r','18');
-    circle.setAttribute('fill','rgba(22,25,41,1)');
-    circle.setAttribute('stroke',color);circle.setAttribute('stroke-width','1.5');
-    circle.setAttribute('stroke-opacity','0.4');circle.setAttribute('id','pstage-'+si);
-    var txt=document.createElementNS('http://www.w3.org/2000/svg','text');
-    txt.setAttribute('x',pos.x);txt.setAttribute('y',pos.y+4);txt.setAttribute('text-anchor','middle');
-    txt.setAttribute('fill',color);txt.setAttribute('font-size','10');txt.setAttribute('font-weight','700');
-    txt.setAttribute('fill-opacity','0.5');txt.setAttribute('id','ptxt-'+si);
-    txt.textContent=si+1;
-    var label=document.createElementNS('http://www.w3.org/2000/svg','text');
-    label.setAttribute('x',pos.x+(si%2===0?25:-25));label.setAttribute('y',pos.y+4);
-    label.setAttribute('text-anchor',si%2===0?'start':'end');
-    label.setAttribute('fill','rgba(120,130,200,0.6)');label.setAttribute('font-size','8');
-    label.textContent=(s.label||'').substring(0,14);
-    g.appendChild(circle);g.appendChild(txt);g.appendChild(label);
-    pnodes.appendChild(g);
-    progressNodes.push({pos,color,si,taskCount:s.tasks?s.tasks.length:0,tasksDone:0});
-
-    // Task satellite nodes
-    (s.tasks||[]).forEach(function(t,ti){
-      var angle=(-60+ti*60)*(Math.PI/180);
-      var dist=38;
-      var tx=pos.x+Math.cos(angle)*dist;
-      var ty=pos.y+Math.sin(angle)*dist;
-      var tline=document.createElementNS('http://www.w3.org/2000/svg','line');
-      tline.setAttribute('x1',pos.x);tline.setAttribute('y1',pos.y);
-      tline.setAttribute('x2',tx);tline.setAttribute('y2',ty);
-      tline.setAttribute('stroke','rgba(120,130,200,0.15)');tline.setAttribute('stroke-width','1');
-      tline.setAttribute('id','ptline-'+si+'-'+ti);
-      plines.appendChild(tline);
-      var tc=document.createElementNS('http://www.w3.org/2000/svg','circle');
-      tc.setAttribute('cx',tx);tc.setAttribute('cy',ty);tc.setAttribute('r','5');
-      tc.setAttribute('fill','rgba(22,25,41,1)');
-      tc.setAttribute('stroke',color);tc.setAttribute('stroke-width','1');
-      tc.setAttribute('stroke-opacity','0.25');tc.setAttribute('id','ptask-'+si+'-'+ti);
-      pnodes.appendChild(tc);
-      progressTasks.push({si,ti,x:tx,y:ty,color,done:false});
-    });
+    var isLast=si===stages.length-1;
+    var div=document.createElement('div');
+    div.className='pm-stage';
+    div.innerHTML='<div class="pm-left">'
+      +'<div class="pm-node" id="pmnode-'+si+'">'+( si+1)+'</div>'
+      +(!isLast?'<div class="pm-line" id="pmline-'+si+'"></div>':'')
+      +'</div>'
+      +'<div class="pm-right">'
+      +'<div class="pm-stage-name" id="pmname-'+si+'">'+esc(s.label||'Stage '+(si+1))+'</div>'
+      +'<div class="pm-stage-desc">'+esc(s.desc||'')+'</div>'
+      +'<div class="pm-stage-tasks" id="pmtasks-'+si+'">0 / '+(s.tasks?s.tasks.length:0)+' tasks</div>'
+      +'</div>';
+    chain.appendChild(div);
   });
+  updateProgressMap();
 }
 
 function updateProgressMap(){
-  var checks=document.querySelectorAll('.task-check');
-  var taskIdx=0;
-  progressTasks.forEach(function(pt){
-    var check=checks[taskIdx];
-    if(!check)return;
-    var isDone=check.checked;
-    var tc=document.getElementById('ptask-'+pt.si+'-'+pt.ti);
-    if(tc){
-      if(isDone){
-        tc.setAttribute('fill',pt.color);
-        tc.setAttribute('stroke-opacity','1');
-        tc.setAttribute('r','6');
-        var pline=document.getElementById('ptline-'+pt.si+'-'+pt.ti);
-        if(pline){pline.setAttribute('stroke',pt.color);pline.setAttribute('stroke-opacity','0.5');}
-      } else {
-        tc.setAttribute('fill','rgba(22,25,41,1)');
-        tc.setAttribute('stroke-opacity','0.25');
-        tc.setAttribute('r','5');
-      }
+  var checks=[...document.querySelectorAll('.task-check')];
+  var total=checks.length;
+  var totalDone=checks.filter(function(c){return c.checked;}).length;
+  var pct=total?Math.round(totalDone/total*100):0;
+
+  // Update pct display
+  var pctEl=document.getElementById('pm-pct');
+  if(pctEl)pctEl.textContent=pct+'%';
+
+  // Also update momentum ring
+  var ring=document.getElementById('momentum-ring');
+  var circ=163;
+  if(ring)ring.setAttribute('stroke-dashoffset',circ-(circ*pct/100));
+  var mpct=document.getElementById('momentum-pct');
+  if(mpct)mpct.textContent=pct+'%';
+  document.getElementById('stat-done')&&(document.getElementById('stat-done').textContent=totalDone);
+  document.getElementById('stat-total')&&(document.getElementById('stat-total').textContent=total);
+
+  // Per-stage task tracking
+  var taskOffset=0;
+  pmStages.forEach(function(s,si){
+    var stageCount=s.tasks?s.tasks.length:0;
+    var stageDone=0;
+    for(var i=taskOffset;i<taskOffset+stageCount;i++){
+      if(checks[i]&&checks[i].checked)stageDone++;
     }
-    taskIdx++;
-    pt.done=isDone;
+    taskOffset+=stageCount;
+    var allDone=stageCount>0&&stageDone===stageCount;
+    var anyDone=stageDone>0;
+
+    var node=document.getElementById('pmnode-'+si);
+    var name=document.getElementById('pmname-'+si);
+    var line=document.getElementById('pmline-'+si);
+    var tasksEl=document.getElementById('pmtasks-'+si);
+
+    if(node){
+      node.className='pm-node'+(allDone?' done':anyDone?' active':'');
+    }
+    if(name){
+      name.className='pm-stage-name'+(allDone?' done':anyDone?' active':'');
+    }
+    if(line){
+      line.className='pm-line'+(allDone?' done':'');
+    }
+    if(tasksEl){
+      tasksEl.textContent=stageDone+' / '+stageCount+' tasks';
+    }
   });
 
-  // Check if whole stage done — illuminate stage node
-  progressNodes.forEach(function(pn){
-    var stageTasks=progressTasks.filter(function(pt){return pt.si===pn.si;});
-    var allDone=stageTasks.length>0&&stageTasks.every(function(pt){return pt.done;});
-    var stageCircle=document.getElementById('pstage-'+pn.si);
-    var stageTxt=document.getElementById('ptxt-'+pn.si);
-    if(stageCircle){
-      stageCircle.setAttribute('fill',allDone?pn.color:'rgba(22,25,41,1)');
-      stageCircle.setAttribute('stroke-opacity',allDone?'1':'0.4');
-    }
-    if(stageTxt){stageTxt.setAttribute('fill-opacity',allDone?'1':'0.5');stageTxt.setAttribute('fill',allDone?'#fff':pn.color);}
-    if(allDone){
-      var pline=document.getElementById('pline-'+pn.si);
-      if(pline){pline.setAttribute('stroke',pn.color);pline.setAttribute('stroke-opacity','0.6');pline.setAttribute('stroke-dasharray','none');}
-    }
-  });
+  // Footer message
+  var footer=document.getElementById('pm-footer');
+  var footerText=document.getElementById('pm-footer-text');
+  if(footer&&footerText){
+    footer.style.display='flex';
+    var msgs=[
+      {t:'Keep going!',c:'var(--mid)'},
+      {t:'Great start!',c:'var(--teal)'},
+      {t:'Momentum building!',c:'var(--teal)'},
+      {t:'Almost there!',c:'var(--purple2)'},
+      {t:'Path complete! 🎉',c:'var(--gold)'}
+    ];
+    var idx=pct===100?4:pct>=75?3:pct>=50?2:pct>=25?1:0;
+    footerText.textContent=msgs[idx].t;
+    footerText.style.color=msgs[idx].c;
+  }
+
+  // Also update momentum status
+  var status=document.getElementById('momentum-status');
+  if(status){
+    if(pct===0)status.textContent='Check off tasks to build momentum';
+    else if(pct<25)status.textContent="You've started — keep going!";
+    else if(pct<50)status.textContent='Good progress. Stay consistent.';
+    else if(pct<75)status.textContent="You're more than halfway there!";
+    else if(pct<100)status.textContent='Almost done. Finish strong.';
+    else status.textContent='Path complete!';
+  }
 }
 
 // ── UTILS ──
