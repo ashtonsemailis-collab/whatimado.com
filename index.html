@@ -1,315 +1,1935 @@
-/* cyrillic-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2JL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2ZL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+1F00-1FFF;
-}
-/* greek */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2JL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2ZL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+1F00-1FFF;
-}
-/* greek */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2JL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2ZL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+1F00-1FFF;
-}
-/* greek */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2JL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2ZL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+1F00-1FFF;
-}
-/* greek */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2JL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2ZL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+1F00-1FFF;
-}
-/* greek */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7W0Q5n-wU.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>whatimado.com | Let us help figure out what ya gonna do</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #07080f;
+      --bg-soft: #0d0f1a;
+      --surface: #161929;
+      --surface-2: #1e2235;
+      --surface-3: #252840;
+      --ink: #f0f2ff;
+      --ink-muted: #c8ccee;
+      --muted: #7b82b0;
+      --line: rgba(120, 130, 200, .16);
+      --purple: #7c6fcd;
+      --purple-2: #9b8fe0;
+      --teal: #4ecdc4;
+      --gold: #f7c948;
+      --green: #52c47a;
+      --rose: #e06c75;
+      --shadow: 0 18px 60px rgba(0, 0, 0, .42);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+    }
+
+    html {
+      min-height: 100%;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 22% 20%, rgba(78, 205, 196, .18), transparent 30rem),
+        radial-gradient(circle at 78% 16%, rgba(124, 111, 205, .22), transparent 34rem),
+        linear-gradient(145deg, #071027 0%, #08111f 48%, #10202a 100%);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      min-height: 100%;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    button, textarea, input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    #network-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: .18;
+    }
+
+    .app-header {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 20;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0 1.5rem;
+      background: rgba(7, 8, 15, .72);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, var(--purple), var(--teal));
+    }
+
+    .logo-icon svg {
+      width: 15px;
+      height: 15px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+
+    .logo-text {
+      font-size: .95rem;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+
+    .logo-text span {
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: .25rem;
+    }
+
+    .nav-btn {
+      border: 0;
+      border-radius: var(--radius-sm);
+      padding: .4rem .75rem;
+      color: var(--muted);
+      background: transparent;
+      font-size: .8rem;
+      font-weight: 600;
+      transition: .16s ease;
+    }
+
+    .nav-btn:hover,
+    .nav-btn.active {
+      color: var(--ink);
+      background: var(--surface-2);
+    }
+
+    .nav-btn.primary {
+      color: #fff;
+      background: var(--purple);
+    }
+
+    .nav-btn.primary:hover {
+      background: var(--purple-2);
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 18px;
+      margin: 0 .2rem;
+      background: var(--line);
+    }
+
+    .nav-user {
+      display: none;
+      align-items: center;
+      gap: .5rem;
+      color: var(--muted);
+      font-size: .8rem;
+    }
+
+    .screen {
+      position: relative;
+      z-index: 1;
+      display: none;
+      min-height: 100vh;
+      padding-top: 56px;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    #screen-main.active {
+      display: grid;
+      place-items: center;
+    }
+
+    .hero {
+      width: min(100%, 580px);
+      padding: 3rem 1.5rem;
+    }
+
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      margin-bottom: 1rem;
+      padding: .4rem .9rem;
+      border: 1px solid rgba(144, 212, 255, .42);
+      border-radius: 999px;
+      color: #90d4ff;
+      background: rgba(144, 212, 255, .12);
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .hero-chip::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 10px currentColor;
+    }
+
+    .hero h1 {
+      margin: 0 0 .9rem;
+      color: #e8f4ff;
+      font-size: clamp(2rem, 7vw, 3rem);
+      line-height: 1.05;
+      letter-spacing: -.03em;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: #c8e6ff;
+      font-weight: 500;
+    }
+
+    .hero h1 em {
+      color: #90d4ff;
+      font-style: normal;
+    }
+
+    .hero-copy {
+      max-width: 440px;
+      margin: 0 0 1.35rem;
+      color: rgba(210, 232, 255, .88);
+      line-height: 1.55;
+    }
+
+    .prompt-box {
+      overflow: hidden;
+      border: 1px solid rgba(144, 212, 255, .4);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, .96);
+      box-shadow: var(--shadow);
+    }
+
+    .prompt-box:focus-within {
+      border-color: rgba(26, 106, 191, .55);
+      box-shadow: 0 0 0 3px rgba(144, 212, 255, .15), var(--shadow);
+    }
+
+    .prompt-textarea {
+      width: 100%;
+      min-height: 96px;
+      resize: none;
+      border: 0;
+      outline: 0;
+      padding: 1.1rem 1.25rem;
+      color: #0d1e3a;
+      background: transparent;
+      line-height: 1.5;
+    }
+
+    .prompt-textarea::placeholder {
+      color: #6a9abf;
+    }
+
+    .prompt-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .75rem;
+      padding: .7rem .75rem .7rem 1.25rem;
+      border-top: 1px solid rgba(26, 106, 191, .12);
+    }
+
+    .hint {
+      color: #5a8aaa;
+      font-size: .72rem;
+      font-weight: 600;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .4rem;
+      min-height: 38px;
+      border: 0;
+      border-radius: 10px;
+      padding: .6rem 1rem;
+      color: #fff;
+      background: #1a6abf;
+      font-size: .83rem;
+      font-weight: 700;
+      transition: .16s ease;
+    }
+
+    .action-btn:hover {
+      background: #2278d0;
+      transform: translateY(-1px);
+    }
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+      margin-top: .85rem;
+    }
+
+    .pill {
+      border: 1px solid rgba(144, 212, 255, .35);
+      border-radius: 999px;
+      padding: .4rem .9rem;
+      color: #0d2a4a;
+      background: rgba(144, 212, 255, .78);
+      font-size: .72rem;
+      font-weight: 800;
+    }
+
+    .pill:hover {
+      color: #fff;
+      background: rgba(26, 106, 191, .82);
+    }
+
+    #screen-convo.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .conversation {
+      width: min(100%, 650px);
+      margin: 0 auto;
+      padding: 1.5rem 1.5rem 8rem;
+      flex: 1;
+    }
+
+    .bubble-pair {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      margin-bottom: .85rem;
+    }
+
+    .bubble-user,
+    .bubble-ai {
+      display: flex;
+    }
+
+    .bubble-user {
+      justify-content: flex-end;
+    }
+
+    .bubble-ai {
+      justify-content: flex-start;
+    }
+
+    .bubble {
+      max-width: min(78%, 460px);
+      padding: .85rem 1rem;
+      border-radius: var(--radius-md);
+      font-size: .9rem;
+      line-height: 1.52;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, .28);
+    }
+
+    .bubble.user {
+      color: #fff;
+      background: var(--purple);
+      border-top-right-radius: 6px;
+    }
+
+    .bubble.ai {
+      color: #d0e8ff;
+      background: var(--surface-2);
+      border: 1px solid rgba(124, 111, 205, .22);
+      border-top-left-radius: 6px;
+    }
+
+    .ai-label {
+      margin: 0 0 .35rem;
+      color: var(--purple-2);
+      font-size: .65rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .typing-dots {
+      display: flex;
+      gap: 4px;
+      padding: .25rem 0;
+    }
+
+    .typing-dots span {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--purple);
+      animation: typing 1.2s infinite ease;
+    }
+
+    .typing-dots span:nth-child(2) {
+      animation-delay: .16s;
+    }
+
+    .typing-dots span:nth-child(3) {
+      animation-delay: .32s;
+    }
+
+    .reply-box {
+      position: fixed;
+      left: 50%;
+      bottom: 1.5rem;
+      z-index: 10;
+      width: min(calc(100% - 2rem), 620px);
+      display: none;
+      transform: translateX(-50%);
+      padding: .85rem;
+      border: 1px solid rgba(124, 111, 205, .35);
+      border-radius: var(--radius-lg);
+      background: rgba(22, 25, 41, .96);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .reply-inner {
+      display: flex;
+      align-items: flex-end;
+      gap: .65rem;
+    }
+
+    .reply-textarea,
+    .task-textarea,
+    .task-question,
+    .auth-input {
+      width: 100%;
+      border: 1px solid rgba(120, 130, 200, .22);
+      border-radius: var(--radius-sm);
+      outline: 0;
+      color: var(--ink);
+      background: var(--surface-3);
+    }
+
+    .reply-textarea {
+      min-height: 42px;
+      max-height: 120px;
+      flex: 1;
+      resize: none;
+      padding: .7rem .9rem;
+      line-height: 1.45;
+    }
+
+    .send-btn,
+    .task-ask-btn,
+    .auth-submit {
+      border: 0;
+      border-radius: var(--radius-sm);
+      color: #fff;
+      background: var(--purple);
+      font-size: .82rem;
+      font-weight: 800;
+      transition: .16s ease;
+    }
+
+    .send-btn {
+      min-height: 42px;
+      padding: .65rem 1rem;
+    }
+
+    .send-btn:hover,
+    .auth-submit:hover {
+      background: var(--purple-2);
+    }
+
+    .page {
+      width: min(100%, 1000px);
+      margin: 0 auto;
+      padding: 2rem 1.5rem 5rem;
+    }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .back-btn {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: .4rem .75rem;
+      color: var(--muted);
+      background: var(--surface);
+      font-size: .78rem;
+      font-weight: 700;
+    }
+
+    .back-btn:hover {
+      color: var(--ink);
+      border-color: rgba(124, 111, 205, .4);
+    }
+
+    .page-title {
+      margin: 0;
+      color: #e8f2ff;
+      font-size: 1.2rem;
+    }
+
+    .page-subtitle {
+      margin: .2rem 0 0;
+      color: #a8c4e8;
+      font-size: .82rem;
+    }
+
+    .map-panel {
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      min-height: 420px;
+      overflow: hidden;
+      border: 1px solid rgba(120, 130, 200, .2);
+      border-radius: var(--radius-lg);
+      background: rgba(13, 15, 26, .9);
+      box-shadow: var(--shadow);
+    }
+
+    #opportunity-svg {
+      width: 100%;
+      height: 420px;
+    }
+
+    .opp-labels {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: .75rem;
+      padding: 1rem;
+      border-left: 1px solid rgba(120, 130, 200, .12);
+    }
+
+    .opp-label {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: .7rem;
+      background: rgba(255, 255, 255, .02);
+      text-align: left;
+    }
+
+    .opp-label:hover {
+      background: rgba(124, 111, 205, .1);
+    }
+
+    .opp-label-title {
+      display: flex;
+      align-items: center;
+      gap: .55rem;
+      color: #c8deff;
+      font-size: .82rem;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    .opp-number {
+      width: 24px;
+      height: 24px;
+      display: inline-grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      color: #fff;
+      font-size: .72rem;
+      font-weight: 800;
+    }
+
+    .opp-label-type {
+      margin: .35rem 0 0 1.95rem;
+      color: rgba(168, 196, 232, .7);
+      font-size: .7rem;
+    }
+
+    .opp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+
+    .opp-card,
+    .stage-card,
+    .momentum-card,
+    .progress-map {
+      border: 1px solid rgba(120, 130, 200, .2);
+      border-radius: var(--radius-md);
+      background: rgba(18, 21, 42, .92);
+      box-shadow: 0 10px 34px rgba(0, 0, 0, .25);
+    }
+
+    .opp-card {
+      padding: 1.1rem;
+      text-align: left;
+      transition: .18s ease;
+    }
+
+    .opp-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(124, 111, 205, .45);
+    }
+
+    .opp-type {
+      color: var(--teal);
+      font-size: .66rem;
+      font-weight: 800;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .opp-name {
+      margin-top: .5rem;
+      color: #e8f2ff;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .opp-tagline {
+      margin-top: .4rem;
+      color: #a8c4e8;
+      font-size: .82rem;
+      line-height: 1.45;
+    }
+
+    .opp-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .55rem;
+      margin-top: .8rem;
+      color: var(--muted);
+      font-size: .72rem;
+      font-weight: 700;
+    }
+
+    .opp-why {
+      margin-top: .8rem;
+      border-left: 2px solid var(--purple);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: .6rem .75rem;
+      color: #a8c4e8;
+      background: var(--surface-2);
+      font-size: .76rem;
+      line-height: 1.45;
+    }
+
+    .roadmap-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 280px;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .roadmap-side {
+      position: sticky;
+      top: 76px;
+    }
+
+    .roadmap-type {
+      color: var(--purple-2);
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .roadmap-title {
+      margin: .35rem 0;
+      color: #e8f2ff;
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+
+    .roadmap-sub {
+      margin: 0 0 1.25rem;
+      color: #a8c4e8;
+      font-size: .88rem;
+      line-height: 1.5;
+    }
+
+    .momentum-card {
+      display: none;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding: 1rem;
+    }
+
+    .momentum-ring-wrap {
+      position: relative;
+      width: 64px;
+      height: 64px;
+      flex: 0 0 auto;
+    }
+
+    .momentum-ring-wrap svg {
+      transform: rotate(-90deg);
+    }
+
+    .ring-bg,
+    .ring-fill {
+      fill: none;
+      stroke-width: 6;
+    }
+
+    .ring-bg {
+      stroke: var(--surface-3);
+    }
+
+    .ring-fill {
+      stroke: url(#ring-gradient);
+      stroke-linecap: round;
+      transition: stroke-dashoffset .35s ease;
+    }
+
+    .momentum-pct {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-size: .82rem;
+      font-weight: 800;
+    }
+
+    .momentum-label {
+      color: var(--muted);
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .momentum-status {
+      margin-top: .25rem;
+      color: #c8deff;
+      font-size: .86rem;
+      font-weight: 600;
+    }
+
+    .momentum-stats {
+      display: flex;
+      gap: .8rem;
+      margin-top: .4rem;
+      color: var(--muted);
+      font-size: .74rem;
+      font-weight: 700;
+    }
+
+    .stage-list {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+    }
+
+    .stage-card {
+      overflow: hidden;
+    }
+
+    .stage-card.open {
+      border-color: rgba(124, 111, 205, .38);
+    }
+
+    .stage-head {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      width: 100%;
+      border: 0;
+      padding: .95rem 1rem;
+      color: inherit;
+      background: transparent;
+      text-align: left;
+    }
+
+    .stage-num {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(120, 130, 200, .35);
+      border-radius: 50%;
+      color: var(--muted);
+      font-size: .7rem;
+      font-weight: 800;
+    }
+
+    .stage-label {
+      flex: 1;
+      color: #c8deff;
+      font-weight: 800;
+    }
+
+    .stage-body {
+      display: none;
+      padding: 0 1rem 1rem;
+      border-top: 1px solid rgba(120, 130, 200, .1);
+    }
+
+    .stage-card.open .stage-body {
+      display: block;
+    }
+
+    .stage-desc {
+      margin: .85rem 0 1rem;
+      color: #a8c4e8;
+      font-size: .84rem;
+      line-height: 1.5;
+    }
+
+    .tasks {
+      display: grid;
+      gap: .8rem;
+    }
+
+    .task-item {
+      border: 1px solid rgba(120, 130, 200, .15);
+      border-radius: var(--radius-sm);
+      padding: .85rem;
+      background: rgba(30, 34, 53, .95);
+    }
+
+    .task-top {
+      display: flex;
+      gap: .65rem;
+      align-items: flex-start;
+    }
+
+    .task-check {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      flex: 0 0 auto;
+      accent-color: var(--teal);
+    }
+
+    .task-text {
+      color: #d0e8ff;
+      font-size: .86rem;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .task-label {
+      margin: .75rem 0 .3rem;
+      color: #7aa8d8;
+      font-size: .62rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .task-textarea,
+    .task-question {
+      min-height: 40px;
+      resize: vertical;
+      padding: .55rem .7rem;
+      font-size: .8rem;
+      line-height: 1.45;
+    }
+
+    .task-ask-row {
+      display: flex;
+      gap: .45rem;
+      margin-top: .5rem;
+    }
+
+    .task-ask-btn {
+      padding: .5rem .8rem;
+      color: var(--bg);
+      background: var(--teal);
+    }
+
+    .task-answer {
+      display: none;
+      margin-top: .6rem;
+      border-left: 2px solid var(--teal);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: .6rem .75rem;
+      color: #d0e8ff;
+      background: rgba(78, 205, 196, .1);
+      font-size: .8rem;
+      line-height: 1.5;
+    }
+
+    .task-answer.visible {
+      display: block;
+    }
+
+    .progress-map {
+      padding: 1rem;
+    }
+
+    .progress-title {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: .9rem;
+      color: var(--muted);
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .pm-chain {
+      display: grid;
+      gap: .85rem;
+    }
+
+    .pm-stage {
+      display: flex;
+      gap: .65rem;
+      color: var(--muted);
+    }
+
+    .pm-node {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border: 2px solid rgba(120, 130, 200, .25);
+      border-radius: 50%;
+      font-size: .68rem;
+      font-weight: 800;
+    }
+
+    .pm-node.active {
+      border-color: var(--purple);
+      color: var(--purple-2);
+      background: rgba(124, 111, 205, .1);
+    }
+
+    .pm-node.done {
+      border-color: transparent;
+      color: #fff;
+      background: linear-gradient(135deg, var(--purple), var(--teal));
+    }
+
+    .pm-name {
+      color: #c8deff;
+      font-size: .8rem;
+      font-weight: 800;
+    }
+
+    .pm-tasks {
+      margin-top: .15rem;
+      font-size: .7rem;
+      font-weight: 700;
+    }
+
+    .loader {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      background: var(--bg);
+      transition: opacity .55s ease;
+    }
+
+    .loader.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loader-inner {
+      display: grid;
+      gap: 1.1rem;
+      justify-items: center;
+      text-align: center;
+    }
+
+    .loader-dot {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--teal));
+      animation: pulse 1.2s infinite ease;
+    }
+
+    .loader-domain {
+      color: var(--muted);
+    }
+
+    .loader-tagline {
+      max-width: 360px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      background: rgba(0, 0, 0, .68);
+      backdrop-filter: blur(8px);
+    }
+
+    .auth-overlay.open {
+      display: flex;
+    }
+
+    .auth-modal {
+      width: min(100%, 380px);
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .auth-close {
+      position: absolute;
+      top: .75rem;
+      right: .75rem;
+      border: 0;
+      color: var(--muted);
+      background: transparent;
+      font-size: 1rem;
+    }
+
+    .auth-tabs {
+      display: flex;
+      gap: .35rem;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      padding: .2rem;
+      background: var(--surface-2);
+    }
+
+    .auth-tab {
+      flex: 1;
+      border: 0;
+      border-radius: var(--radius-sm);
+      padding: .5rem;
+      color: var(--muted);
+      background: transparent;
+      font-weight: 700;
+    }
+
+    .auth-tab.active {
+      color: var(--ink);
+      background: var(--surface-3);
+    }
+
+    .auth-msg {
+      display: none;
+      margin-bottom: .75rem;
+      border-radius: var(--radius-sm);
+      padding: .6rem .7rem;
+      font-size: .8rem;
+      background: var(--surface-2);
+    }
+
+    .auth-label {
+      margin: .8rem 0 .3rem;
+      color: var(--muted);
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .auth-input {
+      min-height: 42px;
+      padding: .65rem .75rem;
+    }
+
+    .auth-submit {
+      width: 100%;
+      min-height: 42px;
+      margin-top: 1rem;
+    }
+
+    .auth-footer {
+      margin: .85rem 0 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: .78rem;
+    }
+
+    .auth-footer button {
+      border: 0;
+      color: var(--purple-2);
+      background: transparent;
+      font-weight: 800;
+    }
+
+    @keyframes typing {
+      0%, 70%, 100% {
+        transform: translateY(0);
+        opacity: .45;
+      }
+
+      35% {
+        transform: translateY(-4px);
+        opacity: 1;
+      }
+    }
+
+    @keyframes pulse {
+      50% {
+        transform: scale(.82);
+        opacity: .65;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .app-header {
+        padding: 0 .85rem;
+      }
+
+      .logo-text {
+        display: none;
+      }
+
+      .nav-btn {
+        padding: .38rem .5rem;
+      }
+
+      .map-panel,
+      .roadmap-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .opp-labels {
+        border-left: 0;
+        border-top: 1px solid rgba(120, 130, 200, .12);
+      }
+
+      .roadmap-side {
+        position: static;
+      }
+
+      .bubble {
+        max-width: 88%;
+      }
+
+      .prompt-footer,
+      .reply-inner,
+      .task-ask-row {
+        align-items: stretch;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="loader" id="loader">
+    <div class="loader-inner">
+      <div class="loader-dot"></div>
+      <strong>whatimado<span class="loader-domain">.com</span></strong>
+      <small class="loader-tagline">Let us help figure out what ya gonna do.</small>
+    </div>
+  </div>
+
+  <canvas id="network-canvas" aria-hidden="true"></canvas>
+
+  <header class="app-header">
+    <a class="logo" href="#main" data-screen-link="main">
+      <span class="logo-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v4M12 18v4M2 12h4M18 12h4"></path></svg>
+      </span>
+      <span class="logo-text">whatimado<span>.com</span></span>
+    </a>
+
+    <nav class="nav" aria-label="Main navigation">
+      <button class="nav-btn active" data-screen-link="main" id="nav-home-btn">Home</button>
+      <button class="nav-btn" data-screen-link="map" id="nav-map-btn" hidden>My Map</button>
+      <button class="nav-btn" data-screen-link="roadmap" id="nav-roadmap-btn" hidden>Roadmap</button>
+      <span class="nav-divider" aria-hidden="true"></span>
+      <button class="nav-btn" id="nav-signin-btn" data-auth-open="signin">Sign in</button>
+      <button class="nav-btn primary" id="nav-signup-btn" data-auth-open="signup">Sign up</button>
+      <span class="nav-user" id="nav-user">
+        <span id="nav-username"></span>
+        <button class="nav-btn" id="signout-btn">Sign out</button>
+      </span>
+    </nav>
+  </header>
+
+  <main>
+    <section class="screen active" id="screen-main">
+      <div class="hero">
+        <div class="hero-chip">Start here</div>
+        <h1><span>Let us help figure out,</span><em>what ya gonna do...</em></h1>
+        <p class="hero-copy">Tell us your situation, skills, interests, or goals. We'll map out paths you may never have considered.</p>
+
+        <div class="prompt-box">
+          <textarea class="prompt-textarea" id="main-input" rows="3" placeholder="Tell us your situation: what you know, what you enjoy, what you want..."></textarea>
+          <div class="prompt-footer">
+            <span class="hint">Be honest. There's no wrong answer.</span>
+            <button class="action-btn" id="start-btn">Continue</button>
+          </div>
+        </div>
+
+        <div class="pills" aria-label="Prompt starters">
+          <button class="pill" data-prompt="I love working with my hands and fixing things">hands-on</button>
+          <button class="pill" data-prompt="I am good with technology and computers">tech</button>
+          <button class="pill" data-prompt="I enjoy helping and talking to people">people</button>
+          <button class="pill" data-prompt="I am creative and artistic">creative</button>
+          <button class="pill" data-prompt="I have no money but I have time and hustle">starting from zero</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-convo">
+      <div class="conversation" id="bubble-chain"></div>
+      <div class="reply-box" id="reply-box">
+        <div class="reply-inner">
+          <textarea class="reply-textarea" id="reply-textarea" rows="1" placeholder="Type your response..."></textarea>
+          <button class="send-btn" id="reply-send-btn">Send</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-map">
+      <div class="page">
+        <div class="page-header">
+          <button class="back-btn" data-screen-link="convo">Back</button>
+          <div>
+            <h2 class="page-title">Your Possibility Map</h2>
+            <p class="page-subtitle">Tap any opportunity to explore its roadmap</p>
+          </div>
+          <button class="back-btn" id="reset-btn">Start over</button>
+        </div>
+
+        <div class="map-panel">
+          <svg id="opportunity-svg" viewBox="0 0 560 420" role="img" aria-label="Opportunity map">
+            <defs>
+              <radialGradient id="user-gradient" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#9b8fe0"></stop>
+                <stop offset="100%" stop-color="#7c6fcd"></stop>
+              </radialGradient>
+              <filter id="svg-glow">
+                <feGaussianBlur stdDeviation="3" result="blur"></feGaussianBlur>
+                <feMerge><feMergeNode in="blur"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+              </filter>
+            </defs>
+            <g id="svg-connections"></g>
+            <g id="svg-nodes"></g>
+          </svg>
+          <div class="opp-labels" id="opp-labels"></div>
+        </div>
+
+        <div class="opp-grid" id="opp-grid"></div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-roadmap">
+      <div class="page roadmap-layout">
+        <div>
+          <button class="back-btn" data-screen-link="map">Back to map</button>
+          <div class="roadmap-type" id="roadmap-type"></div>
+          <h2 class="roadmap-title" id="roadmap-title"></h2>
+          <p class="roadmap-sub" id="roadmap-sub">Building your personalised roadmap...</p>
+
+          <div class="momentum-card" id="momentum-card">
+            <div class="momentum-ring-wrap">
+              <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true">
+                <defs>
+                  <linearGradient id="ring-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#7c6fcd"></stop>
+                    <stop offset="100%" stop-color="#4ecdc4"></stop>
+                  </linearGradient>
+                </defs>
+                <circle class="ring-bg" cx="32" cy="32" r="26"></circle>
+                <circle class="ring-fill" id="momentum-ring" cx="32" cy="32" r="26" stroke-dasharray="163" stroke-dashoffset="163"></circle>
+              </svg>
+              <div class="momentum-pct" id="momentum-pct">0%</div>
+            </div>
+            <div>
+              <div class="momentum-label">Momentum</div>
+              <div class="momentum-status" id="momentum-status">Check off tasks to build momentum</div>
+              <div class="momentum-stats">
+                <span><strong id="stat-done">0</strong> done</span>
+                <span><strong id="stat-total">0</strong> total</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stage-list" id="stage-list"></div>
+        </div>
+
+        <aside class="roadmap-side">
+          <div class="progress-map">
+            <div class="progress-title">Progress Map <span id="progress-pct">0%</span></div>
+            <div class="pm-chain" id="progress-chain"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <div class="auth-overlay" id="auth-overlay">
+    <div class="auth-modal" role="dialog" aria-modal="true" aria-label="Authentication">
+      <button class="auth-close" id="auth-close-btn" aria-label="Close">x</button>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-auth-tab="signin" id="tab-signin">Sign in</button>
+        <button class="auth-tab" data-auth-tab="signup" id="tab-signup">Sign up</button>
+      </div>
+      <div class="auth-msg" id="auth-msg"></div>
+
+      <form id="signin-form">
+        <label class="auth-label" for="si-email">Email</label>
+        <input class="auth-input" type="email" id="si-email" autocomplete="email" placeholder="you@email.com">
+        <label class="auth-label" for="si-pass">Password</label>
+        <input class="auth-input" type="password" id="si-pass" autocomplete="current-password" placeholder="Password">
+        <button class="auth-submit" type="submit">Sign in</button>
+        <p class="auth-footer">Don't have an account? <button type="button" data-auth-tab="signup">Sign up</button></p>
+      </form>
+
+      <form id="signup-form" hidden>
+        <label class="auth-label" for="su-name">Name</label>
+        <input class="auth-input" type="text" id="su-name" autocomplete="name" placeholder="First name">
+        <label class="auth-label" for="su-email">Email</label>
+        <input class="auth-input" type="email" id="su-email" autocomplete="email" placeholder="you@email.com">
+        <label class="auth-label" for="su-pass">Password</label>
+        <input class="auth-input" type="password" id="su-pass" autocomplete="new-password" placeholder="Create a password">
+        <button class="auth-submit" type="submit">Create account</button>
+        <p class="auth-footer">Already have an account? <button type="button" data-auth-tab="signin">Sign in</button></p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = "https://acgjcnhcjgtpoztntcyb.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFjZ2pjbmhjamd0cG96dG50Y3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzMDU1MTgsImV4cCI6MjA5Njg4MTUxOH0.gEJfMFWjmsLTw2aKbjQhYDlPl_zvpjfxP8QskAN6ghQ";
+    const supabaseClient = window.supabase?.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const opportunityColors = ["#e06c75", "#4ecdc4", "#f7c948", "#52c47a", "#9b8fe0"];
+    const fallbackIdeas = [
+      {
+        title: "Local Help-for-Hire Service",
+        type: "Immediate income",
+        tagline: "Turn useful everyday skills into small paid jobs in your neighborhood.",
+        why: "This fits because it starts with what you already know and does not require upfront money.",
+        cost: "$0-25",
+        timeline: "This week",
+        income: "$200-1000/mo"
+      },
+      {
+        title: "Skill Sprint Portfolio",
+        type: "Learning path",
+        tagline: "Pick one practical skill and build three small proof projects fast.",
+        why: "A visible portfolio helps people trust you before you have formal experience.",
+        cost: "$0",
+        timeline: "2-4 weeks",
+        income: "Long-term"
+      },
+      {
+        title: "Micro Business Test",
+        type: "Build your own thing",
+        tagline: "Test a tiny offer with ten real people before investing deeply.",
+        why: "It keeps risk low while showing what people will actually pay for.",
+        cost: "$0-50",
+        timeline: "1-2 weeks",
+        income: "$500+/mo"
+      }
+    ];
+
+    const fallbackStages = [
+      {
+        label: "First Win",
+        desc: "Get one real signal that this path can work.",
+        tasks: ["Write the simplest version of your offer", "Tell five people what you are trying", "Record what people ask for or push back on"]
+      },
+      {
+        label: "Proof",
+        desc: "Turn the first response into repeatable evidence.",
+        tasks: ["Complete one small project or test", "Ask for feedback or a testimonial", "Adjust your offer based on what happened"]
+      },
+      {
+        label: "Consistency",
+        desc: "Make the path easier to repeat every week.",
+        tasks: ["Set a weekly target", "Create a simple tracking sheet", "Repeat the best outreach channel three times"]
+      },
+      {
+        label: "Growth",
+        desc: "Build from a small win into a sustainable plan.",
+        tasks: ["Raise the quality or price of the offer", "Create a basic online presence", "Set a 90-day goal"]
+      }
+    ];
+
+    const state = {
+      step: 1,
+      history: [],
+      ideas: [],
+      roadmapStages: [],
+      currentUser: null
+    };
+
+    const $ = (selector) => document.querySelector(selector);
+    const $$ = (selector) => [...document.querySelectorAll(selector)];
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function formatText(value) {
+      return escapeHtml(value).replaceAll("\n\n", "<br><br>").replaceAll("\n", "<br>");
+    }
+
+    function showScreen(name) {
+      $$(".screen").forEach((screen) => screen.classList.toggle("active", screen.id === `screen-${name}`));
+      $$(".nav-btn").forEach((button) => button.classList.remove("active"));
+      $(`[data-screen-link="${name}"]`)?.classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function addUserBubble(text) {
+      const wrapper = document.createElement("div");
+      wrapper.className = "bubble-pair";
+      wrapper.innerHTML = `<div class="bubble-user"><div class="bubble user">${formatText(text)}</div></div>`;
+      $("#bubble-chain").append(wrapper);
+      scrollConversation();
+    }
+
+    function addTypingBubble() {
+      const wrapper = document.createElement("div");
+      wrapper.className = "bubble-pair";
+      wrapper.id = "typing-pair";
+      wrapper.innerHTML = `
+        <div class="bubble-ai">
+          <div>
+            <div class="ai-label">whatimado</div>
+            <div class="bubble ai"><div class="typing-dots"><span></span><span></span><span></span></div></div>
+          </div>
+        </div>`;
+      $("#bubble-chain").append(wrapper);
+      scrollConversation();
+    }
+
+    function resolveTyping(text) {
+      const typing = $("#typing-pair");
+      if (!typing) return;
+      typing.querySelector(".bubble.ai").innerHTML = formatText(text);
+      typing.removeAttribute("id");
+      scrollConversation();
+    }
+
+    function scrollConversation() {
+      setTimeout(() => $("#bubble-chain")?.lastElementChild?.scrollIntoView({ behavior: "smooth", block: "end" }), 80);
+    }
+
+    function showReplyBox(show = true) {
+      $("#reply-box").style.display = show ? "block" : "none";
+      if (show) $("#reply-textarea").focus();
+    }
+
+    async function callAdvisor(prompt, maxTokens = 700) {
+      try {
+        const response = await fetch("/api/claude", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            model: "claude-sonnet-4-5",
+            max_tokens: maxTokens,
+            messages: [{ role: "user", content: prompt }]
+          })
+        });
+        if (!response.ok) throw new Error(`API returned ${response.status}`);
+        const data = await response.json();
+        return (data.content || []).filter((block) => block.type === "text").map((block) => block.text).join("").trim();
+      } catch {
+        return "";
+      }
+    }
+
+    function extractJsonArray(text, fallback) {
+      const match = text.match(/\[[\s\S]*\]/);
+      if (!match) return fallback;
+      try {
+        return JSON.parse(match[0]);
+      } catch {
+        return fallback;
+      }
+    }
+
+    async function startFlow() {
+      const text = $("#main-input").value.trim();
+      if (!text) return;
+      showScreen("convo");
+      addUserBubble(text);
+      addTypingBubble();
+      state.history.push({ role: "user", content: text });
+
+      const answer = await callAdvisor(
+        "You are whatimado, an empathetic possibility advisor. Ask one short clarifying question to uncover this person's skills, talents, hobbies, knowledge, and whether they want to work for someone, learn something new, or build their own thing. Plain text only.\n\nUser: " + text,
+        300
+      );
+
+      resolveTyping(answer || "What are you naturally good at, and would you rather get hired, learn a new skill, or build your own thing?");
+      state.step = 2;
+      showReplyBox(true);
+    }
+
+    async function submitReply() {
+      const textarea = $("#reply-textarea");
+      const text = textarea.value.trim();
+      if (!text) return;
+      textarea.value = "";
+      addUserBubble(text);
+      addTypingBubble();
+      state.history.push({ role: "user", content: text });
+
+      if (state.step === 2) {
+        resolveTyping("May I ask your name?");
+        state.step = 3;
+        showReplyBox(true);
+        return;
+      }
+
+      showReplyBox(false);
+      const summary = state.history.map((entry) => `${entry.role === "user" ? "User" : "Advisor"}: ${entry.content}`).join("\n");
+      const response = await callAdvisor(
+        'Generate exactly 3 realistic, tailored ideas for this person. Include zero-cost options, skill-building paths, gig work, or unconventional ideas when useful.\n\nConversation:\n' +
+          summary +
+          '\n\nRespond only with a raw JSON array in this format: [{"title":"...","type":"...","tagline":"one sentence","why":"one sentence why it fits","cost":"e.g. $0","timeline":"e.g. 2-4 weeks","income":"e.g. $500-1500/mo"}]',
+        900
+      );
+
+      state.ideas = extractJsonArray(response, fallbackIdeas);
+      resolveTyping("Here are your paths. Tap any opportunity to see your full roadmap.");
+      setTimeout(() => {
+        buildOpportunityMap(state.ideas);
+        $("#nav-map-btn").hidden = false;
+        showScreen("map");
+      }, 550);
+    }
+
+    function buildOpportunityMap(ideas) {
+      const nodes = $("#svg-nodes");
+      const connections = $("#svg-connections");
+      const labels = $("#opp-labels");
+      const grid = $("#opp-grid");
+      nodes.innerHTML = "";
+      connections.innerHTML = "";
+      labels.innerHTML = "";
+      grid.innerHTML = "";
+
+      const center = { x: 280, y: 210, r: 40 };
+      nodes.insertAdjacentHTML("beforeend", `
+        <g>
+          <circle cx="${center.x}" cy="${center.y}" r="${center.r}" fill="url(#user-gradient)" filter="url(#svg-glow)"></circle>
+          <text x="${center.x}" y="${center.y + 5}" text-anchor="middle" fill="#fff" font-size="12" font-weight="800">You</text>
+        </g>`);
+
+      const angles = [-100, -35, 30, 95, 160];
+      ideas.forEach((idea, index) => {
+        const angle = (angles[index] ?? index * 72 - 90) * Math.PI / 180;
+        const x = center.x + Math.cos(angle) * 165;
+        const y = center.y + Math.sin(angle) * 118;
+        const color = opportunityColors[index % opportunityColors.length];
+        const dx = x - center.x;
+        const dy = y - center.y;
+        const length = Math.hypot(dx, dy);
+        const ux = dx / length;
+        const uy = dy / length;
+
+        connections.insertAdjacentHTML("beforeend", `
+          <line x1="${center.x + ux * 48}" y1="${center.y + uy * 48}" x2="${x - ux * 40}" y2="${y - uy * 40}" stroke="${color}" stroke-width="1.5" stroke-opacity=".55"></line>`);
+
+        const node = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        node.setAttribute("role", "button");
+        node.style.cursor = "pointer";
+        node.innerHTML = `
+          <circle cx="${x}" cy="${y}" r="32" fill="${color}" fill-opacity=".18" stroke="${color}" stroke-width="1.5"></circle>
+          <text x="${x}" y="${y + 5}" text-anchor="middle" fill="${color}" font-size="14" font-weight="800">${index + 1}</text>`;
+        node.addEventListener("click", () => viewRoadmap(idea));
+        nodes.append(node);
+
+        const label = document.createElement("button");
+        label.className = "opp-label";
+        label.innerHTML = `
+          <div class="opp-label-title"><span class="opp-number">${index + 1}</span>${escapeHtml(idea.title)}</div>
+          <div class="opp-label-type">${escapeHtml(idea.type || "Opportunity")}</div>`;
+        label.querySelector(".opp-number").style.background = color;
+        label.addEventListener("click", () => viewRoadmap(idea));
+        labels.append(label);
+
+        const card = document.createElement("button");
+        card.className = "opp-card";
+        card.innerHTML = `
+          <div class="opp-type">${escapeHtml(idea.type || "Opportunity")}</div>
+          <div class="opp-name">${escapeHtml(idea.title)}</div>
+          <div class="opp-tagline">${escapeHtml(idea.tagline || "")}</div>
+          <div class="opp-meta">
+            ${idea.cost ? `<span>${escapeHtml(idea.cost)}</span>` : ""}
+            ${idea.timeline ? `<span>${escapeHtml(idea.timeline)}</span>` : ""}
+            ${idea.income ? `<span>${escapeHtml(idea.income)}</span>` : ""}
+          </div>
+          ${idea.why ? `<div class="opp-why">${escapeHtml(idea.why)}</div>` : ""}`;
+        card.addEventListener("click", () => viewRoadmap(idea));
+        grid.append(card);
+      });
+    }
+
+    async function viewRoadmap(idea) {
+      $("#nav-roadmap-btn").hidden = false;
+      $("#roadmap-type").textContent = idea.type || "Roadmap";
+      $("#roadmap-title").textContent = idea.title;
+      $("#roadmap-sub").textContent = "Building your personalised roadmap...";
+      $("#stage-list").innerHTML = "";
+      $("#momentum-card").style.display = "none";
+      showScreen("roadmap");
+
+      const context = state.history.map((entry) => `${entry.role === "user" ? "User" : "Advisor"}: ${entry.content}`).join("\n");
+      const response = await callAdvisor(
+        `Generate a 4-stage roadmap for someone pursuing "${idea.title}". Make every task specific and realistic for their actual situation.\n\nUser context:\n${context}\n\nRespond only with a raw JSON array like [{"label":"Stage Name","desc":"one sentence","tasks":["task1","task2","task3"]}]`,
+        1200
+      );
+
+      state.roadmapStages = extractJsonArray(response, fallbackStages);
+      $("#roadmap-sub").textContent = "Follow these stages to get this off the ground.";
+      $("#momentum-card").style.display = "flex";
+      renderStages(state.roadmapStages);
+    }
+
+    function renderStages(stages) {
+      const list = $("#stage-list");
+      list.innerHTML = "";
+
+      stages.forEach((stage, stageIndex) => {
+        const card = document.createElement("article");
+        card.className = `stage-card ${stageIndex === 0 ? "open" : ""}`;
+        const taskMarkup = (stage.tasks || []).map((task, taskIndex) => {
+          const id = `task-${stageIndex}-${taskIndex}`;
+          return `
+            <div class="task-item">
+              <div class="task-top">
+                <input class="task-check" type="checkbox" id="${id}">
+                <label class="task-text" for="${id}">${escapeHtml(task)}</label>
+              </div>
+              <div class="task-label">My Notes</div>
+              <textarea class="task-textarea" placeholder="Jot down thoughts, progress, links..."></textarea>
+              <div class="task-ask-row">
+                <textarea class="task-question" id="question-${id}" rows="1" placeholder="Ask AI about this task..."></textarea>
+                <button class="task-ask-btn" data-task-id="${id}" data-task="${escapeHtml(task)}">Ask</button>
+              </div>
+              <div class="task-answer" id="answer-${id}"></div>
+            </div>`;
+        }).join("");
+
+        card.innerHTML = `
+          <button class="stage-head">
+            <span class="stage-num">${stageIndex + 1}</span>
+            <span class="stage-label">${escapeHtml(stage.label)}</span>
+            <span aria-hidden="true">&gt;</span>
+          </button>
+          <div class="stage-body">
+            <p class="stage-desc">${escapeHtml(stage.desc)}</p>
+            <div class="tasks">${taskMarkup}</div>
+          </div>`;
+        card.querySelector(".stage-head").addEventListener("click", () => card.classList.toggle("open"));
+        list.append(card);
+      });
+
+      $$(".task-check").forEach((checkbox) => checkbox.addEventListener("change", updateMomentum));
+      $$(".task-ask-btn").forEach((button) => button.addEventListener("click", () => askTask(button.dataset.taskId, button.dataset.task)));
+      initProgressMap(stages);
+      updateMomentum();
+    }
+
+    function updateMomentum() {
+      const checks = $$(".task-check");
+      const done = checks.filter((check) => check.checked).length;
+      const total = checks.length;
+      const percent = total ? Math.round(done / total * 100) : 0;
+      const circumference = 163;
+
+      $("#momentum-ring")?.setAttribute("stroke-dashoffset", circumference - circumference * percent / 100);
+      $("#momentum-pct").textContent = `${percent}%`;
+      $("#stat-done").textContent = done;
+      $("#stat-total").textContent = total;
+      $("#progress-pct").textContent = `${percent}%`;
+
+      const status = $("#momentum-status");
+      if (percent === 0) status.textContent = "Check off tasks to build momentum";
+      else if (percent < 50) status.textContent = "Good start. Keep the rhythm going.";
+      else if (percent < 100) status.textContent = "You're building real momentum now.";
+      else status.textContent = "Path complete!";
+
+      updateProgressMap();
+    }
+
+    function initProgressMap(stages) {
+      const chain = $("#progress-chain");
+      chain.innerHTML = stages.map((stage, index) => `
+        <div class="pm-stage">
+          <span class="pm-node" id="pm-node-${index}">${index + 1}</span>
+          <div>
+            <div class="pm-name">${escapeHtml(stage.label)}</div>
+            <div class="pm-tasks" id="pm-tasks-${index}">0 / ${(stage.tasks || []).length} tasks</div>
+          </div>
+        </div>`).join("");
+    }
+
+    function updateProgressMap() {
+      let offset = 0;
+      state.roadmapStages.forEach((stage, index) => {
+        const count = (stage.tasks || []).length;
+        const checks = $$(".task-check").slice(offset, offset + count);
+        const done = checks.filter((check) => check.checked).length;
+        offset += count;
+        const node = $(`#pm-node-${index}`);
+        node?.classList.toggle("active", done > 0 && done < count);
+        node?.classList.toggle("done", count > 0 && done === count);
+        const tasks = $(`#pm-tasks-${index}`);
+        if (tasks) tasks.textContent = `${done} / ${count} tasks`;
+      });
+    }
+
+    async function askTask(id, taskText) {
+      const question = $(`#question-${id}`)?.value.trim();
+      const answer = $(`#answer-${id}`);
+      if (!question || !answer) return;
+      answer.classList.add("visible");
+      answer.textContent = "Thinking...";
+
+      const text = await callAdvisor(
+        `Answer this question about a specific task in 2-4 sentences. Plain text only.\n\nIdea: ${$("#roadmap-title").textContent}\nTask: ${taskText}\nQuestion: ${question}`,
+        300
+      );
+      answer.innerHTML = formatText(text || "Try breaking this into one tiny action you can finish today, then use what happens as feedback.");
+      $(`#question-${id}`).value = "";
+    }
+
+    function resetAll() {
+      state.step = 1;
+      state.history = [];
+      state.ideas = [];
+      state.roadmapStages = [];
+      $("#main-input").value = "";
+      $("#bubble-chain").innerHTML = "";
+      $("#nav-map-btn").hidden = true;
+      $("#nav-roadmap-btn").hidden = true;
+      showReplyBox(false);
+      showScreen("main");
+    }
+
+    function showAuth(tab) {
+      $("#auth-overlay").classList.add("open");
+      switchAuthTab(tab);
+    }
+
+    function closeAuth() {
+      $("#auth-overlay").classList.remove("open");
+    }
+
+    function switchAuthTab(tab) {
+      const isSignin = tab === "signin";
+      $("#signin-form").hidden = !isSignin;
+      $("#signup-form").hidden = isSignin;
+      $("#tab-signin").classList.toggle("active", isSignin);
+      $("#tab-signup").classList.toggle("active", !isSignin);
+      $("#auth-msg").style.display = "none";
+    }
+
+    function showAuthMessage(message, isError = false) {
+      const element = $("#auth-msg");
+      element.textContent = message;
+      element.style.display = "block";
+      element.style.color = isError ? "var(--rose)" : "var(--teal)";
+      element.style.background = isError ? "rgba(224, 108, 117, .1)" : "rgba(78, 205, 196, .1)";
+    }
+
+    async function initAuth() {
+      if (!supabaseClient) return;
+      const { data } = await supabaseClient.auth.getSession();
+      setUser(data.session?.user || null);
+      supabaseClient.auth.onAuthStateChange((_, session) => setUser(session?.user || null));
+    }
+
+    function setUser(user) {
+      state.currentUser = user;
+      $("#nav-signin-btn").hidden = Boolean(user);
+      $("#nav-signup-btn").hidden = Boolean(user);
+      $("#nav-user").style.display = user ? "flex" : "none";
+      if (user) $("#nav-username").textContent = user.email.split("@")[0];
+    }
+
+    async function signIn(event) {
+      event.preventDefault();
+      if (!supabaseClient) return showAuthMessage("Supabase is not available.", true);
+      const email = $("#si-email").value.trim();
+      const password = $("#si-pass").value;
+      if (!email || !password) return showAuthMessage("Please fill in all fields.", true);
+      const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      if (error) return showAuthMessage(error.message, true);
+      closeAuth();
+    }
+
+    async function signUp(event) {
+      event.preventDefault();
+      if (!supabaseClient) return showAuthMessage("Supabase is not available.", true);
+      const name = $("#su-name").value.trim();
+      const email = $("#su-email").value.trim();
+      const password = $("#su-pass").value;
+      if (!email || !password) return showAuthMessage("Please fill in all fields.", true);
+      const { error } = await supabaseClient.auth.signUp({ email, password, options: { data: { full_name: name } } });
+      if (error) return showAuthMessage(error.message, true);
+      showAuthMessage("Check your email to confirm your account.");
+    }
+
+    async function signOut() {
+      await supabaseClient?.auth.signOut();
+      setUser(null);
+    }
+
+    function initNetworkCanvas() {
+      const canvas = $("#network-canvas");
+      const context = canvas.getContext("2d");
+      let nodes = [];
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const count = Math.max(14, Math.floor(window.innerWidth / 95));
+        nodes = Array.from({ length: count }, () => ({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - .5) * .25,
+          vy: (Math.random() - .5) * .25,
+          r: Math.random() * 2.2 + 1.8,
+          color: opportunityColors[Math.floor(Math.random() * opportunityColors.length)]
+        }));
+      }
+
+      function draw() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        nodes.forEach((node) => {
+          node.x += node.vx;
+          node.y += node.vy;
+          if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
+          if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
+          context.beginPath();
+          context.arc(node.x, node.y, node.r, 0, Math.PI * 2);
+          context.fillStyle = node.color;
+          context.fill();
+        });
+
+        nodes.forEach((a, index) => {
+          nodes.slice(index + 1).forEach((b) => {
+            const distance = Math.hypot(a.x - b.x, a.y - b.y);
+            if (distance > 120) return;
+            context.beginPath();
+            context.moveTo(a.x, a.y);
+            context.lineTo(b.x, b.y);
+            context.strokeStyle = `rgba(124,111,205,${(1 - distance / 120) * .16})`;
+            context.stroke();
+          });
+        });
+
+        requestAnimationFrame(draw);
+      }
+
+      resize();
+      draw();
+      window.addEventListener("resize", resize);
+    }
+
+    function bindEvents() {
+      $$("[data-screen-link]").forEach((element) => {
+        element.addEventListener("click", (event) => {
+          event.preventDefault();
+          showScreen(element.dataset.screenLink);
+        });
+      });
+
+      $$("[data-prompt]").forEach((button) => {
+        button.addEventListener("click", () => {
+          $("#main-input").value = button.dataset.prompt;
+          $("#main-input").focus();
+        });
+      });
+
+      $("#start-btn").addEventListener("click", startFlow);
+      $("#main-input").addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && !event.shiftKey) {
+          event.preventDefault();
+          startFlow();
+        }
+      });
+
+      $("#reply-send-btn").addEventListener("click", submitReply);
+      $("#reply-textarea").addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && !event.shiftKey) {
+          event.preventDefault();
+          submitReply();
+        }
+      });
+
+      $("#reset-btn").addEventListener("click", resetAll);
+      $("#auth-close-btn").addEventListener("click", closeAuth);
+      $("#auth-overlay").addEventListener("click", (event) => {
+        if (event.target.id === "auth-overlay") closeAuth();
+      });
+      $$("[data-auth-open]").forEach((button) => button.addEventListener("click", () => showAuth(button.dataset.authOpen)));
+      $$("[data-auth-tab]").forEach((button) => button.addEventListener("click", () => switchAuthTab(button.dataset.authTab)));
+      $("#signin-form").addEventListener("submit", signIn);
+      $("#signup-form").addEventListener("submit", signUp);
+      $("#signout-btn").addEventListener("click", signOut);
+    }
+
+    window.addEventListener("load", () => {
+      bindEvents();
+      initNetworkCanvas();
+      initAuth();
+      setTimeout(() => {
+        $("#loader").classList.add("hidden");
+        setTimeout(() => $("#loader").remove(), 650);
+      }, 650);
+    });
+  </script>
+</body>
+</html>
