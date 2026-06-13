@@ -22,9 +22,9 @@ body{min-height:100vh}
 @keyframes floatCloudSlowR{0%{transform:translateX(-600px)}100%{transform:translateX(110vw)}}
 @keyframes cloudFadeIn{from{opacity:0}to{opacity:1}}
 header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(204,220,231,0.8);box-shadow:0 1px 0 rgba(11,21,30,0.04)}
-.logo{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:-.02em;color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:.5rem}
+.logo{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:-.02em;color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:.35rem}
 .logo-dot{width:8px;height:8px;border-radius:50%;background:var(--aqua)}
-.logo span{color:var(--mid);font-weight:400}
+.logo span{color:var(--mid);font-weight:400;margin-left:-2px}
 .tagline{font-size:.72rem;font-weight:600;letter-spacing:.04em;color:var(--mid);text-transform:uppercase}
 .nav{display:flex;gap:.25rem;align-items:center}
 .nav-btn{font-family:'Manrope',sans-serif;font-size:.82rem;font-weight:600;color:var(--text2);background:none;border:none;cursor:pointer;transition:color .15s;padding:.35rem .75rem;border-radius:var(--radius-sm)}
@@ -121,7 +121,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:500;padding:.875rem 2rem;disp
   box-shadow:var(--shadow-md);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   text-align:center;
-  padding:28px 28px 34px 28px;
+  padding:28px;
   cursor:pointer;transition:all .22s cubic-bezier(.4,0,.2,1);flex-shrink:0;
   font-family:'Manrope',sans-serif;overflow:hidden;box-sizing:border-box;
 }
@@ -348,7 +348,7 @@ body.night-mode .node-ai{background:rgba(255,255,255,0.92);border-color:rgba(180
 }
 /* Bubbles need special handling due to circular shape */
 .node-bubble.magic-glow::after { background: var(--surface); }
-.node-bubble.more-bubble.magic-glow::after { background: transparent; }
+.node-bubble.more-bubble.magic-glow::after { background: rgba(10,18,50,0.85); border-radius:50%; }
 .prompt-box.magic-glow::after { background: var(--surface); border-radius: var(--radius-lg); }
 .stage-card.magic-glow::after { background: var(--surface); border-radius: var(--radius-md); }
 .path-btn.magic-glow::after { background: var(--surface); border-radius: var(--radius-md); }
@@ -380,7 +380,7 @@ body.night-mode .node-ai{background:rgba(255,255,255,0.92);border-color:rgba(180
 <div id="weather-badge"></div>
 
 <header>
-  <div class="logo" onclick="resetAll()"><span class="logo-dot"></span>whatimado<span>.com</span></div>
+  <div class="logo" onclick="resetAll()"><span class="logo-dot"></span>whatimado<span style="font-weight:400;color:var(--mid)">.com</span></div>
   <div class="tagline">Casual name. Serious business.</div>
   <nav class="nav">
     <button class="nav-btn active" id="nav-home-btn" onclick="resetAll()">Home</button>
@@ -697,7 +697,11 @@ function showNodeIdeas(ideas){
     if(i>0){const c=document.createElement('div');c.className='node-connector-h';rail.appendChild(c);}
     const btn=document.createElement('button');
     btn.className='node-bubble magic-glow';
-    btn.innerHTML=`<div class="nb-icon">${ICONS[i%ICONS.length]}</div><div class="nb-type">${esc(idea.type||'Idea')}</div><div class="nb-title">${esc(idea.title)}</div><div class="nb-sub">${esc((idea.tagline||'').substring(0,52))}</div>`;
+    var t=idea.title||'', tp=idea.type||'Idea', tg=idea.tagline||'';
+    var trimTitle=t.length>26?t.substring(0,24)+'…':t;
+    var trimType=tp.length>22?tp.substring(0,20)+'…':tp;
+    var trimTag=tg.substring(0,46);
+    btn.innerHTML='<div class="nb-icon">'+ICONS[i%ICONS.length]+'</div><div class="nb-type">'+esc(trimType)+'</div><div class="nb-title">'+esc(trimTitle)+'</div><div class="nb-sub">'+esc(trimTag)+'</div>';
     btn.onclick=()=>viewJourney(idea.title,idea.type);
     const delay = i * 0.12;
     btn.style.animationDelay = delay + 's';
@@ -1143,29 +1147,45 @@ const WX = {
 
     const isNight = this.current && this.current.includes('night');
     const baseColor = isNight ? `rgba(130,150,190,${opacity})` : `rgba(255,255,255,${opacity})`;
-    // Draw each puff individually so overlaps merge cleanly (no even-odd holes)
-    const puffs = [
-      {x: cw*(0.45+Math.random()*0.1),  y: ch*0.65, r: cw*(0.18+Math.random()*0.07)},
-      {x: cw*(0.25+Math.random()*0.1),  y: ch*0.72, r: cw*(0.13+Math.random()*0.06)},
-      {x: cw*(0.65+Math.random()*0.1),  y: ch*0.70, r: cw*(0.13+Math.random()*0.05)},
-      {x: cw*(0.38+Math.random()*0.08), y: ch*0.5,  r: cw*(0.16+Math.random()*0.06)},
-      {x: cw*(0.58+Math.random()*0.08), y: ch*0.48, r: cw*(0.15+Math.random()*0.05)},
-      {x: cw*(0.48+Math.random()*0.06), y: ch*0.34, r: cw*(0.12+Math.random()*0.05)},
-    ];
-    // Fill each circle separately — overlaps paint on top, no holes
-    cx.fillStyle = baseColor;
-    puffs.forEach(p => {
-      cx.beginPath();
-      cx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-      cx.fill();
+    // Cloud: draw fully opaque on offscreen, then composite at desired opacity
+    var isNightCloud = this.current && this.current.includes('night');
+    var solidColor = isNightCloud ? '#8090b8' : '#ffffff';
+
+    var off2 = document.createElement('canvas');
+    off2.width = Math.ceil(cw); off2.height = Math.ceil(ch);
+    var ox2 = off2.getContext('2d');
+    // FULLY OPAQUE — no rgba transparency so overlaps are truly solid
+    ox2.fillStyle = solidColor;
+
+    // Wide pill base
+    var bx=cw*0.05, by=ch*0.60, bw=cw*0.90, bh=ch*0.32, br=bh/2;
+    ox2.beginPath();
+    ox2.moveTo(bx+br, by);
+    ox2.lineTo(bx+bw-br, by);
+    ox2.arcTo(bx+bw, by, bx+bw, by+br, br);
+    ox2.lineTo(bx+bw, by+bh-br);
+    ox2.arcTo(bx+bw, by+bh, bx+bw-br, by+bh, br);
+    ox2.lineTo(bx+br, by+bh);
+    ox2.arcTo(bx, by+bh, bx, by+bh-br, br);
+    ox2.lineTo(bx, by+br);
+    ox2.arcTo(bx, by, bx+br, by, br);
+    ox2.closePath();
+    ox2.fill();
+
+    // Puff bumps as full circles — all solid, overlaps merge
+    [{x:cw*0.22,y:ch*0.60,r:cw*0.13},
+     {x:cw*0.40,y:ch*0.52,r:cw*0.17},
+     {x:cw*0.59,y:ch*0.54,r:cw*0.15},
+     {x:cw*0.77,y:ch*0.59,r:cw*0.11}
+    ].forEach(function(b){
+      ox2.beginPath();
+      ox2.arc(b.x, b.y, b.r, 0, Math.PI*2);
+      ox2.fill();
     });
-    // Second pass: slightly larger, low opacity for soft edge blending
-    cx.globalAlpha = 0.18;
-    puffs.forEach(p => {
-      cx.beginPath();
-      cx.arc(p.x, p.y, p.r * 1.18, 0, Math.PI*2);
-      cx.fill();
-    });
+
+    // Stamp offscreen onto main canvas at the desired opacity
+    cx.globalAlpha = opacity;
+    cx.drawImage(off2, 0, 0);
     cx.globalAlpha = 1;
 
     const top = 3 + Math.random() * 68;
@@ -1183,7 +1203,7 @@ const WX = {
       opacity: 0,
       animation: `cloudFadeIn 1.8s ease ${fadeDel}s forwards, ${dir.anim} ${dur}s linear ${delay}s infinite`,
       pointerEvents: 'none',
-      filter: 'blur(0.6px)',
+      filter: 'none',
       zIndex: '0',
     });
     bg.appendChild(cvs);
