@@ -642,27 +642,33 @@
       min-width: 0;
     }
 
-    .more-ideas-wrap {
+    .map-actions {
       display: flex;
+      flex-wrap: wrap;
+      align-items: center;
       justify-content: center;
+      gap: .65rem;
       margin-top: 1.5rem;
       padding-bottom: .5rem;
     }
 
-    .more-ideas-btn {
+    .map-action-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: .45rem;
       min-height: 42px;
-      border: 1px solid rgba(124, 111, 205, .45);
       border-radius: 10px;
-      padding: .65rem 1.35rem;
-      color: #fff;
-      background: var(--purple);
+      padding: .65rem 1.25rem;
       font-size: .83rem;
       font-weight: 700;
       transition: .16s ease;
+    }
+
+    .more-ideas-btn {
+      border: 1px solid rgba(124, 111, 205, .45);
+      color: #fff;
+      background: var(--purple);
     }
 
     .more-ideas-btn:hover:not(:disabled) {
@@ -670,9 +676,72 @@
       transform: translateY(-1px);
     }
 
-    .more-ideas-btn:disabled {
+    .alter-path-btn {
+      border: 1px solid rgba(78, 205, 196, .45);
+      color: #07111f;
+      background: var(--teal);
+    }
+
+    .alter-path-btn:hover:not(:disabled) {
+      background: #6eddd4;
+      transform: translateY(-1px);
+    }
+
+    .map-action-btn:disabled {
       opacity: .65;
       cursor: wait;
+    }
+
+    .nav-btn.save-btn {
+      border: 1px solid rgba(78, 205, 196, .32);
+      color: #90e8df;
+    }
+
+    .nav-btn.save-btn:hover {
+      color: #fff;
+      background: rgba(78, 205, 196, .14);
+      border-color: rgba(78, 205, 196, .5);
+    }
+
+    .nav-btn.save-btn.is-saving {
+      opacity: .7;
+      pointer-events: none;
+    }
+
+    .nav-btn.save-btn.is-saved {
+      color: var(--green);
+      border-color: rgba(82, 196, 122, .45);
+    }
+
+    .nav-btn.save-btn.is-error {
+      color: var(--rose);
+      border-color: rgba(224, 108, 117, .45);
+    }
+
+    .save-status-bar {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      margin-top: .75rem;
+      color: var(--muted);
+      font-size: .72rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .save-status-bar.visible {
+      display: flex;
+    }
+
+    .save-status-bar button {
+      border: 0;
+      color: var(--purple-2);
+      background: transparent;
+      font-size: .72rem;
+      font-weight: 800;
+      text-decoration: underline;
+      text-underline-offset: 2px;
     }
 
     .opp-card,
@@ -1023,20 +1092,138 @@
       background: var(--teal);
     }
 
-    .task-answer {
-      display: none;
-      margin-top: .6rem;
-      border-left: 2px solid var(--teal);
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-      padding: .6rem .75rem;
+    .task-threads {
+      display: flex;
+      flex-direction: column;
+      gap: .45rem;
+      margin-top: .55rem;
+    }
+
+    .task-thread-collapsed {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      width: 100%;
+      border: 1px solid rgba(78, 205, 196, .22);
+      border-radius: var(--radius-sm);
+      padding: .5rem .65rem;
+      color: #a8d4f0;
+      background: rgba(78, 205, 196, .08);
+      font-size: .76rem;
+      font-weight: 600;
+      line-height: 1.35;
+      text-align: left;
+      transition: .14s ease;
+    }
+
+    .task-thread-collapsed:hover {
+      border-color: rgba(78, 205, 196, .45);
       color: #d0e8ff;
-      background: rgba(78, 205, 196, .1);
+      background: rgba(78, 205, 196, .14);
+    }
+
+    .task-thread-dot {
+      width: 7px;
+      height: 7px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+
+    .task-thread-expanded {
+      border: 1px solid rgba(78, 205, 196, .28);
+      border-radius: var(--radius-sm);
+      padding: .65rem .75rem;
+      background: rgba(78, 205, 196, .07);
+    }
+
+    .task-thread-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .5rem;
+      margin-bottom: .5rem;
+    }
+
+    .task-thread-title {
+      color: var(--teal);
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      line-height: 1.3;
+    }
+
+    .task-thread-collapse {
+      border: 0;
+      border-radius: 4px;
+      padding: .15rem .4rem;
+      color: var(--muted);
+      background: rgba(120, 130, 200, .12);
+      font-size: .85rem;
+      line-height: 1;
+    }
+
+    .task-thread-collapse:hover {
+      color: var(--ink);
+    }
+
+    .task-thread-msgs {
+      display: flex;
+      flex-direction: column;
+      gap: .45rem;
+    }
+
+    .task-thread-msg {
       font-size: .8rem;
       line-height: 1.5;
     }
 
-    .task-answer.visible {
-      display: block;
+    .task-thread-msg.user {
+      color: #c8deff;
+      font-weight: 600;
+    }
+
+    .task-thread-msg.assistant {
+      color: #d0e8ff;
+    }
+
+    .task-thread-msg.thinking {
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .rich-text a {
+      color: #6ee7de;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      word-break: break-word;
+    }
+
+    .rich-text a:hover {
+      color: #90fff5;
+    }
+
+    .save-toast {
+      position: fixed;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      z-index: 30;
+      border: 1px solid rgba(78, 205, 196, .35);
+      border-radius: 999px;
+      padding: .45rem .85rem;
+      color: #d0e8ff;
+      background: rgba(22, 25, 41, .94);
+      font-size: .72rem;
+      font-weight: 700;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+      backdrop-filter: blur(12px);
+    }
+
+    .save-toast.visible {
+      opacity: 1;
     }
 
     .progress-map {
@@ -1338,6 +1525,7 @@
       <button class="nav-btn active" data-screen-link="main" id="nav-home-btn">Home</button>
       <button class="nav-btn" data-screen-link="map" id="nav-map-btn" hidden>My Map</button>
       <button class="nav-btn" data-screen-link="roadmap" id="nav-roadmap-btn" hidden>Roadmap</button>
+      <button class="nav-btn save-btn" id="nav-save-btn" type="button" hidden title="Save progress">Save</button>
       <span class="nav-divider" aria-hidden="true"></span>
       <button class="nav-btn" id="nav-signin-btn" data-auth-open="signin">Sign in</button>
       <button class="nav-btn primary" id="nav-signup-btn" data-auth-open="signup">Sign up</button>
@@ -1414,8 +1602,13 @@
 
         <div class="opp-grid" id="opp-grid"></div>
 
-        <div class="more-ideas-wrap">
-          <button class="more-ideas-btn" id="more-ideas-btn" type="button">Show me more paths</button>
+        <div class="map-actions">
+          <button class="map-action-btn more-ideas-btn" id="more-ideas-btn" type="button">Show me more paths</button>
+          <button class="map-action-btn alter-path-btn" id="alter-path-btn" type="button">Chat to alter path</button>
+        </div>
+        <div class="save-status-bar" id="save-status-bar">
+          <span id="save-status-text"></span>
+          <button type="button" id="save-signin-link" hidden>Sign in to sync</button>
         </div>
       </div>
     </section>
@@ -1511,6 +1704,8 @@
     </div>
   </div>
 
+  <div class="save-toast" id="save-toast" aria-live="polite">Progress saved</div>
+
   <script>
     const SUPABASE_URL = "https://acgjcnhcjgtpoztntcyb.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFjZ2pjbmhjamd0cG96dG50Y3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzMDU1MTgsImV4cCI6MjA5Njg4MTUxOH0.gEJfMFWjmsLTw2aKbjQhYDlPl_zvpjfxP8QskAN6ghQ";
@@ -1575,8 +1770,22 @@
       history: [],
       ideas: [],
       roadmapStages: [],
-      currentUser: null
+      currentUser: null,
+      currentIdea: null,
+      roadmapKey: null,
+      allTaskChats: {},
+      allRoadmaps: {},
+      activeTaskId: null,
+      expandedThreadId: null,
+      lastScreen: "main",
+      journeyId: null,
+      alterPathMode: false,
+      saveStatus: "idle"
     };
+
+    const STORAGE_GUEST = "whatimado_journey_guest";
+    let persistTimer = null;
+    let saveToastTimer = null;
 
     const $ = (selector) => document.querySelector(selector);
     const $$ = (selector) => [...document.querySelectorAll(selector)];
@@ -1590,14 +1799,407 @@
     }
 
     function formatText(value) {
-      return escapeHtml(value).replaceAll("\n\n", "<br><br>").replaceAll("\n", "<br>");
+      return formatRichText(value);
     }
 
-    function showScreen(name) {
+    function formatRichText(value) {
+      let html = escapeHtml(value);
+      html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (_, label, url) => {
+        const safeUrl = escapeHtml(url);
+        return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`;
+      });
+      html = html.replace(/(^|[\s(])((https?:\/\/[^\s<]+?)(?=[\s),.!?]|$))/g, (_, prefix, url) => {
+        const safeUrl = escapeHtml(url);
+        return `${prefix}<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${safeUrl}</a>`;
+      });
+      return html.replaceAll("\n\n", "<br><br>").replaceAll("\n", "<br>");
+    }
+
+    function slugify(text) {
+      return String(text ?? "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "roadmap";
+    }
+
+    function abbreviateQuestion(text, max = 56) {
+      const trimmed = String(text ?? "").trim().replace(/\s+/g, " ");
+      if (trimmed.length <= max) return trimmed;
+      return `${trimmed.slice(0, max - 1)}…`;
+    }
+
+    function getStorageKey() {
+      return state.currentUser?.id ? `whatimado_journey_${state.currentUser.id}` : STORAGE_GUEST;
+    }
+
+    function serializeSession() {
+      return {
+        step: state.step,
+        history: state.history,
+        ideas: state.ideas,
+        roadmapStages: state.roadmapStages,
+        currentIdea: state.currentIdea,
+        roadmapKey: state.roadmapKey,
+        allTaskChats: state.allTaskChats,
+        allRoadmaps: state.allRoadmaps,
+        expandedThreadId: state.expandedThreadId,
+        activeTaskId: state.activeTaskId,
+        lastScreen: state.lastScreen,
+        savedAt: Date.now()
+      };
+    }
+
+    function applySession(data) {
+      if (!data) return;
+      state.step = data.step ?? 1;
+      state.history = Array.isArray(data.history) ? data.history : [];
+      state.ideas = Array.isArray(data.ideas) ? data.ideas : [];
+      state.roadmapStages = Array.isArray(data.roadmapStages) ? data.roadmapStages : [];
+      state.currentIdea = data.currentIdea ?? null;
+      state.roadmapKey = data.roadmapKey ?? null;
+      state.allTaskChats = data.allTaskChats && typeof data.allTaskChats === "object" ? data.allTaskChats : {};
+      state.allRoadmaps = data.allRoadmaps && typeof data.allRoadmaps === "object" ? data.allRoadmaps : {};
+      state.expandedThreadId = data.expandedThreadId ?? null;
+      state.activeTaskId = data.activeTaskId ?? null;
+      state.lastScreen = data.lastScreen ?? "main";
+    }
+
+    function hasSavableProgress() {
+      return state.history.length > 0 || state.ideas.length > 0;
+    }
+
+    function updateSaveButtonVisibility() {
+      const saveBtn = $("#nav-save-btn");
+      if (saveBtn) saveBtn.hidden = !hasSavableProgress();
+    }
+
+    function setSaveStatus(status, message = "") {
+      state.saveStatus = status;
+      const saveBtn = $("#nav-save-btn");
+      const statusBar = $("#save-status-bar");
+      const statusText = $("#save-status-text");
+      const signinLink = $("#save-signin-link");
+
+      saveBtn?.classList.remove("is-saving", "is-saved", "is-error");
+      if (status === "saving") {
+        saveBtn?.classList.add("is-saving");
+        if (saveBtn) saveBtn.textContent = "Saving…";
+      } else if (status === "saved-cloud") {
+        saveBtn?.classList.add("is-saved");
+        if (saveBtn) saveBtn.textContent = "Saved";
+      } else if (status === "saved-local") {
+        saveBtn?.classList.add("is-saved");
+        if (saveBtn) saveBtn.textContent = "Saved";
+      } else if (status === "error") {
+        saveBtn?.classList.add("is-error");
+        if (saveBtn) saveBtn.textContent = "Save";
+      } else if (saveBtn) {
+        saveBtn.textContent = "Save";
+      }
+
+      if (statusBar && statusText) {
+        if (message && hasSavableProgress()) {
+          statusBar.classList.add("visible");
+          statusText.textContent = message;
+          if (signinLink) signinLink.hidden = Boolean(state.currentUser) || status === "error";
+        } else {
+          statusBar.classList.remove("visible");
+        }
+      }
+    }
+
+    function schedulePersist() {
+      clearTimeout(persistTimer);
+      persistTimer = setTimeout(() => persistSession({ silent: true }), 450);
+    }
+
+    function flashSaveToast(message) {
+      const toast = $("#save-toast");
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add("visible");
+      clearTimeout(saveToastTimer);
+      saveToastTimer = setTimeout(() => toast.classList.remove("visible"), 2400);
+    }
+
+    async function persistSession(options = {}) {
+      const { manual = false, silent = false } = options;
+      if (!hasSavableProgress()) return { ok: false };
+
+      setSaveStatus("saving");
+      const payload = serializeSession();
+      let localOk = false;
+
+      try {
+        localStorage.setItem(getStorageKey(), JSON.stringify(payload));
+        localOk = true;
+      } catch {
+        localOk = false;
+      }
+
+      let cloudOk = false;
+      let cloudError = false;
+      if (state.currentUser && supabaseClient) {
+        try {
+          const { data, error } = await supabaseClient.from("user_journeys").upsert(
+            {
+              user_id: state.currentUser.id,
+              payload,
+              updated_at: new Date().toISOString()
+            },
+            { onConflict: "user_id" }
+          ).select("id").single();
+          cloudOk = !error;
+          cloudError = Boolean(error);
+          if (!error && data?.id) state.journeyId = data.id;
+        } catch {
+          cloudError = true;
+        }
+      }
+
+      updateSaveButtonVisibility();
+
+      if (cloudOk) {
+        setSaveStatus("saved-cloud", manual ? "Saved to your account." : "Synced to your account.");
+        if (manual) flashSaveToast("Saved to your account");
+      } else if (localOk) {
+        const hint = state.currentUser
+          ? "Saved on this device. Cloud sync unavailable — run the Supabase migration or try again."
+          : "Saved on this device. Sign in to sync across devices.";
+        setSaveStatus("saved-local", manual ? hint : (state.currentUser ? "Saved locally." : "Saved on this device."));
+        if (manual) flashSaveToast(state.currentUser ? "Saved locally" : "Saved on this device");
+      } else {
+        setSaveStatus("error", "Could not save. Check browser storage settings.");
+        if (manual) flashSaveToast("Save failed — try again");
+      }
+
+      if (silent && !manual) {
+        const bar = $("#save-status-bar");
+        if (bar && !state.currentUser && localOk) {
+          bar.classList.add("visible");
+          $("#save-status-text").textContent = "Saved on this device.";
+          $("#save-signin-link").hidden = false;
+        }
+      }
+
+      return { ok: localOk || cloudOk, localOk, cloudOk, cloudError };
+    }
+
+    async function manualSave() {
+      await persistSession({ manual: true });
+    }
+
+    async function loadSession() {
+      let payload = null;
+      try {
+        const raw = localStorage.getItem(getStorageKey());
+        if (raw) payload = JSON.parse(raw);
+      } catch {
+        payload = null;
+      }
+
+      if (state.currentUser && supabaseClient) {
+        try {
+          const { data } = await supabaseClient
+            .from("user_journeys")
+            .select("id, payload, updated_at")
+            .eq("user_id", state.currentUser.id)
+            .maybeSingle();
+          if (data?.payload) {
+            const cloudTime = new Date(data.updated_at).getTime();
+            const localTime = payload?.savedAt ?? 0;
+            if (cloudTime >= localTime) {
+              payload = data.payload;
+              state.journeyId = data.id;
+            }
+          }
+        } catch {
+          /* fall back to localStorage */
+        }
+      }
+
+      if (payload) {
+        applySession(payload);
+        restoreSessionUI();
+      }
+      updateSaveButtonVisibility();
+    }
+
+    function restoreConversationBubbles() {
+      const chain = $("#bubble-chain");
+      if (!chain || !state.history.length) return;
+      chain.innerHTML = "";
+      state.history.forEach((entry) => {
+        if (entry.role === "user") {
+          addUserBubble(entry.content);
+        } else {
+          addTypingBubble();
+          resolveTyping(entry.content);
+        }
+      });
+      if (state.step >= 2 && state.step < 4) showReplyBox(true);
+    }
+
+    function restoreSessionUI() {
+      if (state.history.length) restoreConversationBubbles();
+      if (state.ideas.length) {
+        buildOpportunityMap(state.ideas);
+        $("#nav-map-btn").hidden = false;
+      }
+      if (state.currentIdea && state.roadmapStages.length) {
+        if (state.roadmapKey && !state.allRoadmaps[state.roadmapKey]) {
+          state.allRoadmaps[state.roadmapKey] = { idea: state.currentIdea, stages: state.roadmapStages };
+        }
+        $("#nav-roadmap-btn").hidden = false;
+        $("#roadmap-type").textContent = state.currentIdea.type || "Roadmap";
+        $("#roadmap-title").textContent = state.currentIdea.title || "";
+        $("#roadmap-sub").textContent = "Follow these stages to get this off the ground.";
+        $("#momentum-card").style.display = "flex";
+        setRoadmapLoading(false);
+        renderStages(state.roadmapStages);
+      }
+      if (state.lastScreen && state.lastScreen !== "main" && state.history.length) {
+        showScreen(state.lastScreen, { skipPersist: true });
+      }
+      updateSaveButtonVisibility();
+    }
+
+    function startAlterPathChat() {
+      if (!state.ideas.length) return;
+      state.alterPathMode = true;
+      showScreen("convo");
+      const prompt = "What would you like to change about these paths? Tell me what's not fitting — or what direction you'd rather explore.";
+      addTypingBubble();
+      resolveTyping(prompt);
+      state.history.push({ role: "assistant", content: prompt });
+      const reply = $("#reply-textarea");
+      if (reply) reply.placeholder = "e.g. These feel too online — I want something local and hands-on...";
+      showReplyBox(true);
+      schedulePersist();
+    }
+
+    async function submitAlterPathReply() {
+      showReplyBox(false);
+      addTypingBubble();
+      const summary = getConversationSummary();
+      const response = await callAdvisor(
+        `${buildIdeasPrompt(summary, 3)}\n\nThe user is revising their path options — previous paths did not fully fit. Generate 3 NEW ideas that reflect their latest feedback. Reference what they want changed.`,
+        900
+      );
+
+      state.ideas = extractJsonArray(response, fallbackIdeas);
+      state.allRoadmaps = {};
+      state.currentIdea = null;
+      state.roadmapKey = null;
+      state.roadmapStages = [];
+      state.alterPathMode = false;
+      $("#nav-roadmap-btn").hidden = true;
+      const reply = $("#reply-textarea");
+      if (reply) reply.placeholder = "Type your response...";
+
+      const closing = "Got it — I've updated your paths based on that. Take a look at your revised map.";
+      resolveTyping(closing);
+      state.history.push({ role: "assistant", content: closing });
+      schedulePersist();
+
+      setTimeout(() => {
+        buildOpportunityMap(state.ideas);
+        $("#nav-map-btn").hidden = false;
+        showScreen("map");
+      }, 550);
+    }
+
+    function getRoadmapTaskData(taskId) {
+      if (!state.roadmapKey) return { notes: "", checked: false, threads: [] };
+      if (!state.allTaskChats[state.roadmapKey]) state.allTaskChats[state.roadmapKey] = {};
+      if (!state.allTaskChats[state.roadmapKey][taskId]) {
+        state.allTaskChats[state.roadmapKey][taskId] = { notes: "", checked: false, threads: [] };
+      }
+      return state.allTaskChats[state.roadmapKey][taskId];
+    }
+
+    function collapseAllThreads(exceptId = null) {
+      state.expandedThreadId = exceptId;
+      Object.values(state.allTaskChats).forEach((roadmap) => {
+        Object.values(roadmap).forEach((taskData) => {
+          (taskData.threads || []).forEach((thread) => {
+            thread.expanded = thread.id === exceptId;
+          });
+        });
+      });
+      renderAllTaskThreads();
+    }
+
+    function renderAllTaskThreads() {
+      $$(".task-threads").forEach((container) => {
+        const taskId = container.id.replace("threads-", "");
+        renderTaskThreads(taskId);
+      });
+    }
+
+    function renderTaskThreads(taskId) {
+      const container = $(`#threads-${taskId}`);
+      if (!container) return;
+      const taskData = getRoadmapTaskData(taskId);
+      const threads = taskData.threads || [];
+
+      if (!threads.length) {
+        container.innerHTML = "";
+        return;
+      }
+
+      container.innerHTML = threads.map((thread) => {
+        const isExpanded = thread.expanded || thread.id === state.expandedThreadId;
+        if (!isExpanded) {
+          return `
+            <button type="button" class="task-thread-collapsed" data-task-id="${taskId}" data-thread-id="${thread.id}">
+              <span class="task-thread-dot" aria-hidden="true"></span>
+              ${escapeHtml(thread.title)}
+            </button>`;
+        }
+
+        const messages = (thread.messages || []).map((message) => `
+          <div class="task-thread-msg ${message.role} rich-text">${formatRichText(message.content)}</div>
+        `).join("");
+
+        return `
+          <div class="task-thread-expanded" data-thread-id="${thread.id}">
+            <div class="task-thread-head">
+              <div class="task-thread-title">${escapeHtml(thread.title)}</div>
+              <button type="button" class="task-thread-collapse" data-task-id="${taskId}" data-thread-id="${thread.id}" aria-label="Collapse chat">−</button>
+            </div>
+            <div class="task-thread-msgs rich-text">${messages}</div>
+          </div>`;
+      }).join("");
+    }
+
+    function expandThread(taskId, threadId) {
+      collapseAllThreads(threadId);
+      state.activeTaskId = taskId;
+      const taskData = getRoadmapTaskData(taskId);
+      const thread = taskData.threads.find((item) => item.id === threadId);
+      if (thread) thread.expanded = true;
+      renderTaskThreads(taskId);
+      schedulePersist();
+    }
+
+    function handleTaskThreadClick(event) {
+      const collapsed = event.target.closest(".task-thread-collapsed");
+      if (collapsed) {
+        expandThread(collapsed.dataset.taskId, collapsed.dataset.threadId);
+        return;
+      }
+      const collapseBtn = event.target.closest(".task-thread-collapse");
+      if (collapseBtn) {
+        collapseAllThreads(null);
+        schedulePersist();
+      }
+    }
+
+    function showScreen(name, options = {}) {
+      state.lastScreen = name;
       $$(".screen").forEach((screen) => screen.classList.toggle("active", screen.id === `screen-${name}`));
       $$(".nav-btn").forEach((button) => button.classList.remove("active"));
       $(`[data-screen-link="${name}"]`)?.classList.add("active");
       window.scrollTo({ top: 0, behavior: "smooth" });
+      if (!options.skipPersist) schedulePersist();
     }
 
     function addUserBubble(text) {
@@ -1732,8 +2334,11 @@
       );
 
       resolveTyping(answer || "What are you naturally good at, and would you rather get hired, learn a new skill, or build your own thing?");
+      state.history.push({ role: "assistant", content: answer || "What are you naturally good at, and would you rather get hired, learn a new skill, or build your own thing?" });
       state.step = 2;
       showReplyBox(true);
+      updateSaveButtonVisibility();
+      schedulePersist();
     }
 
     async function submitReply() {
@@ -1745,10 +2350,18 @@
       addTypingBubble();
       state.history.push({ role: "user", content: text });
 
+      if (state.alterPathMode) {
+        await submitAlterPathReply();
+        return;
+      }
+
       if (state.step === 2) {
-        resolveTyping("May I ask your name?");
+        const reply = "May I ask your name?";
+        resolveTyping(reply);
+        state.history.push({ role: "assistant", content: reply });
         state.step = 3;
         showReplyBox(true);
+        schedulePersist();
         return;
       }
 
@@ -1757,7 +2370,12 @@
       const response = await callAdvisor(buildIdeasPrompt(summary, 3), 900);
 
       state.ideas = extractJsonArray(response, fallbackIdeas);
-      resolveTyping("Here are your paths. Tap any opportunity to see your full roadmap.");
+      const closing = "Here are your paths. Tap any opportunity to see your full roadmap.";
+      resolveTyping(closing);
+      state.history.push({ role: "assistant", content: closing });
+      state.step = 4;
+      updateSaveButtonVisibility();
+      schedulePersist();
       setTimeout(() => {
         buildOpportunityMap(state.ideas);
         $("#nav-map-btn").hidden = false;
@@ -1849,6 +2467,7 @@
         card.addEventListener("click", () => viewRoadmap(idea, index));
         grid.append(card);
       });
+      schedulePersist();
     }
 
     function setRoadmapLoading(loading) {
@@ -1857,14 +2476,28 @@
     }
 
     async function viewRoadmap(idea, ideaIndex) {
+      state.currentIdea = idea;
+      state.roadmapKey = slugify(idea.title);
       $("#nav-roadmap-btn").hidden = false;
       $("#roadmap-type").textContent = idea.type || "Roadmap";
       $("#roadmap-title").textContent = idea.title;
+      setRoadmapLoading(true);
+      showScreen("roadmap");
+
+      const cached = state.allRoadmaps[state.roadmapKey];
+      if (cached?.stages?.length) {
+        state.roadmapStages = cached.stages;
+        $("#roadmap-sub").textContent = "Follow these stages to get this off the ground.";
+        $("#momentum-card").style.display = "flex";
+        renderStages(state.roadmapStages);
+        setRoadmapLoading(false);
+        schedulePersist();
+        return;
+      }
+
       $("#roadmap-sub").textContent = "Building your personalised roadmap...";
       $("#stage-list").innerHTML = "";
       $("#momentum-card").style.display = "none";
-      setRoadmapLoading(true);
-      showScreen("roadmap");
 
       const context = state.history.map((entry) => `${entry.role === "user" ? "User" : "Advisor"}: ${entry.content}`).join("\n");
       const response = await callAdvisor(
@@ -1873,10 +2506,33 @@
       );
 
       state.roadmapStages = extractJsonArray(response, fallbackStages);
+      state.allRoadmaps[state.roadmapKey] = { idea, stages: state.roadmapStages };
       $("#roadmap-sub").textContent = "Follow these stages to get this off the ground.";
       $("#momentum-card").style.display = "flex";
       renderStages(state.roadmapStages);
       setRoadmapLoading(false);
+      schedulePersist();
+    }
+
+    function bindTaskPersistence() {
+      $$(".task-item").forEach((item) => {
+        const taskId = item.dataset.taskId;
+        const data = getRoadmapTaskData(taskId);
+        const check = item.querySelector(".task-check");
+        const notes = item.querySelector(".task-textarea");
+        if (check) check.checked = Boolean(data.checked);
+        if (notes) notes.value = data.notes || "";
+        check?.addEventListener("change", () => {
+          data.checked = check.checked;
+          schedulePersist();
+          updateMomentum();
+        });
+        notes?.addEventListener("input", () => {
+          data.notes = notes.value;
+          schedulePersist();
+        });
+        renderTaskThreads(taskId);
+      });
     }
 
     function renderStages(stages) {
@@ -1889,23 +2545,23 @@
         const taskMarkup = (stage.tasks || []).map((task, taskIndex) => {
           const id = `task-${stageIndex}-${taskIndex}`;
           return `
-            <div class="task-item">
+            <div class="task-item" data-task-id="${id}">
               <div class="task-top">
                 <input class="task-check" type="checkbox" id="${id}">
                 <label class="task-text" for="${id}">${escapeHtml(task)}</label>
               </div>
               <div class="task-label">My Notes</div>
               <textarea class="task-textarea" placeholder="Jot down thoughts, progress, links..."></textarea>
+              <div class="task-threads" id="threads-${id}"></div>
               <div class="task-ask-row">
                 <textarea class="task-question" id="question-${id}" rows="1" placeholder="Ask AI about this task..."></textarea>
-                <button class="task-ask-btn" data-task-id="${id}" data-task="${escapeHtml(task)}">Ask</button>
+                <button class="task-ask-btn" type="button" data-task-id="${id}" data-task="${escapeHtml(task)}">Ask</button>
               </div>
-              <div class="task-answer" id="answer-${id}"></div>
             </div>`;
         }).join("");
 
         card.innerHTML = `
-          <button class="stage-head">
+          <button class="stage-head" type="button">
             <span class="stage-num">${stageIndex + 1}</span>
             <span class="stage-label">${escapeHtml(stage.label)}</span>
             <span aria-hidden="true">&gt;</span>
@@ -1918,8 +2574,10 @@
         list.append(card);
       });
 
-      $$(".task-check").forEach((checkbox) => checkbox.addEventListener("change", updateMomentum));
-      $$(".task-ask-btn").forEach((button) => button.addEventListener("click", () => askTask(button.dataset.taskId, button.dataset.task)));
+      $$(".task-ask-btn").forEach((button) => {
+        button.addEventListener("click", () => askTask(button.dataset.taskId, button.dataset.task));
+      });
+      bindTaskPersistence();
       initProgressMap(stages);
       updateMomentum();
     }
@@ -1973,19 +2631,57 @@
       });
     }
 
-    async function askTask(id, taskText) {
-      const question = $(`#question-${id}`)?.value.trim();
-      const answer = $(`#answer-${id}`);
-      if (!question || !answer) return;
-      answer.classList.add("visible");
-      answer.textContent = "Thinking...";
+    async function askTask(taskId, taskText) {
+      const questionEl = $(`#question-${taskId}`);
+      const question = questionEl?.value.trim();
+      if (!question) return;
+
+      if (state.activeTaskId && state.activeTaskId !== taskId) {
+        collapseAllThreads(null);
+      }
+      state.activeTaskId = taskId;
+
+      const taskData = getRoadmapTaskData(taskId);
+      let thread = state.expandedThreadId
+        ? taskData.threads.find((item) => item.id === state.expandedThreadId && item.expanded)
+        : null;
+
+      if (!thread) {
+        thread = {
+          id: `thread-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+          title: abbreviateQuestion(question),
+          expanded: true,
+          messages: []
+        };
+        taskData.threads.push(thread);
+        collapseAllThreads(thread.id);
+      }
+
+      thread.messages.push({ role: "user", content: question });
+      questionEl.value = "";
+      renderTaskThreads(taskId);
+      schedulePersist();
+
+      thread.messages.push({ role: "assistant", content: "Thinking..." });
+      renderTaskThreads(taskId);
+
+      const threadHistory = thread.messages
+        .filter((message) => message.content !== "Thinking...")
+        .map((message) => `${message.role === "user" ? "User" : "Advisor"}: ${message.content}`)
+        .join("\n");
 
       const text = await callAdvisor(
-        `Answer this question about a specific task in 2-4 sentences. Plain text only.\n\nIdea: ${$("#roadmap-title").textContent}\nTask: ${taskText}\nQuestion: ${question}`,
-        300
+        `You are whatimado, a practical task coach. Answer helpfully in 2-5 sentences.\nWhen mentioning websites, tools, or platforms, always include the full URL starting with https:// so the user can click it.\n\nIdea: ${$("#roadmap-title").textContent}\nTask: ${taskText}\n\nConversation so far:\n${threadHistory}`,
+        450
       );
-      answer.innerHTML = formatText(text || "Try breaking this into one tiny action you can finish today, then use what happens as feedback.");
-      $(`#question-${id}`).value = "";
+
+      thread.messages = thread.messages.filter((message) => message.content !== "Thinking...");
+      thread.messages.push({
+        role: "assistant",
+        content: text || "Try one small step today, note what happens, and ask a follow-up if you get stuck."
+      });
+      renderTaskThreads(taskId);
+      schedulePersist();
     }
 
     function resetAll() {
@@ -1993,6 +2689,24 @@
       state.history = [];
       state.ideas = [];
       state.roadmapStages = [];
+      state.currentIdea = null;
+      state.roadmapKey = null;
+      state.allTaskChats = {};
+      state.allRoadmaps = {};
+      state.activeTaskId = null;
+      state.expandedThreadId = null;
+      state.lastScreen = "main";
+      state.alterPathMode = false;
+      setSaveStatus("idle");
+      $("#save-status-bar")?.classList.remove("visible");
+      try {
+        localStorage.removeItem(getStorageKey());
+      } catch {
+        /* ignore */
+      }
+      if (state.currentUser && supabaseClient) {
+        supabaseClient.from("user_journeys").delete().eq("user_id", state.currentUser.id).then(() => {});
+      }
       $("#main-input").value = "";
       $("#bubble-chain").innerHTML = "";
       $("#nav-map-btn").hidden = true;
@@ -2003,6 +2717,7 @@
         moreBtn.textContent = "Show me more paths";
       }
       showReplyBox(false);
+      updateSaveButtonVisibility();
       showScreen("main");
     }
 
@@ -2032,19 +2747,55 @@
       element.style.background = isError ? "rgba(224, 108, 117, .1)" : "rgba(78, 205, 196, .1)";
     }
 
-    async function initAuth() {
-      if (!supabaseClient) return;
-      const { data } = await supabaseClient.auth.getSession();
-      setUser(data.session?.user || null);
-      supabaseClient.auth.onAuthStateChange((_, session) => setUser(session?.user || null));
+    async function mergeGuestSessionIntoAccount() {
+      if (!state.currentUser) return;
+      try {
+        const guestRaw = localStorage.getItem(STORAGE_GUEST);
+        if (!guestRaw) return;
+        const guestData = JSON.parse(guestRaw);
+        const userKey = `whatimado_journey_${state.currentUser.id}`;
+        const userRaw = localStorage.getItem(userKey);
+        const userData = userRaw ? JSON.parse(userRaw) : null;
+        if (!userData || (guestData.savedAt ?? 0) > (userData.savedAt ?? 0)) {
+          localStorage.setItem(userKey, guestRaw);
+        }
+        localStorage.removeItem(STORAGE_GUEST);
+      } catch {
+        /* ignore merge errors */
+      }
     }
 
-    function setUser(user) {
+    async function setUser(user, options = {}) {
+      const previousId = state.currentUser?.id ?? null;
+      const nextId = user?.id ?? null;
       state.currentUser = user;
       $("#nav-signin-btn").hidden = Boolean(user);
       $("#nav-signup-btn").hidden = Boolean(user);
       $("#nav-user").style.display = user ? "flex" : "none";
       if (user) $("#nav-username").textContent = user.email.split("@")[0];
+      updateSaveButtonVisibility();
+
+      if (nextId && !previousId) {
+        await mergeGuestSessionIntoAccount();
+      }
+
+      if (options.reload || nextId !== previousId) {
+        await loadSession();
+      }
+
+      if (nextId && !previousId && hasSavableProgress()) {
+        await persistSession({ manual: true });
+      }
+    }
+
+    async function initAuth() {
+      if (!supabaseClient) {
+        await loadSession();
+        return;
+      }
+      const { data } = await supabaseClient.auth.getSession();
+      await setUser(data.session?.user || null, { reload: true });
+      supabaseClient.auth.onAuthStateChange((_, session) => setUser(session?.user || null));
     }
 
     function getAuthRedirectUrl() {
@@ -2197,6 +2948,10 @@
 
       $("#reset-btn").addEventListener("click", resetAll);
       $("#more-ideas-btn").addEventListener("click", fetchMoreIdeas);
+      $("#alter-path-btn").addEventListener("click", startAlterPathChat);
+      $("#nav-save-btn").addEventListener("click", manualSave);
+      $("#save-signin-link")?.addEventListener("click", () => showAuth("signin"));
+      $("#stage-list")?.addEventListener("click", handleTaskThreadClick);
       $("#auth-close-btn").addEventListener("click", closeAuth);
       $("#auth-overlay").addEventListener("click", (event) => {
         if (event.target.id === "auth-overlay") closeAuth();
@@ -2209,10 +2964,10 @@
       $("#signout-btn").addEventListener("click", signOut);
     }
 
-    window.addEventListener("load", () => {
+    window.addEventListener("load", async () => {
       bindEvents();
       initNetworkCanvas();
-      initAuth();
+      await initAuth();
       setTimeout(() => {
         $("#loader").classList.add("hidden");
         setTimeout(() => $("#loader").remove(), 650);
