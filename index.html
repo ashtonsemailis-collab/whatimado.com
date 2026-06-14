@@ -210,13 +210,15 @@
       width: 100%;
       overflow: hidden;
       cursor: grab;
-      touch-action: pan-y;
+      touch-action: none;
       user-select: none;
       -webkit-user-select: none;
+      transition: height .38s cubic-bezier(.22, 1, .36, 1);
     }
 
     .status-wall.is-dragging {
       cursor: grabbing;
+      transition: none;
     }
 
     .status-wall.is-dragging .status-wall-track {
@@ -225,6 +227,7 @@
 
     .status-wall-track {
       display: flex;
+      align-items: flex-start;
       gap: 1rem;
       width: max-content;
       will-change: transform;
@@ -232,7 +235,8 @@
 
     .status-wall-card {
       flex: 0 0 min(300px, 78vw);
-      padding: 1rem 1.1rem;
+      height: auto;
+      padding: 1rem 1.1rem 1.05rem;
       text-align: left;
     }
 
@@ -241,58 +245,50 @@
       background: rgba(18, 28, 48, .94);
     }
 
-    .status-wall-head {
-      display: flex;
+    .status-wall-step {
+      display: inline-flex;
       align-items: center;
-      gap: .65rem;
-      margin-bottom: .7rem;
-    }
-
-    .status-wall-avatar {
-      flex: 0 0 36px;
-      width: 36px;
-      height: 36px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      color: #fff;
-      font-size: .72rem;
-      font-weight: 800;
-      letter-spacing: .02em;
-    }
-
-    .status-wall-avatar--teal { background: linear-gradient(135deg, #3db8b0, #2a8f88); }
-    .status-wall-avatar--purple { background: linear-gradient(135deg, #7c6fcd, #5a4db8); }
-    .status-wall-avatar--gold { background: linear-gradient(135deg, #d4a82a, #b8860b); }
-    .status-wall-avatar--rose { background: linear-gradient(135deg, #c45a62, #9a3d45); }
-    .status-wall-avatar--green { background: linear-gradient(135deg, #3da866, #2a7a4a); }
-    .status-wall-avatar--founder { background: linear-gradient(135deg, var(--purple), var(--teal)); }
-
-    .status-wall-meta {
-      min-width: 0;
-    }
-
-    .status-wall-name {
-      color: #e8f2ff;
-      font-size: .82rem;
-      font-weight: 800;
-      line-height: 1.2;
-    }
-
-    .status-wall-badge {
-      display: inline-block;
-      margin-top: .2rem;
-      color: #90a8d0;
-      font-size: .68rem;
-      font-weight: 600;
-    }
-
-    .status-wall-time {
-      margin-left: auto;
-      flex: 0 0 auto;
-      color: #6b7aa8;
+      margin-bottom: .6rem;
+      padding: .32rem .72rem;
+      border-radius: 999px;
+      color: #c8deff;
       font-size: .64rem;
-      font-weight: 600;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .status-wall-step--teal {
+      border: 1px solid rgba(78, 205, 196, .35);
+      background: rgba(78, 205, 196, .1);
+      color: #90e8df;
+    }
+
+    .status-wall-step--purple {
+      border: 1px solid rgba(124, 111, 205, .35);
+      background: rgba(124, 111, 205, .12);
+      color: #c8bfff;
+    }
+
+    .status-wall-step--gold {
+      border: 1px solid rgba(247, 201, 72, .35);
+      background: rgba(247, 201, 72, .1);
+      color: #f7d774;
+    }
+
+    .status-wall-step--green {
+      border: 1px solid rgba(82, 196, 122, .35);
+      background: rgba(82, 196, 122, .1);
+      color: #8de0a8;
+    }
+
+    .status-wall-title {
+      margin: 0 0 .5rem;
+      color: #e8f2ff;
+      font-size: .9rem;
+      font-weight: 800;
+      line-height: 1.35;
+      letter-spacing: -.01em;
     }
 
     .status-wall-text {
@@ -1774,7 +1770,7 @@
   <main>
     <section class="screen active" id="screen-main">
       <div class="status-wall-wrap">
-        <div class="status-wall" id="status-wall" aria-label="Community status wall">
+        <div class="status-wall" id="status-wall" aria-label="How whatimado works">
           <div class="status-wall-track" id="status-wall-track"></div>
           <div class="status-wall-fade status-wall-fade--left" aria-hidden="true"></div>
           <div class="status-wall-fade status-wall-fade--right" aria-hidden="true"></div>
@@ -3208,7 +3204,7 @@
     }
 
     function initStatusWall() {
-      const STATUS_WALL_POSTS = [
+      const HOW_IT_WORKS = [
         {
           type: "founder",
           chip: "Free for everyone",
@@ -3217,64 +3213,58 @@
           tags: ["Sponsors welcome", "One-time gifts", "Monthly support"]
         },
         {
-          name: "Marcus T.",
-          status: "Between jobs",
-          initials: "MT",
+          step: "Step 1",
+          title: "Share your situation",
           tone: "teal",
-          text: "Left retail after eight years. Didn't know where to start — mapped three paths here I never would've thought of on my own.",
-          time: "3h ago"
+          text: "Tell us what you know, what you enjoy, and what you're aiming for. Use the prompt below or tap a starter pill — there is no wrong answer."
         },
         {
-          name: "Jen L.",
-          status: "Freelancing",
-          initials: "JL",
+          step: "Step 2",
+          title: "A short conversation",
           tone: "purple",
-          text: "Still juggling client work but finally wrote down what I actually want next. This helped me stop spinning in circles.",
-          time: "5h ago"
+          text: "We ask one or two clarifying questions based on what you wrote — about your skills, constraints, and whether you want to get hired, learn, or build something."
         },
         {
-          name: "Andre K.",
-          status: "Career pivot",
-          initials: "AK",
+          step: "Step 3",
+          title: "Your opportunity map",
           tone: "gold",
-          text: "Warehouse supervisor for a decade. Exploring trades and IT support — didn't realize how many doors were still open.",
-          time: "Yesterday"
+          text: "You get three tailored paths visualized on a map. Each one is a real direction you could take, not a generic career quiz result."
         },
         {
-          name: "Sam R.",
-          status: "Recent grad",
-          initials: "SR",
+          step: "Step 4",
+          title: "Explore and refine",
           tone: "green",
-          text: "Degree in hand, no clear plan. Posted my situation and got ideas that match how I actually think, not just my major.",
-          time: "Yesterday"
+          text: "Request more paths or open a chat to steer the map — for example, more local, more hands-on, or less online."
         },
         {
-          name: "Priya M.",
-          status: "Side hustle mode",
-          initials: "PM",
-          tone: "rose",
-          text: "Full-time admin, building something on the side. Nice to see other people mid-journey instead of only highlight reels.",
-          time: "2d ago"
-        },
-        {
-          name: "Diego V.",
-          status: "Laid off",
-          initials: "DV",
+          step: "Step 5",
+          title: "Pick a roadmap",
           tone: "teal",
-          text: "Two weeks out from a tech layoff. Shared my skills out loud here — already feeling less stuck than I did Monday.",
-          time: "2d ago"
+          text: "Tap any opportunity to open a four-stage roadmap with concrete tasks shaped around your conversation — not vague advice."
+        },
+        {
+          step: "Step 6",
+          title: "Ask as you go",
+          tone: "purple",
+          text: "Each task has its own AI thread. Ask follow-ups, get links to tools, and keep the conversation going while you work through the plan."
+        },
+        {
+          step: "Step 7",
+          title: "Pick up where you left off",
+          tone: "gold",
+          text: "Your session saves automatically on this device. Sign in to sync your map, roadmaps, and task chats across devices."
         }
       ];
 
-      function renderStatusWallCard(post) {
-        if (post.type === "founder") {
+      function renderHowCard(slide) {
+        if (slide.type === "founder") {
           return `
             <article class="status-wall-card status-wall-card--founder surface-card">
-              <div class="status-wall-chip">${post.chip}</div>
-              <p class="status-wall-lead">${post.lead}</p>
-              <p class="status-wall-text">${post.body}</p>
+              <div class="status-wall-chip">${slide.chip}</div>
+              <p class="status-wall-lead">${slide.lead}</p>
+              <p class="status-wall-text">${slide.body}</p>
               <div class="status-wall-asks" aria-label="Ways to support">
-                ${post.tags.map((tag) => `<span class="status-wall-tag">${tag}</span>`).join("")}
+                ${slide.tags.map((tag) => `<span class="status-wall-tag">${tag}</span>`).join("")}
               </div>
             </article>
           `;
@@ -3282,15 +3272,9 @@
 
         return `
           <article class="status-wall-card surface-card">
-            <div class="status-wall-head">
-              <div class="status-wall-avatar status-wall-avatar--${post.tone}">${post.initials}</div>
-              <div class="status-wall-meta">
-                <div class="status-wall-name">${post.name}</div>
-                <span class="status-wall-badge">${post.status}</span>
-              </div>
-              <span class="status-wall-time">${post.time}</span>
-            </div>
-            <p class="status-wall-text">${post.text}</p>
+            <div class="status-wall-step status-wall-step--${slide.tone}">${slide.step}</div>
+            <h3 class="status-wall-title">${slide.title}</h3>
+            <p class="status-wall-text">${slide.text}</p>
           </article>
         `;
       }
@@ -3300,40 +3284,45 @@
       if (!wall || !track) return;
 
       track.innerHTML = Array.from({ length: 3 }, () =>
-        STATUS_WALL_POSTS.map(renderStatusWallCard).join("")
+        HOW_IT_WORKS.map(renderHowCard).join("")
       ).join("");
 
       let offset = 0;
+      let velocity = 0;
       let dragStartX = 0;
       let dragStartOffset = 0;
+      let lastMoveX = 0;
+      let lastMoveTs = 0;
       let dragging = false;
       let paused = false;
       let pauseUntil = 0;
+      let autoBlend = 1;
       let setWidth = 0;
       let lastTs = 0;
-      const AUTO_SPEED = 26;
-      const RIGHT_UNLOCK = 52;
+      const AUTO_SPEED = 24;
+      const RIGHT_UNLOCK = 48;
+      const MIN_VELOCITY = 2;
+      const FLICK_GAIN = 1.08;
+      const FRICTION = 5.2;
+      const AUTO_RAMP = 1.35;
 
       function measure() {
         const cards = track.querySelectorAll(".status-wall-card");
         const cardWidth = cards[0]?.offsetWidth || 300;
         const gap = parseFloat(getComputedStyle(track).gap) || 16;
-        setWidth = STATUS_WALL_POSTS.length * (cardWidth + gap);
+        setWidth = HOW_IT_WORKS.length * (cardWidth + gap);
         const pad = Math.max(0, (wall.clientWidth - cardWidth) / 2);
         track.style.paddingLeft = `${pad}px`;
         track.style.paddingRight = `${pad}px`;
         normalizeOffset();
         applyTransform();
+        updateWallHeight();
       }
 
       function normalizeOffset() {
         if (!setWidth) return;
         while (offset <= -setWidth) offset += setWidth;
         while (offset > 0) offset -= setWidth;
-      }
-
-      function applyTransform() {
-        track.style.transform = `translate3d(${offset}px, 0, 0)`;
       }
 
       function canScrollRight() {
@@ -3345,15 +3334,63 @@
         return value;
       }
 
+      function applyTransform() {
+        track.style.transform = `translate3d(${offset}px, 0, 0)`;
+        updateWallHeight();
+      }
+
+      function updateWallHeight() {
+        const wallRect = wall.getBoundingClientRect();
+        const wallCenter = wallRect.left + wallRect.width / 2;
+        let closest = null;
+        let closestDist = Infinity;
+
+        track.querySelectorAll(".status-wall-card").forEach((card) => {
+          const rect = card.getBoundingClientRect();
+          const cardCenter = rect.left + rect.width / 2;
+          const dist = Math.abs(cardCenter - wallCenter);
+          if (dist < closestDist) {
+            closestDist = dist;
+            closest = card;
+          }
+        });
+
+        if (closest) {
+          wall.style.height = `${closest.offsetHeight}px`;
+        }
+      }
+
       function tick(ts) {
         if (!lastTs) lastTs = ts;
-        const dt = Math.min((ts - lastTs) / 1000, 0.05);
+        const dt = Math.min((ts - lastTs) / 1000, 0.032);
         lastTs = ts;
 
-        if (!dragging && !paused && ts >= pauseUntil) {
-          offset -= AUTO_SPEED * dt;
-          normalizeOffset();
-          applyTransform();
+        if (!dragging) {
+          if (Math.abs(velocity) > MIN_VELOCITY) {
+            autoBlend = 0;
+            let next = offset + velocity * dt;
+            if (next > 0 && !canScrollRight()) {
+              next = 0;
+              velocity = 0;
+            } else if (next > 0) {
+              next = 0;
+              velocity *= 0.35;
+            }
+            offset = next;
+            velocity *= Math.exp(-FRICTION * dt);
+            normalizeOffset();
+            applyTransform();
+          } else {
+            velocity = 0;
+            if (!paused && ts >= pauseUntil) {
+              autoBlend = Math.min(1, autoBlend + dt * AUTO_RAMP);
+              offset -= AUTO_SPEED * dt * autoBlend;
+              normalizeOffset();
+              applyTransform();
+            } else {
+              autoBlend = Math.max(0, autoBlend - dt * 2.4);
+            }
+          }
         }
 
         requestAnimationFrame(tick);
@@ -3363,21 +3400,35 @@
         if (!dragging) return;
         dragging = false;
         wall.classList.remove("is-dragging");
-        pauseUntil = performance.now() + 1600;
+        velocity = pointerVelocity * FLICK_GAIN;
+        pauseUntil = performance.now() + 1400;
         paused = false;
       }
+
+      let pointerVelocity = 0;
 
       wall.addEventListener("pointerdown", (event) => {
         dragging = true;
         paused = true;
+        autoBlend = 0;
+        velocity = 0;
+        pointerVelocity = 0;
         wall.classList.add("is-dragging");
         dragStartX = event.clientX;
         dragStartOffset = offset;
+        lastMoveX = event.clientX;
+        lastMoveTs = performance.now();
         wall.setPointerCapture(event.pointerId);
       });
 
       wall.addEventListener("pointermove", (event) => {
         if (!dragging) return;
+        const now = performance.now();
+        const dt = Math.max(now - lastMoveTs, 1);
+        const dx = event.clientX - lastMoveX;
+        pointerVelocity = (dx / dt) * 1000;
+        lastMoveX = event.clientX;
+        lastMoveTs = now;
         offset = clampOffset(dragStartOffset + (event.clientX - dragStartX));
         normalizeOffset();
         applyTransform();
@@ -3389,11 +3440,12 @@
 
       wall.addEventListener("mouseenter", () => {
         paused = true;
+        autoBlend = Math.max(0, autoBlend - 0.25);
       });
 
       wall.addEventListener("mouseleave", () => {
         if (!dragging) {
-          pauseUntil = performance.now() + 700;
+          pauseUntil = performance.now() + 600;
           paused = false;
         }
       });
