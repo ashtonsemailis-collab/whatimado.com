@@ -204,6 +204,75 @@
       padding: 3rem 1.5rem;
     }
 
+    .free-promise {
+      margin-bottom: 1.35rem;
+      padding: 1rem 1.15rem;
+      text-align: left;
+    }
+
+    .free-promise-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      margin-bottom: .65rem;
+      padding: .35rem .8rem;
+      border: 1px solid rgba(78, 205, 196, .38);
+      border-radius: 999px;
+      color: #90e8df;
+      background: rgba(78, 205, 196, .1);
+      font-size: .66rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .free-promise-chip::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 10px currentColor;
+    }
+
+    .free-promise-lead {
+      margin: 0 0 .55rem;
+      color: #e8f2ff;
+      font-size: .92rem;
+      font-weight: 800;
+      line-height: 1.4;
+      letter-spacing: -.01em;
+    }
+
+    .free-promise-body {
+      margin: 0;
+      color: #a8c4e8;
+      font-size: .82rem;
+      line-height: 1.55;
+    }
+
+    .free-promise-body + .free-promise-body {
+      margin-top: .65rem;
+    }
+
+    .free-promise-asks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+      margin-top: .85rem;
+    }
+
+    .free-promise-tag {
+      border: 1px solid rgba(124, 111, 205, .35);
+      border-radius: 999px;
+      padding: .35rem .75rem;
+      color: #c8deff;
+      background: rgba(124, 111, 205, .12);
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .03em;
+    }
+
     .hero-chip {
       display: inline-flex;
       align-items: center;
@@ -1595,6 +1664,17 @@
   <main>
     <section class="screen active" id="screen-main">
       <div class="hero">
+        <aside class="free-promise surface-card" aria-label="Our commitment to stay free">
+          <div class="free-promise-chip">Free for everyone</div>
+          <p class="free-promise-lead">whatimado is built to stay free — no matter where you're starting from.</p>
+          <p class="free-promise-body">I'm keeping this website free so anyone can use it. When the app launches, that same promise carries over. Instead of charging you, I'm asking for help from sponsors who believe in the mission — and from anyone who can give once or chip in monthly to keep the lights on.</p>
+          <div class="free-promise-asks" aria-label="Ways to support">
+            <span class="free-promise-tag">Sponsors welcome</span>
+            <span class="free-promise-tag">One-time gifts</span>
+            <span class="free-promise-tag">Monthly support</span>
+          </div>
+        </aside>
+
         <div class="hero-chip">Start here</div>
         <h1><span>Let us help figure out,</span><em>what ya gonna do...</em></h1>
         <p class="hero-copy">Tell us your situation, skills, interests, or goals. We'll map out paths you may never have considered.</p>
