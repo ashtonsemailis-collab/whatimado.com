@@ -213,7 +213,6 @@
       touch-action: none;
       user-select: none;
       -webkit-user-select: none;
-      transition: height .38s cubic-bezier(.22, 1, .36, 1);
     }
 
     .status-wall.is-dragging {
@@ -243,43 +242,6 @@
     .status-wall-card--founder {
       border-color: rgba(78, 205, 196, .28);
       background: rgba(18, 28, 48, .94);
-    }
-
-    .status-wall-step {
-      display: inline-flex;
-      align-items: center;
-      margin-bottom: .6rem;
-      padding: .32rem .72rem;
-      border-radius: 999px;
-      color: #c8deff;
-      font-size: .64rem;
-      font-weight: 800;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-    }
-
-    .status-wall-step--teal {
-      border: 1px solid rgba(78, 205, 196, .35);
-      background: rgba(78, 205, 196, .1);
-      color: #90e8df;
-    }
-
-    .status-wall-step--purple {
-      border: 1px solid rgba(124, 111, 205, .35);
-      background: rgba(124, 111, 205, .12);
-      color: #c8bfff;
-    }
-
-    .status-wall-step--gold {
-      border: 1px solid rgba(247, 201, 72, .35);
-      background: rgba(247, 201, 72, .1);
-      color: #f7d774;
-    }
-
-    .status-wall-step--green {
-      border: 1px solid rgba(82, 196, 122, .35);
-      background: rgba(82, 196, 122, .1);
-      color: #8de0a8;
     }
 
     .status-wall-title {
@@ -361,12 +323,12 @@
 
     .status-wall-fade--left {
       left: 0;
-      background: linear-gradient(90deg, rgba(7, 17, 31, .92) 15%, transparent);
+      background: linear-gradient(90deg, #1a3a5c 0%, rgba(26, 58, 92, 0) 100%);
     }
 
     .status-wall-fade--right {
       right: 0;
-      background: linear-gradient(270deg, rgba(7, 17, 31, .92) 15%, transparent);
+      background: linear-gradient(270deg, #1a3a5c 0%, rgba(26, 58, 92, 0) 100%);
     }
 
     .hero {
@@ -3213,45 +3175,31 @@
           tags: ["Sponsors welcome", "One-time gifts", "Monthly support"]
         },
         {
-          step: "Step 1",
           title: "Share your situation",
-          tone: "teal",
           text: "Tell us what you know, what you enjoy, and what you're aiming for. Use the prompt below or tap a starter pill — there is no wrong answer."
         },
         {
-          step: "Step 2",
           title: "A short conversation",
-          tone: "purple",
           text: "We ask one or two clarifying questions based on what you wrote — about your skills, constraints, and whether you want to get hired, learn, or build something."
         },
         {
-          step: "Step 3",
           title: "Your opportunity map",
-          tone: "gold",
           text: "You get three tailored paths visualized on a map. Each one is a real direction you could take, not a generic career quiz result."
         },
         {
-          step: "Step 4",
           title: "Explore and refine",
-          tone: "green",
           text: "Request more paths or open a chat to steer the map — for example, more local, more hands-on, or less online."
         },
         {
-          step: "Step 5",
           title: "Pick a roadmap",
-          tone: "teal",
           text: "Tap any opportunity to open a four-stage roadmap with concrete tasks shaped around your conversation — not vague advice."
         },
         {
-          step: "Step 6",
           title: "Ask as you go",
-          tone: "purple",
           text: "Each task has its own AI thread. Ask follow-ups, get links to tools, and keep the conversation going while you work through the plan."
         },
         {
-          step: "Step 7",
           title: "Pick up where you left off",
-          tone: "gold",
           text: "Your session saves automatically on this device. Sign in to sync your map, roadmaps, and task chats across devices."
         }
       ];
@@ -3272,7 +3220,6 @@
 
         return `
           <article class="status-wall-card surface-card">
-            <div class="status-wall-step status-wall-step--${slide.tone}">${slide.step}</div>
             <h3 class="status-wall-title">${slide.title}</h3>
             <p class="status-wall-text">${slide.text}</p>
           </article>
@@ -3316,7 +3263,6 @@
         track.style.paddingRight = `${pad}px`;
         normalizeOffset();
         applyTransform();
-        updateWallHeight();
       }
 
       function normalizeOffset() {
@@ -3336,28 +3282,6 @@
 
       function applyTransform() {
         track.style.transform = `translate3d(${offset}px, 0, 0)`;
-        updateWallHeight();
-      }
-
-      function updateWallHeight() {
-        const wallRect = wall.getBoundingClientRect();
-        const wallCenter = wallRect.left + wallRect.width / 2;
-        let closest = null;
-        let closestDist = Infinity;
-
-        track.querySelectorAll(".status-wall-card").forEach((card) => {
-          const rect = card.getBoundingClientRect();
-          const cardCenter = rect.left + rect.width / 2;
-          const dist = Math.abs(cardCenter - wallCenter);
-          if (dist < closestDist) {
-            closestDist = dist;
-            closest = card;
-          }
-        });
-
-        if (closest) {
-          wall.style.height = `${closest.offsetHeight}px`;
-        }
       }
 
       function tick(ts) {
