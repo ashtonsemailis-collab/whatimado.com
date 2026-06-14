@@ -213,6 +213,24 @@
       touch-action: none;
       user-select: none;
       -webkit-user-select: none;
+      -webkit-mask-image: linear-gradient(
+        90deg,
+        transparent 0%,
+        #000 12%,
+        #000 88%,
+        transparent 100%
+      );
+      mask-image: linear-gradient(
+        90deg,
+        transparent 0%,
+        #000 12%,
+        #000 88%,
+        transparent 100%
+      );
+      -webkit-mask-size: 100% 100%;
+      mask-size: 100% 100%;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
     }
 
     .status-wall.is-dragging {
@@ -310,25 +328,6 @@
       font-size: .68rem;
       font-weight: 800;
       letter-spacing: .03em;
-    }
-
-    .status-wall-fade {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: min(120px, 18vw);
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    .status-wall-fade--left {
-      left: 0;
-      background: linear-gradient(90deg, #1a3a5c 0%, rgba(26, 58, 92, 0) 100%);
-    }
-
-    .status-wall-fade--right {
-      right: 0;
-      background: linear-gradient(270deg, #1a3a5c 0%, rgba(26, 58, 92, 0) 100%);
     }
 
     .hero {
@@ -1734,8 +1733,6 @@
       <div class="status-wall-wrap">
         <div class="status-wall" id="status-wall" aria-label="How whatimado works">
           <div class="status-wall-track" id="status-wall-track"></div>
-          <div class="status-wall-fade status-wall-fade--left" aria-hidden="true"></div>
-          <div class="status-wall-fade status-wall-fade--right" aria-hidden="true"></div>
         </div>
       </div>
 
