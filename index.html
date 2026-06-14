@@ -195,22 +195,114 @@
     }
 
     #screen-main.active {
-      display: grid;
-      place-items: center;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
-    .hero {
-      width: min(100%, 580px);
-      padding: 3rem 1.5rem;
+    .status-wall-wrap {
+      width: 100%;
+      padding: 1.35rem 0 .25rem;
     }
 
-    .free-promise {
-      margin-bottom: 1.35rem;
-      padding: 1rem 1.15rem;
+    .status-wall {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      cursor: grab;
+      touch-action: pan-y;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .status-wall.is-dragging {
+      cursor: grabbing;
+    }
+
+    .status-wall.is-dragging .status-wall-track {
+      transition: none;
+    }
+
+    .status-wall-track {
+      display: flex;
+      gap: 1rem;
+      width: max-content;
+      will-change: transform;
+    }
+
+    .status-wall-card {
+      flex: 0 0 min(300px, 78vw);
+      padding: 1rem 1.1rem;
       text-align: left;
     }
 
-    .free-promise-chip {
+    .status-wall-card--founder {
+      border-color: rgba(78, 205, 196, .28);
+      background: rgba(18, 28, 48, .94);
+    }
+
+    .status-wall-head {
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+      margin-bottom: .7rem;
+    }
+
+    .status-wall-avatar {
+      flex: 0 0 36px;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+
+    .status-wall-avatar--teal { background: linear-gradient(135deg, #3db8b0, #2a8f88); }
+    .status-wall-avatar--purple { background: linear-gradient(135deg, #7c6fcd, #5a4db8); }
+    .status-wall-avatar--gold { background: linear-gradient(135deg, #d4a82a, #b8860b); }
+    .status-wall-avatar--rose { background: linear-gradient(135deg, #c45a62, #9a3d45); }
+    .status-wall-avatar--green { background: linear-gradient(135deg, #3da866, #2a7a4a); }
+    .status-wall-avatar--founder { background: linear-gradient(135deg, var(--purple), var(--teal)); }
+
+    .status-wall-meta {
+      min-width: 0;
+    }
+
+    .status-wall-name {
+      color: #e8f2ff;
+      font-size: .82rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .status-wall-badge {
+      display: inline-block;
+      margin-top: .2rem;
+      color: #90a8d0;
+      font-size: .68rem;
+      font-weight: 600;
+    }
+
+    .status-wall-time {
+      margin-left: auto;
+      flex: 0 0 auto;
+      color: #6b7aa8;
+      font-size: .64rem;
+      font-weight: 600;
+    }
+
+    .status-wall-text {
+      margin: 0;
+      color: #a8c4e8;
+      font-size: .82rem;
+      line-height: 1.55;
+    }
+
+    .status-wall-chip {
       display: inline-flex;
       align-items: center;
       gap: .45rem;
@@ -226,7 +318,7 @@
       text-transform: uppercase;
     }
 
-    .free-promise-chip::before {
+    .status-wall-chip::before {
       content: "";
       width: 6px;
       height: 6px;
@@ -235,7 +327,7 @@
       box-shadow: 0 0 10px currentColor;
     }
 
-    .free-promise-lead {
+    .status-wall-lead {
       margin: 0 0 .55rem;
       color: #e8f2ff;
       font-size: .92rem;
@@ -244,25 +336,14 @@
       letter-spacing: -.01em;
     }
 
-    .free-promise-body {
-      margin: 0;
-      color: #a8c4e8;
-      font-size: .82rem;
-      line-height: 1.55;
-    }
-
-    .free-promise-body + .free-promise-body {
-      margin-top: .65rem;
-    }
-
-    .free-promise-asks {
+    .status-wall-asks {
       display: flex;
       flex-wrap: wrap;
       gap: .45rem;
       margin-top: .85rem;
     }
 
-    .free-promise-tag {
+    .status-wall-tag {
       border: 1px solid rgba(124, 111, 205, .35);
       border-radius: 999px;
       padding: .35rem .75rem;
@@ -271,6 +352,35 @@
       font-size: .68rem;
       font-weight: 800;
       letter-spacing: .03em;
+    }
+
+    .status-wall-fade {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: min(120px, 18vw);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .status-wall-fade--left {
+      left: 0;
+      background: linear-gradient(90deg, rgba(7, 17, 31, .92) 15%, transparent);
+    }
+
+    .status-wall-fade--right {
+      right: 0;
+      background: linear-gradient(270deg, rgba(7, 17, 31, .92) 15%, transparent);
+    }
+
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: min(100%, 580px);
+      margin: 0 auto;
+      padding: 1.5rem 1.5rem 3rem;
     }
 
     .hero-chip {
@@ -1663,18 +1773,15 @@
 
   <main>
     <section class="screen active" id="screen-main">
-      <div class="hero">
-        <aside class="free-promise surface-card" aria-label="Our commitment to stay free">
-          <div class="free-promise-chip">Free for everyone</div>
-          <p class="free-promise-lead">whatimado is built to stay free — no matter where you're starting from.</p>
-          <p class="free-promise-body">I'm keeping this website free so anyone can use it. When the app launches, that same promise carries over. Instead of charging you, I'm asking for help from sponsors who believe in the mission — and from anyone who can give once or chip in monthly to keep the lights on.</p>
-          <div class="free-promise-asks" aria-label="Ways to support">
-            <span class="free-promise-tag">Sponsors welcome</span>
-            <span class="free-promise-tag">One-time gifts</span>
-            <span class="free-promise-tag">Monthly support</span>
-          </div>
-        </aside>
+      <div class="status-wall-wrap">
+        <div class="status-wall" id="status-wall" aria-label="Community status wall">
+          <div class="status-wall-track" id="status-wall-track"></div>
+          <div class="status-wall-fade status-wall-fade--left" aria-hidden="true"></div>
+          <div class="status-wall-fade status-wall-fade--right" aria-hidden="true"></div>
+        </div>
+      </div>
 
+      <div class="hero">
         <div class="hero-chip">Start here</div>
         <h1><span>Let us help figure out,</span><em>what ya gonna do...</em></h1>
         <p class="hero-copy">Tell us your situation, skills, interests, or goals. We'll map out paths you may never have considered.</p>
@@ -3100,6 +3207,205 @@
       window.addEventListener("resize", resize);
     }
 
+    function initStatusWall() {
+      const STATUS_WALL_POSTS = [
+        {
+          type: "founder",
+          chip: "Free for everyone",
+          lead: "whatimado is built to stay free — no matter where you're starting from.",
+          body: "I'm keeping this website free so anyone can use it. When the app launches, that same promise carries over. Instead of charging you, I'm asking for help from sponsors who believe in the mission — and from anyone who can give once or chip in monthly to keep the lights on.",
+          tags: ["Sponsors welcome", "One-time gifts", "Monthly support"]
+        },
+        {
+          name: "Marcus T.",
+          status: "Between jobs",
+          initials: "MT",
+          tone: "teal",
+          text: "Left retail after eight years. Didn't know where to start — mapped three paths here I never would've thought of on my own.",
+          time: "3h ago"
+        },
+        {
+          name: "Jen L.",
+          status: "Freelancing",
+          initials: "JL",
+          tone: "purple",
+          text: "Still juggling client work but finally wrote down what I actually want next. This helped me stop spinning in circles.",
+          time: "5h ago"
+        },
+        {
+          name: "Andre K.",
+          status: "Career pivot",
+          initials: "AK",
+          tone: "gold",
+          text: "Warehouse supervisor for a decade. Exploring trades and IT support — didn't realize how many doors were still open.",
+          time: "Yesterday"
+        },
+        {
+          name: "Sam R.",
+          status: "Recent grad",
+          initials: "SR",
+          tone: "green",
+          text: "Degree in hand, no clear plan. Posted my situation and got ideas that match how I actually think, not just my major.",
+          time: "Yesterday"
+        },
+        {
+          name: "Priya M.",
+          status: "Side hustle mode",
+          initials: "PM",
+          tone: "rose",
+          text: "Full-time admin, building something on the side. Nice to see other people mid-journey instead of only highlight reels.",
+          time: "2d ago"
+        },
+        {
+          name: "Diego V.",
+          status: "Laid off",
+          initials: "DV",
+          tone: "teal",
+          text: "Two weeks out from a tech layoff. Shared my skills out loud here — already feeling less stuck than I did Monday.",
+          time: "2d ago"
+        }
+      ];
+
+      function renderStatusWallCard(post) {
+        if (post.type === "founder") {
+          return `
+            <article class="status-wall-card status-wall-card--founder surface-card">
+              <div class="status-wall-chip">${post.chip}</div>
+              <p class="status-wall-lead">${post.lead}</p>
+              <p class="status-wall-text">${post.body}</p>
+              <div class="status-wall-asks" aria-label="Ways to support">
+                ${post.tags.map((tag) => `<span class="status-wall-tag">${tag}</span>`).join("")}
+              </div>
+            </article>
+          `;
+        }
+
+        return `
+          <article class="status-wall-card surface-card">
+            <div class="status-wall-head">
+              <div class="status-wall-avatar status-wall-avatar--${post.tone}">${post.initials}</div>
+              <div class="status-wall-meta">
+                <div class="status-wall-name">${post.name}</div>
+                <span class="status-wall-badge">${post.status}</span>
+              </div>
+              <span class="status-wall-time">${post.time}</span>
+            </div>
+            <p class="status-wall-text">${post.text}</p>
+          </article>
+        `;
+      }
+
+      const wall = $("#status-wall");
+      const track = $("#status-wall-track");
+      if (!wall || !track) return;
+
+      track.innerHTML = Array.from({ length: 3 }, () =>
+        STATUS_WALL_POSTS.map(renderStatusWallCard).join("")
+      ).join("");
+
+      let offset = 0;
+      let dragStartX = 0;
+      let dragStartOffset = 0;
+      let dragging = false;
+      let paused = false;
+      let pauseUntil = 0;
+      let setWidth = 0;
+      let lastTs = 0;
+      const AUTO_SPEED = 26;
+      const RIGHT_UNLOCK = 52;
+
+      function measure() {
+        const cards = track.querySelectorAll(".status-wall-card");
+        const cardWidth = cards[0]?.offsetWidth || 300;
+        const gap = parseFloat(getComputedStyle(track).gap) || 16;
+        setWidth = STATUS_WALL_POSTS.length * (cardWidth + gap);
+        const pad = Math.max(0, (wall.clientWidth - cardWidth) / 2);
+        track.style.paddingLeft = `${pad}px`;
+        track.style.paddingRight = `${pad}px`;
+        normalizeOffset();
+        applyTransform();
+      }
+
+      function normalizeOffset() {
+        if (!setWidth) return;
+        while (offset <= -setWidth) offset += setWidth;
+        while (offset > 0) offset -= setWidth;
+      }
+
+      function applyTransform() {
+        track.style.transform = `translate3d(${offset}px, 0, 0)`;
+      }
+
+      function canScrollRight() {
+        return offset < -RIGHT_UNLOCK;
+      }
+
+      function clampOffset(value) {
+        if (value > 0) return canScrollRight() ? Math.min(value, 0) : 0;
+        return value;
+      }
+
+      function tick(ts) {
+        if (!lastTs) lastTs = ts;
+        const dt = Math.min((ts - lastTs) / 1000, 0.05);
+        lastTs = ts;
+
+        if (!dragging && !paused && ts >= pauseUntil) {
+          offset -= AUTO_SPEED * dt;
+          normalizeOffset();
+          applyTransform();
+        }
+
+        requestAnimationFrame(tick);
+      }
+
+      function endDrag() {
+        if (!dragging) return;
+        dragging = false;
+        wall.classList.remove("is-dragging");
+        pauseUntil = performance.now() + 1600;
+        paused = false;
+      }
+
+      wall.addEventListener("pointerdown", (event) => {
+        dragging = true;
+        paused = true;
+        wall.classList.add("is-dragging");
+        dragStartX = event.clientX;
+        dragStartOffset = offset;
+        wall.setPointerCapture(event.pointerId);
+      });
+
+      wall.addEventListener("pointermove", (event) => {
+        if (!dragging) return;
+        offset = clampOffset(dragStartOffset + (event.clientX - dragStartX));
+        normalizeOffset();
+        applyTransform();
+      });
+
+      wall.addEventListener("pointerup", endDrag);
+      wall.addEventListener("pointercancel", endDrag);
+      wall.addEventListener("lostpointercapture", endDrag);
+
+      wall.addEventListener("mouseenter", () => {
+        paused = true;
+      });
+
+      wall.addEventListener("mouseleave", () => {
+        if (!dragging) {
+          pauseUntil = performance.now() + 700;
+          paused = false;
+        }
+      });
+
+      measure();
+      requestAnimationFrame(() => {
+        measure();
+        requestAnimationFrame(tick);
+      });
+      window.addEventListener("resize", measure);
+    }
+
     function bindEvents() {
       $$("[data-screen-link]").forEach((element) => {
         element.addEventListener("click", (event) => {
@@ -3157,6 +3463,7 @@
     window.addEventListener("load", async () => {
       bindEvents();
       initNetworkCanvas();
+      initStatusWall();
       await initAuth();
       setTimeout(() => {
         $("#loader").classList.add("hidden");
